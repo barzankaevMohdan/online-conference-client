@@ -1,0 +1,217 @@
+// @import './fonts/Inter/stylesheet';
+// @import './fonts/Gotham/stylesheet';
+// @import './fonts/GrteskPeta/stylesheet';
+// @import './fonts/SFProDisplay/stylesheet';
+// @import './fonts/Tinkoff/stylesheet';
+// @import './fonts/SourceCodePro/stylesheet';
+@import './variables';
+
+:root {
+  --zeen-player-padding-aside-witdh: 300px;
+  //--main-color: #B773FF;
+  --danger-color: #f00;
+  --main-section-second: #F5F5F5;
+  --main-section-padding-vertical: 100px;
+
+  //переопределение для спикеров
+  --small-badge-background: var(--main-color);
+  --small-badge-radius: 20px;
+  --small-badge-text-color: #fff;
+  --small-badge-size: 12px;
+  --zeen-chat-footer-height: 70px;
+}
+
+* {
+  &,
+  &::after,
+  &::before {
+    box-sizing: inherit;
+    outline: none;
+  }
+}
+
+html,
+body {
+  font-family: 'Source Code Pro', 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  flex: 1 0 auto;
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background: #000;
+  scrollbar-color: transparent;
+  scrollbar-width: var(--zeen-chat-scrollbar-width);
+}
+
+::-webkit-scrollbar {
+  width: var(--zeen-chat-scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--main-color);
+  border-radius: var(--zeen-chat-scrollbar-thumb-borderradius);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--main-color);;
+}
+
+a {
+  color: var(--main-color);
+}
+
+.swiper-container {
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  overflow: hidden;
+  list-style: none;
+  padding: 0;
+  z-index: 1;
+}
+
+.swiper-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  transition-property: transform;
+  box-sizing: content-box;
+}
+
+.swiper-slide {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition-property: transform;
+}
+
+.fullstack,
+#__nuxt,
+#__layout {
+  flex: 1 1 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.fullstack-main {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+}
+
+.fullstack-header {
+  flex: 0 0 auto;
+}
+
+.fullstack-footer {
+  flex: 0 0 auto;
+}
+
+.text-danger {
+  color: #FF4D4D;
+}
+
+.video-js.vjs-fullstack .vjs-big-play-button {
+  display: none;
+}
+
+.fullstack-player__btn {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 1);
+  color: var(--main-color);
+  cursor: pointer;
+  opacity: 0.5;
+  transition: all 0.3s;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  .icon-play {
+    margin-left: 5px;
+  }
+}
+
+.video-js.vjs-fullstack {
+  --player-background-color: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+
+  .vjs-control-bar {
+    height: 46px;
+  }
+
+  .vjs-play-control {
+    order: -3;
+  }
+
+  .vjs-volume-panel {
+    order: -2;
+  }
+
+  .vjs-seek-to-live-control {
+    order: -1;
+
+    .vjs-icon-placeholder {
+      margin-right: 0;
+    }
+
+    .vjs-icon-placeholder::before {
+      border: 1px solid currentColor;
+      line-height: 16px;
+      padding: 4px 5px 4px 5px;
+      border-radius: 10px 0 0 10px;
+      border-right: 0;
+    }
+
+    .vjs-seek-to-live-text {
+      border: 1px solid #888;
+      line-height: 16px;
+      padding: 2px 5px 0 0;
+      border-radius: 0 10px 10px 0;
+      border-left: 0;
+
+    }
+
+    &.vjs-at-live-edge {
+      .vjs-seek-to-live-text {
+        border-color: red;
+      }
+    }
+  }
+
+  .vjs-button > .vjs-icon-placeholder:before {
+    line-height: 46px;
+  }
+
+}
+
+.fullstack-radio {
+  --radio-background-color: trasparent;
+  --radio-checked-color: rgb(24, 24, 24);
+  --radio-checked-background-color: var(--main-color);
+  //--radio-label-color: #FF00FB;
+  &__pseudo {
+    // Хреновое решение, но надо решать проблему уже внутри компонента
+    border-width: 2px !important;
+    border-color: #363636 !important;
+  }
+  .fullstack-radio__real:checked + .fullstack-radio__pseudo {
+    border-color: var(--main-color) !important;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+  }
+}

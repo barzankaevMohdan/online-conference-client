@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'Source Code Pro';
+    src: url('SourceCodePro-Regular.eot');
+    src: url('SourceCodePro-Regular.eot?#iefix') format('embedded-opentype'),
+        url('SourceCodePro-Regular.woff2') format('woff2'),
+        url('SourceCodePro-Regular.woff') format('woff'),
+        url('SourceCodePro-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Source Code Pro';
+    src: url('SourceCodePro-SemiBold.eot');
+    src: url('SourceCodePro-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('SourceCodePro-SemiBold.woff2') format('woff2'),
+        url('SourceCodePro-SemiBold.woff') format('woff'),
+        url('SourceCodePro-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Source Code Pro';
+    src: url('SourceCodePro-Medium.eot');
+    src: url('SourceCodePro-Medium.eot?#iefix') format('embedded-opentype'),
+        url('SourceCodePro-Medium.woff2') format('woff2'),
+        url('SourceCodePro-Medium.woff') format('woff'),
+        url('SourceCodePro-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
