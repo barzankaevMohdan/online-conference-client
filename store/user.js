@@ -68,7 +68,7 @@ export const actions = {
   },
   async checkAuth({commit, rootGetters}) {
     try {
-      const data = await axios.get(`${config.BASE_URL}/user/refresh`) //, {withCredentials: true}
+      const data = await axios.get(`${config.BASE_URL}/user/refresh`, {withCredentials: true})
       localStorage.setItem('token', data.data.accessToken)
       commit('update', data.data)
     } catch (e) {
