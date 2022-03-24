@@ -425,7 +425,7 @@ export default {
   --zeen-schedule-time-text-size: var(--main-large-size);
   --zeen-schedule-time-line-height: 1.5;
   --zeen-schedule-time-font-weight: 400;
-  --zeen-schedule-time-width: 110px;
+  --zeen-schedule-time-width: 130px;
   --zeen-schedule-col-line-size: 750px;
   --zeen-schedule-row-height: 235px;
   --zeen-schedule-hall-text-size: var(--main-small-text);
