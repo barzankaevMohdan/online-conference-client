@@ -34,10 +34,9 @@ export default {
 
   &__left {
     background-repeat: no-repeat;
-    background-position: left;
-    background-size: contain;
+    background-position: center;
+    background-size: cover;
     background-image: url('../../assets/img/auth/bg.png');
-    background-attachment: fixed;
     min-height: 100vh;
     width: 50%;
 
@@ -60,12 +59,15 @@ export default {
     justify-content: center;
     align-items: center;
     width: 50%;
-    min-height: 100vh;
+    max-height: 100vh;
     background: var(--main-positive-color);
+    overflow: auto;
 
     @include tablets() {
       width: 100%;
       min-height: auto;
+      max-height: 100%;
+      overflow: visible;
     }
   }
 

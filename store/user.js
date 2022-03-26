@@ -14,7 +14,6 @@ export const mutations = {
     state.isLoading = false
     state.user = {}
     state.token = null
-    // zeenApi.clearToken()
   },
   update(state, {refreshToken, user}) {
     if (user) {
@@ -62,7 +61,7 @@ export const actions = {
     })
   },
   async logOut({commit, rootGetters}) {
-    await  api.logout()
+    await api.logout()
     localStorage.removeItem('token')
     commit('clear')
   },

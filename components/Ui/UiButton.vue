@@ -1,5 +1,7 @@
 <template>
-  <button
+  <component
+    :is="getElement"
+    :id="`button-${componentId}`"
     class="button"
     :class="{
       'button_fill-main': theme === 'fill-main',
@@ -8,7 +10,10 @@
       'button_parent-width': size === 'parentWidth',
       'button_no-padding': theme === 'no-padding',
       'button_is-loading': isLoading,
+      'button_no-radius': noRadius,
     }"
+    :href="href"
+    :to="to"
     :disabled="disabled || isLoading"
     v-on="$listeners"
     v-bind="$attrs"
@@ -20,9 +25,11 @@
     </div>
 
     <div class="button__loader" v-if="isLoading">
-      {{ loadingText }}
+      <slot name="loading">
+        {{ loadingText }}
+      </slot>
     </div>
-  </button>
+  </component>
 </template>
 
 <script>
@@ -33,10 +40,18 @@ export default {
       type: String,
       default: 'Загрузка...',
     },
+    href: {
+      type: String,
+      default: null,
+    },
+    to: {
+      validator: (prop) => typeof prop === 'object' || typeof prop === 'string',
+      default: null,
+    },
     theme: {
       type: String,
       default: 'fill-main',
-      validator: (theme) => ['fill-main', 'fill-additional', 'outline', 'no-padding'].includes(theme),
+      validator: (theme) => ['fill-main', 'fill-additional', 'outline', 'clean', 'no-padding'].includes(theme),
     },
     size: {
       type: String,
@@ -51,6 +66,24 @@ export default {
       type: Boolean,
       required: false,
     },
+    noRadius: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    componentId() {
+      return this._uid
+    },
+    getElement() {
+      if (this.href) {
+        return 'a'
+      } else if (this.to) {
+        return 'router-link'
+      }
+
+      return 'button'
+    },
   },
 }
 </script>
@@ -59,8 +92,8 @@ export default {
 :root {
   /* Размеры */
   --button-font-size: var(--main-size);
-  --button-padding-horizontal: 30px;
-  --button-padding-vertical: 15px;
+  --button-padding-horizontal: 29px; /*// мекет - 1px бордер*/
+  --button-padding-vertical: 15px; /*// мекет - 1px бордер*/
   --button-border-radius: var(--main-input-radius);
   --button-border-width: 1px;
   --button-line-height: calc(var(--button-font-size) * 1.375);
@@ -72,15 +105,19 @@ export default {
   --button-disabled-background-color: var(--gray-1);
   --button-disabled-color: var(--gray-2);
   --button-text-color: var(--button-additional-color);
-  --button-hover-color: var(--main-hover-color);
-  --button-click-color: var(--main-active-color);
 }
 </style>
 
 <style lang="scss" scoped>
-@import '~/styles/mixins.scss';
+@import "~/styles/mixins.scss";
 
 .button {
+  --button-main: var(--button-background-color-base, var(--button-main-color));
+  --button-real-background-color: var(--button-background-color-base, var(--button-main-color));
+  --button-hover-color: var(--button-hover-color-base, var(--main-hover-color));
+  --button-click-color: var(--button-click-color-base, var(--main-active-color));
+  --button-text-color: var(--button-text-color-base, var(--button-additional-color));
+
   position: relative;
   display: inline-flex;
   justify-content: center;
@@ -100,7 +137,7 @@ export default {
   text-decoration: none;
   font-family: inherit;
   color: var(--button-text-color);
-  background: var(--button-main-color);
+  background: var(--button-real-background-color);
 
   &:focus,
   &:active,
@@ -126,7 +163,7 @@ export default {
 
   &_fill-additional {
     background: transparent;
-    color: var(--button-main-color);
+    color: var(--button-main);
 
     &:hover {
       color: var(--button-hover-color);
@@ -139,8 +176,8 @@ export default {
 
   &_outline {
     background: transparent;
-    color: var(--button-main-color);
-    border-color: var(--button-main-color);
+    color: var(--button-main);
+    border-color: var(--button-main);
 
     &:hover {
       color: var(--button-hover-color);
@@ -164,17 +201,26 @@ export default {
   &_is-loading:disabled:hover,
   &_is-loading:disabled:focus {
     color: var(--button-text-color);
-    background-color: var(--button-main-color);
+    background-color: var(--button-real-background-color);
   }
 
+  //&_parent-width  -> .zeen-button_parent-width
+  //.zeen-button_parent-width  -> .zeen-button .zeen-button_parent-width
+  //& &_parent-width  -> .zeen-button .zeen-button_parent-width
+  //&_mod  -> .zeen-button_mod
+  //&#{&}_mod  -> .zeen-button.zeen-button_mod
   &_parent-width {
     width: 100%;
   }
 
   &_is-loading {
-    .zeen-button__content {
+    .button__content {
       opacity: 0;
     }
+  }
+
+  &_no-radius {
+    border-radius: 0;
   }
 
   &__content {
