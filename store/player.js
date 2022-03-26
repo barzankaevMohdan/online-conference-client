@@ -1,52 +1,77 @@
+import api from "~/services/PlayerService";
 
 export const state = () => ({
   rooms: [],
 })
 
 export const mutations = {
-  createRoom(state, {roomID, streamID}) {
-    state.rooms.push({roomID, streamID})
+  createRoom(state, rooms) {
+    state.rooms = rooms.reduce((accumulator, currentRoom) => {
+      accumulator[currentRoom.id] = currentRoom
+      return accumulator
+    }, {})
   },
-  deleteRoom(state, roomID) {
-    state.rooms = state.rooms.filter(room => room.roomID === roomID)
+  deleteRoom(state, roomId) {
+    state.rooms = delete state.rooms[roomId]
   },
 }
 
-// export const actions = {
-//   createStream({commit, rootGetters}, streamData) {
-//     return new Promise((resolve, reject) => {
-//       api
-//         .createStream(streamData.name)
-//         .then((data) => {
-//           commit('update', data.data)
-//           resolve(data.data)
-//         })
-//         .catch((error) => {
-//           if (error.response?.data) {
-//             reject(error.response.data)
-//           }
-//           reject(error)
-//         })
-//     })
-//   },
-//   allStreams({commit}) {
-//     return new Promise((resolve, reject) => {
-//       api
-//         .getAllStreams()
-//         .then((data) => {
-//           commit('update', data.data)
-//           resolve(data.data)
-//         })
-//         .catch((error) => {
-//           if (error.response?.data) {
-//             reject(error.response.data)
-//           }
-//           reject(error)
-//         })
-//     })
-//   },
-// }
+export const actions = {
+  createStreamRoom({commit, rootGetters}, roomData) {
+    return new Promise((resolve, reject) => {
+      api
+        .createStreamRoom(roomData.roomId, roomData.streamId)
+        .then((data) => {
+          commit('createRoom', data.data)
+          resolve(data.data)
+        })
+        .catch((error) => {
+          if (error.response?.data) {
+            reject(error.response.data)
+          }
+          reject(error)
+        })
+    })
+  },
+  getAllRooms({commit, rootGetters}) {
+    return new Promise((resolve, reject) => {
+      api
+        .getAllRooms()
+        .then((data) => {
+          commit('createRoom', data.data)
+          resolve(data.data)
+        })
+        .catch((error) => {
+          if (error.response?.data) {
+            reject(error.response.data)
+          }
+          reject(error)
+        })
+    })
+  },
+  // deleteStreamRoom({commit, rootGetters}, roomData) {
+  //   console.log(roomData.roomId)
+  //   return new Promise((resolve, reject) => {
+  //     api
+  //       .deleteStreamRoom(roomData.roomId, roomData.streamId)
+  //       .then((data) => {
+  //         commit('deleteRoom', data.data.id)
+  //         resolve(data.data)
+  //       })
+  //       .catch((error) => {
+  //         if (error.response?.data) {
+  //           reject(error.response.data)
+  //         }
+  //         reject(error)
+  //       })
+  //   })
+  // },
+}
 
 export const getters = {
-  roomById: (state) => (id) => state.rooms.find(room => room.streamID === id)
+  allRooms: (state) => state.rooms,
+  roomById: (state) => (id) => {
+    const room = Object.values(state.rooms ?? {}).find(room => room.streamId === id)
+    return room
+  }
 }

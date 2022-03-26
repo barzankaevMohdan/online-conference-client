@@ -5,7 +5,7 @@
   )
     UiButton.player__join-btn(
       v-if="!clients.length && !miniHandler && !streamStarted"
-      @click="joinToRoom"
+      @click="createRoom"
       :isLoading="isLoading"
     ) Начать стрим
     UiButton.player__join-btn(
@@ -36,7 +36,7 @@ import socketIO from "~/mixins/socketIO";
 import {ACTIONS} from "~/helpers/socketActions.js";
 import actualStream from "~/mixins/actualStream"
 
-const id = Date.now()
+const id = 45
 
 export default {
   name: 'Player',
@@ -56,8 +56,8 @@ export default {
     this.socket.on(ACTIONS.ADD_ROOM, this.handleRoom)
     this.socket.on(ACTIONS.ADD_PEER, this.handleNewPeer)
     this.socket.on(ACTIONS.SESSION_DESCRIPTION, this.setRemoteMedia)
-    this.socket.on(ACTIONS.ICE_CANDIDATE, ({peerID, iceCandidate}) => {
-      this.peerConnections[peerID]?.addIceCandidate(
+    this.socket.on(ACTIONS.ICE_CANDIDATE, ({peerId, iceCandidate}) => {
+      this.peerConnections[peerId]?.addIceCandidate(
         new RTCIceCandidate(iceCandidate)
       )
     })
@@ -73,11 +73,11 @@ export default {
       return this.$store.getters['player/roomById'](this.activeStreamId)
     },
     roomId() {
-      return this.room?.roomID ?? id
+      return this.room?.id ?? id
     },
     streamStarted() {
-      return this.roomId !== id
-    }
+      return this.room ?? false
+    },
   },
   methods: {
     miniActive(data) {
@@ -86,10 +86,30 @@ export default {
     miniDisabled(data) {
       this.miniHandler = data
     },
+    async createRoom() {
+      this.isLoading = true
+      const data = {
+        roomId: this.roomId,
+        streamId: this.activeStreamId
+      }
+      await this.$store.dispatch('player/createStreamRoom', data)
+      await this.startCapture()
+        .then(() => {
+          this.socket.emit(ACTIONS.JOIN, data)
+          this.socket.emit(ACTIONS.ADD_ROOM, data)
+        })
+        .catch(e => console.error(e))
+      this.addNewClient('LOCAL_VIDEO', this.localMediaStream)
+      this.isLoading = false
+    },
     async joinToRoom() {
       this.isLoading = true
+      const data = {
+        roomId: this.roomId,
+        streamId: this.activeStreamId
+      }
       await this.startCapture()
-        .then(() => this.socket.emit(ACTIONS.JOIN, {roomID: this.roomId, streamID: this.activeStreamId}))
+        .then(() => this.socket.emit(ACTIONS.JOIN, data))
         .catch(e => console.error(e))
       this.addNewClient('LOCAL_VIDEO', this.localMediaStream)
       this.isLoading = false
@@ -110,80 +130,80 @@ export default {
         videoElement.srcObject = stream
       }, 0)
     },
-    handleRoom({roomID, streamID}) {
-      this.$store.commit('player/createRoom', {roomID, streamID})
+    handleRoom({roomId, streamId}) {
+      this.$store.commit('player/createRoom', {roomId, streamId})
     },
-    async handleNewPeer({peerID, createOffer}) {
-      if (peerID in this.peerConnections) {
-        return console.warn(`Already connected to peer ${peerID}`)
+    async handleNewPeer({peerId, createOffer}) {
+      if (peerId in this.peerConnections) {
+        return console.warn(`Already connected to peer ${peerId}`)
       }
 
-      this.peerConnections[peerID] = new RTCPeerConnection({
+      this.peerConnections[peerId] = new RTCPeerConnection({
         iceServers: freeice(),
       })
 
-      this.peerConnections[peerID].onicecandidate = event => {
+      this.peerConnections[peerId].onicecandidate = event => {
         if (event.candidate) {
           this.socket.emit(ACTIONS.RELAY_ICE, {
-            peerID,
+            peerId,
             iceCandidate: event.candidate,
           })
         }
       }
 
       let tracksNumber = 0
-      this.peerConnections[peerID].ontrack = ({streams: [remoteStream]}) => {
+      this.peerConnections[peerId].ontrack = ({streams: [remoteStream]}) => {
         tracksNumber++
 
         if (tracksNumber === 2) { // video & audio tracks received
           tracksNumber = 0
-          this.addNewClient(peerID, remoteStream)
+          this.addNewClient(peerId, remoteStream)
         }
       }
 
       this.localMediaStream?.getTracks().forEach(track => {
-        this.peerConnections[peerID].addTrack(track, this.localMediaStream)
+        this.peerConnections[peerId].addTrack(track, this.localMediaStream)
       })
 
       if (createOffer) {
-        const offer = await this.peerConnections[peerID].createOffer()
+        const offer = await this.peerConnections[peerId].createOffer()
 
-        await this.peerConnections[peerID].setLocalDescription(offer)
+        await this.peerConnections[peerId].setLocalDescription(offer)
 
         this.socket.emit(ACTIONS.RELAY_SDP, {
-          peerID,
+          peerId,
           sessionDescription: offer,
         })
       }
     },
-    async setRemoteMedia({peerID, sessionDescription: remoteDescription}) {
-      await this.peerConnections[peerID]?.setRemoteDescription(
+    async setRemoteMedia({peerId, sessionDescription: remoteDescription}) {
+      await this.peerConnections[peerId]?.setRemoteDescription(
         new RTCSessionDescription(remoteDescription)
       )
 
       if (remoteDescription.type === 'offer') {
-        const answer = await this.peerConnections[peerID].createAnswer()
+        const answer = await this.peerConnections[peerId].createAnswer()
 
-        await this.peerConnections[peerID].setLocalDescription(answer)
+        await this.peerConnections[peerId].setLocalDescription(answer)
 
         this.socket.emit(ACTIONS.RELAY_SDP, {
-          peerID,
+          peerId,
           sessionDescription: answer,
         })
       }
     },
-    handleRemovePeer({peerID}) {
-      if (this.peerConnections[peerID]) {
-        this.peerConnections[peerID].close();
+    handleRemovePeer({peerId}) {
+      if (this.peerConnections[peerId]) {
+        this.peerConnections[peerId].close();
       }
 
-      delete this.peerConnections[peerID];
-      delete this.peerMediaElements[peerID];
+      delete this.peerConnections[peerId];
+      delete this.peerMediaElements[peerId];
 
-      this.clients = this.clients.filter(c => c !== peerID)
+      this.clients = this.clients.filter(c => c !== peerId)
     },
-    handleRemoveRoom({roomID}) {
-      this.$store.commit('player/deleteRoom', roomID)
+    handleRemoveRoom({roomId}) {
+      this.$store.commit('player/deleteRoom', roomId)
     }
   }
 }
