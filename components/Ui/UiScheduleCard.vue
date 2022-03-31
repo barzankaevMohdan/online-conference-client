@@ -179,8 +179,8 @@ export default {
 
   /* Цвета */
   --zeen-schedule-card-color: var(--main-color);
-  --zeen-schedule-card-color-hold: var(--main-light);
-  --zeen-schedule-card-color-done: var(--main-light);
+  --zeen-schedule-card-color-hold: rgba(24, 24, 24, 0.9);
+  --zeen-schedule-card-color-done: rgba(24, 24, 24, 0.9);
   --zeen-schedule-card-box-shadow-color: rgba(0, 0, 0, 0.05);
 
   --zeen-schedule-card-live-color: var(--main-light);

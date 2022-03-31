@@ -27,5 +27,13 @@ export default {
   mounted() {
     this.isMounted = true
   },
+  async created() {
+    if (this.isAuth) {
+      await this.$store.dispatch('stream/allStreams')
+      await this.$store.dispatch('speech/allSpeeches')
+      await this.$store.dispatch('speaker/allSpeakers')
+      await this.$store.dispatch('player/getAllRooms')
+    }
+  },
 }
 </script>
