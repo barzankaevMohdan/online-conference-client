@@ -18,10 +18,7 @@ export default {
   },
   computed: {
     siteStatus() {
-      if (this.isAuth) {
-        return 'ConferencePage'
-      }
-      return 'RegistrationStart'
+      return this.isAuth ? 'ConferencePage' : 'RegistrationStart'
     },
     isAuth() {
       return this.$store.getters['user/isAuth']

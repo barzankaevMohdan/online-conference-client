@@ -14,12 +14,22 @@ export default {
       return this.$store.getters['user/isAuth']
     },
   },
-  beforeCreate() {
-    if (localStorage.getItem('token')) {
-      this.$store.dispatch('user/checkAuth')
+  watch: {
+    isAuth(valuse) {
+      if (valuse) {
+        this.$store.dispatch('stream/allStreams')
+        this.$store.dispatch('speech/allSpeeches')
+        this.$store.dispatch('speaker/allSpeakers')
+        this.$store.dispatch('player/getAllRooms')
+      }
     }
   },
-  async mounted() {
+  async beforeCreate() {
+    if (localStorage.getItem('token')) {
+      await this.$store.dispatch('user/checkAuth')
+    }
+  },
+  async created() {
     if (this.isAuth) {
       await this.$store.dispatch('stream/allStreams')
       await this.$store.dispatch('speech/allSpeeches')

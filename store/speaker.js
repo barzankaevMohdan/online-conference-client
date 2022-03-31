@@ -11,6 +11,9 @@ export const mutations = {
       return accumulator
     }, {})
   },
+  createSpeaker(state, speaker) {
+    state.speakers[speaker.id] = speaker
+  },
 }
 
 export const actions = {
@@ -19,7 +22,7 @@ export const actions = {
       api
         .createSpeaker(speakerData.login, speakerData.companyName, speakerData.name, speakerData.position, speakerData.about, speakerData.speechId)
         .then((data) => {
-          commit('update', data.data)
+          commit('createSpeaker', data.data)
           resolve(data.data)
         })
         .catch((error) => {

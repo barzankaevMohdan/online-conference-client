@@ -1,11 +1,11 @@
-import axios from "axios";
+// import axios from "axios";
 import api from '../services/AuthService'
-import config from "~/config";
+// import config from "~/config";
 
 export const state = () => ({
   user: {},
   isServer: true,
-  token: localStorage.getItem('token'),
+  token: localStorage.getItem('refreshToken'), // change to token
   isLoading: false,
 })
 
@@ -32,6 +32,7 @@ export const actions = {
         .registration(userData.email, userData.password, userData.name)
         .then((data) => {
           localStorage.setItem('token', data.data.accessToken)
+          localStorage.setItem('refreshToken', data.data.refreshToken) // delete
           commit('update', data.data)
           resolve(data.data)
         })
@@ -49,6 +50,7 @@ export const actions = {
         .login(userData.login, userData.password)
         .then((data) => {
           localStorage.setItem('token', data.data.accessToken)
+          localStorage.setItem('refreshToken', data.data.refreshToken) // delete
           commit('update', data.data)
           resolve(data.data)
         })
@@ -65,14 +67,32 @@ export const actions = {
     localStorage.removeItem('token')
     commit('clear')
   },
-  async checkAuth({commit, rootGetters}) {
-    try {
-      const data = await axios.get(`${config.BASE_URL}/user/refresh`, {withCredentials: true})
-      localStorage.setItem('token', data.data.accessToken)
-      commit('update', data.data)
-    } catch (e) {
-      console.log(e.response?.data?.message)
-    }
+  checkAuth({commit, state}) {
+    // change to  cookie
+    return new Promise((resolve, reject) => {
+      api
+        .refresh(state.token)
+        .then((data) => {
+          localStorage.setItem('token', data.data.accessToken)
+          localStorage.setItem('refreshToken', data.data.refreshToken) // delete
+          commit('update', data.data)
+          resolve(data.data)
+        })
+        .catch((error) => {
+          if (error.response.data) {
+            reject(error.response.data)
+          }
+          reject(error)
+        })
+    })
+    // try {
+    //   const data = await axios.get(`${config.BASE_URL}/user/refresh`, {withCredentials: true})
+    //   localStorage.setItem('token', data.data.accessToken)
+    //   localStorage.setItem('refreshToken', data.data.refreshToken)
+    //   commit('update', data.data)
+    // } catch (e) {
+    //   console.log(e.response?.data?.message)
+    // }
   }
 }
 
