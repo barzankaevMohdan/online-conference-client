@@ -17,6 +17,7 @@
         data-zeen-over="mini"
       >
         <UiActionIcon
+        v-if="mini && !icon"
           :class="['zeen-over__button', {
             'zeen-over__button_left': buttonLeft,
           }]"
