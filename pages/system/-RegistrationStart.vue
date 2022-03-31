@@ -50,7 +50,8 @@ export default {
     }
 
     @include phones() {
-      min-height: 200px;
+      margin-top: 81px;
+      min-height: 300px;
     }
   }
 
