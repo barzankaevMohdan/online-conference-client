@@ -69,9 +69,10 @@ export const actions = {
   },
   checkAuth({commit, state}) {
     // change to  cookie
+    const refreshToken = localStorage.getItem('refreshToken')
     return new Promise((resolve, reject) => {
       api
-        .refresh(state.token)
+        .refresh(refreshToken)
         .then((data) => {
           localStorage.setItem('token', data.data.accessToken)
           localStorage.setItem('refreshToken', data.data.refreshToken) // delete
