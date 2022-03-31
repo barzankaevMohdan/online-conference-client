@@ -9,11 +9,11 @@ export default class AuthService {
     return await $api.post('/user/registration', {email, password, name})
   }
 
-  static async logout() {
-    return await $api.post('/user/logout')
+  static async logout(refreshToken) {
+    return await $api.post('/user/logout', {refreshToken}) // change to $api.post('/user/logout') get
   }
 
   static async refresh(refreshToken) {
-    return await $api.post('/user/refresh', {refreshToken})
+    return await $api.post('/user/refresh', {refreshToken}) // change to $api.post('/user/refresh') get
   }
 }

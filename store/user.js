@@ -63,8 +63,10 @@ export const actions = {
     })
   },
   async logOut({commit, rootGetters}) {
-    await api.logout()
+    const refreshToken = localStorage.getItem('refreshToken')
+    await api.logout(refreshToken)
     localStorage.removeItem('token')
+    localStorage.removeItem('refreshToken')
     commit('clear')
   },
   checkAuth({commit, state}) {
@@ -76,6 +78,7 @@ export const actions = {
         .then((data) => {
           localStorage.setItem('token', data.data.accessToken)
           localStorage.setItem('refreshToken', data.data.refreshToken) // delete
+          console.log(data.data)
           commit('update', data.data)
           resolve(data.data)
         })
