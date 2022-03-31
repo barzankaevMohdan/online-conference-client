@@ -185,8 +185,8 @@ export default {
 
   --zeen-schedule-card-live-color: var(--main-light);
   --zeen-schedule-card-text-color: var(--main-light);
-  --zeen-schedule-card-text-color-hold: var(--main-text-color);
-  --zeen-schedule-card-text-color-done: var(--dark-1);
+  --zeen-schedule-card-text-color-hold: var(--main-light);
+  --zeen-schedule-card-text-color-done: var(--main-light);
 
   --zeen-schedule-card-live-img-color: var(--main-danger-color);
   --zeen-schedule-card-button-color: var(--main-light);

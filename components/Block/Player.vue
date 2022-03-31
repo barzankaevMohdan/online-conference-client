@@ -151,14 +151,15 @@ export default {
         }
       }
 
-      let tracksNumber = 0
+      // let tracksNumber = 0
       this.peerConnections[peerId].ontrack = ({streams: [remoteStream]}) => {
-        tracksNumber++
+        // tracksNumber++
+        this.addNewClient(peerId, remoteStream)
 
-        if (tracksNumber === 2) { // video & audio tracks received
-          tracksNumber = 0
-          this.addNewClient(peerId, remoteStream)
-        }
+        // if (tracksNumber === 2) { // video & audio tracks received
+        //   tracksNumber = 0
+        //   this.addNewClient(peerId, remoteStream)
+        // }
       }
 
       this.localMediaStream?.getTracks().forEach(track => {
