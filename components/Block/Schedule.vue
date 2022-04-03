@@ -117,7 +117,7 @@ export default {
     return {
       slider: null,
       customTranslate: 0,
-      customWidth: 0,
+      diffBetweenSliderAndSch: 0,
       nextDisabled: false,
       prevDisabled: false,
       modalSpeech: null,
@@ -293,13 +293,15 @@ export default {
           this.customScroll()
         },
         touchEnd: () => {
-          this.nextDisabled = this.slider.translate - 1 <= -this.customWidth
-          this.prevDisabled = this.slider.translate >= 0
+          this.prevOrNextDisabled()
         },
+        resize: () => {
+          this.getDiffBetweenSliderAndSch()
+          this.coordsToHallFunc()
+        }
       },
     })
     this.updateSlider()
-    window.addEventListener('resize', this.coordsToHallFunc)
     this.date = getCurrentTime(this.timeFormat)
     this.intervalToCurrentTime = setInterval(() => {
       this.date = getCurrentTime(this.timeFormat)
@@ -307,7 +309,6 @@ export default {
   },
   destroyed() {
     this.slider?.destroy(true, true)
-    window.removeEventListener('resize', this.coordsToHallFunc)
     if (this.intervalToCurrentTime) clearInterval(this.intervalToCurrentTime)
   },
   methods: {
@@ -333,6 +334,7 @@ export default {
     async updateSlider() {
       await this.$nextTick()
       this.slider.update()
+      this.getDiffBetweenSliderAndSch()
       this.getTimeCoordsAndTime()
       this.getColWidthAndTimeArray()
       this.coordsToHallFunc()
@@ -340,20 +342,20 @@ export default {
     },
     // Кастом для слайдера кнопка next
     next() {
-      this.customWidth = this.slider.width - this.$refs.schWidth.clientWidth
       this.slider.translate = this.slider.translate - this.$refs.schWidth.clientWidth
       this.slider.translateTo(this.slider.translate, 250, false)
-      this.nextDisabled = this.slider.translate - 1 <= -this.customWidth
-      this.prevDisabled = this.slider.translate >= 0
+      this.prevOrNextDisabled()
     },
     // Кастом для слайдера кнопка prev
     prev() {
-      this.customWidth = this.slider.width - this.$refs.schWidth.clientWidth
       this.slider.translate = this.slider.translate + this.$refs.schWidth.clientWidth
       this.slider.translateTo(this.slider.translate, 250, false)
-      this.nextDisabled = this.slider.translate - 1 <= -this.customWidth
-      this.prevDisabled = this.slider.translate >= 0
+      this.prevOrNextDisabled()
     },
+    prevOrNextDisabled() {
+      this.nextDisabled = this.slider.translate <= -this.diffBetweenSliderAndSch
+      this.prevDisabled = this.slider.translate >= 0
+    },                                                                                
     // Скролл до онлайн карточки
     async scrollToOnline() {
       await this.$nextTick()
@@ -362,16 +364,21 @@ export default {
         this.slider.translateTo(-firstOnlineCardPosition + this.marginBeforeOnline, 250, false)
       }
     },
+    // Разница между шириной слайдера и секции
+    getDiffBetweenSliderAndSch() {
+      if (!this.slider || !this.$refs.schWidth) return
+      const sliderWidth = this.slider.width
+      const schWidth = this.$refs.schWidth.clientWidth
+      this.diffBetweenSliderAndSch = sliderWidth > schWidth ? sliderWidth - schWidth : 0
+    },
     // Кастомный скролл для слайдера
     customScroll() {
-      if (this.slider && this.$refs.schWidth) {
-        this.customWidth = this.slider.width - this.$refs.schWidth.clientWidth
-        if (this.slider.translate <= -this.customWidth) {
-          this.slider.translate = -this.customWidth + 1
-          this.customTranslate = -this.customWidth + 1
-        } else {
-          this.customTranslate = this.slider.translate
-        }
+      if (!this.slider) return
+      if (this.slider.translate <= -this.diffBetweenSliderAndSch) {
+        this.slider.translate = -this.diffBetweenSliderAndSch
+        this.customTranslate = -this.diffBetweenSliderAndSch
+      } else {
+        this.customTranslate = this.slider.translate
       }
     },
     cardClick(data) {
@@ -419,7 +426,6 @@ export default {
 :root {
   /* Размеры */
   --zeen-schedule-header-margin-bottom: 32px;
-  --zeen-schedule-container-max-width: 1366px;
   --zeen-schedule-arrows-width: 80px;
   --zeen-schedule-col-padding-bottom: 36px;
   --zeen-schedule-time-text-size: var(--main-large-size);
@@ -496,7 +502,7 @@ export default {
   &__container {
     position: relative;
     width: 100%;
-    max-width: var(--zeen-schedule-container-max-width);
+    max-width: fit-content;
     margin-left: auto;
     margin-right: auto;
     overflow: hidden;
@@ -505,8 +511,6 @@ export default {
   &__main {
     box-sizing: border-box;
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
   }
 
   &__col {
