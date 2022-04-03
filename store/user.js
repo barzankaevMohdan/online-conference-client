@@ -78,7 +78,6 @@ export const actions = {
         .then((data) => {
           localStorage.setItem('token', data.data.accessToken)
           localStorage.setItem('refreshToken', data.data.refreshToken) // delete
-          console.log(data.data)
           commit('update', data.data)
           resolve(data.data)
         })

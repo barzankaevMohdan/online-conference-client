@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import getUserMedia from 'getusermedia'
 import freeice from "freeice";
 import socketIO from "~/mixins/socketIO";
 import {ACTIONS} from "~/helpers/socketActions.js";
@@ -99,7 +100,6 @@ export default {
           this.socket.emit(ACTIONS.ADD_ROOM, data)
         })
         .catch(e => console.error(e))
-      this.addNewClient('LOCAL_VIDEO', this.localMediaStream)
       this.isLoading = false
     },
     async joinToRoom() {
@@ -111,13 +111,16 @@ export default {
       await this.startCapture()
         .then(() => this.socket.emit(ACTIONS.JOIN, data))
         .catch(e => console.error(e))
-      this.addNewClient('LOCAL_VIDEO', this.localMediaStream)
       this.isLoading = false
     },
     async startCapture() {
-      this.localMediaStream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true,
+      this.localMediaStream = await getUserMedia({video: true, audio: true}, (err, stream) => {
+        if (err) {
+          console.error(err)
+        } else {
+          this.localMediaStream = stream
+          this.addNewClient('LOCAL_VIDEO', stream)
+        }
       })
     },
     addNewClient(newClient, stream) {
@@ -204,7 +207,8 @@ export default {
       this.clients = this.clients.filter(c => c !== peerId)
     },
     handleRemoveRoom({roomId}) {
-      this.$store.commit('player/deleteRoom', roomId)
+      console.log(roomId);
+      // this.$store.commit('player/deleteRoom', roomId)
     }
   }
 }
