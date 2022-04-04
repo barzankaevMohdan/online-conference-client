@@ -40,16 +40,15 @@
             .swiper-wrapper(:style='{transform: `translateX(${customTranslate}px)`}')
               .swiper-slide
                 .zeen-schedule__wrapper
+                  .zeen-schedule__online-line(
+                    :style='onlineLeftSpacing'
+                    v-if='onlineLeftSpacing'
+                  )
+                      span.zeen-schedule__online-circle
+                        span.zeen-schedule__online-img
+                          slot(name='online-line-icon')
+                            SvgIcon(name="online-icon")
                   ul.zeen-schedule__col(ref='timeRow')
-                    span.zeen-schedule__online(
-                      :style='onlineLeftSpacing'
-                      v-if='onlineLeftSpacing'
-                    )
-                      span.zeen-schedule__online-line
-                        span.zeen-schedule__online-circle
-                          span.zeen-schedule__online-img
-                            slot(name='online-line-icon')
-                              SvgIcon(name="online-icon")
                     li.zeen-schedule__time(
                       v-for='(time, idx) in timeArray'
                       :key='idx'
@@ -426,6 +425,7 @@ export default {
 :root {
   /* Размеры */
   --zeen-schedule-header-margin-bottom: 32px;
+  --zeen-schedule-container-max-width: 100%;
   --zeen-schedule-arrows-width: 80px;
   --zeen-schedule-col-padding-bottom: 36px;
   --zeen-schedule-time-text-size: var(--main-large-size);
@@ -478,6 +478,8 @@ export default {
 
 .zeen-schedule {
   background: var(--zeen-schedule-background);
+  overflow: hidden;
+
   &__top {
     display: flex;
     justify-content: space-between;
@@ -502,10 +504,9 @@ export default {
   &__container {
     position: relative;
     width: 100%;
-    max-width: fit-content;
+    max-width: var(--zeen-schedule-container-max-width);
     margin-left: auto;
     margin-right: auto;
-    overflow: hidden;
   }
 
   &__main {
@@ -586,10 +587,16 @@ export default {
   }
 
   &__online-line {
-    position: relative;
+    position: absolute;
+    top: 32px;
+    left: 50px;
     background: var(--zeen-schedule-online-line);
     width: 2px;
-    height: var(--zeen-schedule-col-line-size);
+    height: 100%;
+   
+    @include phones {
+      top: 22px;
+    }
   }
 
   &__online-circle {
