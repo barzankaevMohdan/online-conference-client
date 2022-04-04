@@ -5,6 +5,10 @@ export default class StreamService {
     return await $api.post('/speeches', {title, info, time_begin: timeBegin, time_end: timeEnd, status, streamId})
   }
 
+  static async deleteSpeech(id) {
+    return await $api.delete(`/speeches/${id}`)
+  }
+
   static async allSpeeches() {
     return await $api.get('/speeches')
   }

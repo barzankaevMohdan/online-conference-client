@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import ChatRoomCreateForm from '../Admin/ChatRoomCreateForm.vue'
+import ChatRoomCreateForm from '../../Admin/ChatRoomCreateForm.vue'
 
 export default {
   name: 'CreateChatRoomModal',

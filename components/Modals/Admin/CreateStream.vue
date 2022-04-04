@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import StreamCreateForm from '../Admin/StreamCreateForm.vue'
+import StreamCreateForm from '../../Admin/StreamCreateForm.vue'
 
 export default {
   name: 'CreateStreamModal',

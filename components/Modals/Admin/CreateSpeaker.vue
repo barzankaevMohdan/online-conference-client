@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import SpeakerCreateForm from '../Admin/SpeakerCreateForm.vue'
+import SpeakerCreateForm from '../../Admin/SpeakerCreateForm.vue'
 
 export default {
   name: 'CreateSpeakerModal',

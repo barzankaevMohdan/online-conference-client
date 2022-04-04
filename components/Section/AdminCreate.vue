@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'StreamCreate',
+  name: 'AdminCreate',
   methods: {
     openModal(name) {
       this.$vfm.show(name)

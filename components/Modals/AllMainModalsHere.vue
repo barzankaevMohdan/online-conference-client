@@ -1,37 +1,20 @@
 <template lang="pug">
   div(ref='modalRoot')
-    AuthenticateModal
-    ErrorLoginExistModal
-    ErrorUserNotFound
-    CreateSpeechModal
-    CreateStreamModal
-    CreateSpeakerModal
-    CreateChatRoomModal
-    NowOnlineModal
+    ModalsAuthenticate
+    ModalsErrorLoginExist
+    ModalsErrorUserNotFound
+    ModalsNowOnline
+    ModalsAdminCreateSpeech
+    ModalsAdminCreateStream
+    ModalsAdminCreateSpeaker
+    ModalsAdminCreateChatRoom
+    ModalsAdminEditSpeech
+    ModalsAdminEditSpeaker
 </template>
 
 <script>
-import AuthenticateModal from './AuthenticateModal'
-import ErrorLoginExistModal from './ErrorLoginExistModal'
-import ErrorUserNotFound from './ErrorUserNotFound'
-import CreateSpeechModal from './CreateSpeechModal'
-import CreateStreamModal from './CreateStreamModal'
-import CreateSpeakerModal from './CreateSpeakerModal'
-import NowOnlineModal from './NowOnlineModal'
-import CreateChatRoomModal from './CreateChatRoomModal'
-
 export default {
   name: 'AllMainModalsHere',
-  components: {
-    AuthenticateModal,
-    ErrorLoginExistModal,
-    ErrorUserNotFound,
-    CreateSpeechModal,
-    CreateStreamModal,
-    CreateSpeakerModal,
-    NowOnlineModal,
-    CreateChatRoomModal
-  },
   data() {
     return {
       mountedKey: false,

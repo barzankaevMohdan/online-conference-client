@@ -6,6 +6,7 @@
     @cardButtonClick="cardButtonClick"
     @hallClick="hallClick"
     @watchSpeech="watchSpeechModal"
+    @edit="edit"
   )
     template(#title)
       UiHeadline(tag="h2") Программа
@@ -25,6 +26,7 @@ export default {
           online: true,
           add: true,
           delete: true,
+          edit: false,
         },
       },
     }
@@ -41,6 +43,11 @@ export default {
       // this.watchSpeech(data.speech)
       this.$vfm.hide('ZeenSchedule')
     },
+    edit(data) {
+      console.log(data)
+      this.$vfm.hide('ZeenSchedule')
+      this.$vfm.show('edit-speech', data)
+    }
   },
 }
 </script>

@@ -20,8 +20,10 @@
       type="time"
       placeholder="timeEnd"
     )
-    UiInput.auth-form__field(
-      v-model.trim='data.status'
+    UiSelect.auth-form__field(
+      v-model='status'
+      :searchable="false"
+      :options="statuses"
       placeholder="status"
     )
     UiSelect.auth-form__field.select(
@@ -47,6 +49,7 @@ export default {
   data() {
     return {
       streamId: null,
+      status: null,
     }
   },
   computed: {
@@ -58,13 +61,30 @@ export default {
         }
       })
       return streams
+    },
+    statuses() {
+      return [
+        {
+          label: 'online',
+          value: 'online'
+        },
+        {
+          label: 'hold',
+          value: 'hold'
+        },
+        {
+          label: 'done',
+          value: 'done'
+        },
+      ]
     }
   },
   methods: {
     async componentHandler() {
       const data = {
         ...this.data,
-        streamId: this.streamId.value
+        streamId: this.streamId.value,
+        status: this.status.value
       }
       await this.$store.dispatch('speech/createSpeech', data)
       this.isLoading = false

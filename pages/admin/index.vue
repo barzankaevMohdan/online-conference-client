@@ -11,7 +11,7 @@
 <script>
 
 export default {
-  name: 'index',
+  name: 'Admin',
   head() {
     return {
       title: 'Панель Админа',

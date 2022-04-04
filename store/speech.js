@@ -32,6 +32,22 @@ export const actions = {
         })
     })
   },
+  deleteSpeech({commit, rootGetters}, id) {
+    return new Promise((resolve, reject) => {
+      api
+        .deleteSpeech(id)
+        .then((data) => {
+          console.log(data.data);
+          resolve(data.data)
+        })
+        .catch((error) => {
+          if (error.response?.data) {
+            reject(error.response.data)
+          }
+          reject(error)
+        })
+    })
+  },
   allSpeeches({commit}) {
     return new Promise((resolve, reject) => {
       api

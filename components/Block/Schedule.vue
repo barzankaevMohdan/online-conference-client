@@ -8,6 +8,7 @@
       @watchSpeech='watchSpeech'
       @addToPersonalSchedule='addToPersonalSchedule'
       @removeFromPersonalSchedule='removeFromPersonalSchedule'
+      @edit='edit'
     )
     LayoutsContainer
       .zeen-schedule__top
@@ -401,6 +402,9 @@ export default {
     },
     watchSpeech(data) {
       this.$emit('watchSpeech', data)
+    },
+    edit(data) {
+      this.$emit('edit', data)
     },
     addToPersonalSchedule(data) {
       this.$emit('addToPersonalSchedule', data)

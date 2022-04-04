@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import SpeechCreateForm from '../Admin/SpeechCreateForm.vue'
+import SpeechCreateForm from '../../Admin/SpeechCreateForm.vue'
 
 export default {
   name: 'CreateSpeechModal',
