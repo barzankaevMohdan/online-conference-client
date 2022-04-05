@@ -1,12 +1,49 @@
 <template lang="pug">
-  UiModal.speech__modal(
+  UiModal.speacer__modal(
     name="edit-speaker"
     @beforeOpen="beforeOpen"
   )
-    .speech__speakers
-      .speech__speakers-list
-        .speech__speakers-item
-        UiSpeakerItem(:speaker='speaker')
+    .speaker__content
+      UiAvatar.speaker__picture(
+        :userName='speaker.name'
+        :src='speaker.picture'
+        :size='100'
+      )
+      UiInput.speaker__field(
+        v-model='speaker.name'
+        placeholder="name"
+      )
+      UiInput.speaker__field(
+        v-model='speaker.login'
+        placeholder="login"
+      )
+      UiInput.speaker__field(
+        v-model='speaker.position'
+        placeholder="position"
+      )
+      UiInput.speaker__field(
+        v-model='speaker.about'
+        placeholder="about"
+      )
+      UiInput.speaker__field(
+        v-model='speaker.company_name'
+        placeholder="company name"
+      )
+      UiSelect.speaker__field(
+        v-model='speechId'
+        :value='speeches'
+        placeholder="speech"
+        :searchable="false"
+        :options="speeches"
+      )
+      UiButton.speaker__field(
+        :isLoading='isLoading'
+        @click="updateSpeaker"
+      ) Обновить
+      UiButton.speaker__field(
+        :isLoading='isLoading'
+        @click="deleteSpeaker"
+      ) Удалить
 </template>
 
 <script>
@@ -15,17 +52,41 @@ export default {
   name: 'EditSpeaker',
   data() {
     return {
-      speaker: {
-        name: null,
-        about: null,
-        post: null,
-      },
+      speaker: {},
+      speechId: null,
+      isLoading: false,
+    }
+  },
+  computed: {
+    speeches() {
+      const speeches = this.$store.getters['speech/allSpeeches'].map((speech) => {
+        return {
+          label: speech.title,
+          value: speech.id
+        }
+      })
+      return speeches
     }
   },
   methods: {
+    async updateSpeaker() {
+      this.isLoading = true
+      const data = {
+        ...this.speaker,
+        speechId: this.speechId.value
+      }
+      await this.$store.dispatch('speaker/updateSpeaker', data)
+      this.isLoading = false
+    },
+    async deleteSpeaker() {
+      this.isLoading = true
+      await this.$store.dispatch('speaker/deleteSpeaker', this.speaker.id)
+      this.isLoading = false
+    },
     beforeOpen(event) {
-      const speaker = JSON.stringify(event.ref.params) !== '{}' ? event.ref.params || '' : ''
+      const speaker = JSON.parse(JSON.stringify(event.ref.params))
       this.speaker = speaker
+      this.speechId = this.speeches.find(speech => speech.value === speaker.speechId)
     },
   },
 }
@@ -34,96 +95,30 @@ export default {
 <style lang="scss" scoped>
 @import '~/styles/mixins.scss';
 
-.speech {
-  &__modal {
-    --modal-padding-top: var(--zeen-speech-modal-padding-top);
-    --modal-padding-horizon: var(--zeen-speech-modal-padding-horizon);
-    --modal-padding-bottom: var(--zeen-speech-modal-padding-bottom);
-    --modal-description-margin-vertical: var(--zeen-speech-modal-margin-vertical);
-  }
+.speaker {
 
-  &__title {
-    font-weight: var(--zeen-speech-modal-title-weight);
-    font-size: var(--zeen-speech-modal-title-size);
-    line-height: var(--zeen-speech-modal-title-line-height);
-  }
-
-  &__info {
+  &__content {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    margin-top: var(--zeen-speech-modal-info-margin-top);
   }
 
-  &__time {
-    font-weight: var(--zeen-speech-modal-time-weight);
-    font-size: var(--zeen-speech-modal-time-size);
-    line-height: var(--zeen-speech-modal-time-line-height);
+  &__picture {
+    --picture-border-radius: 100px;
+    max-width: 100%;
+    max-height: 100px;
   }
 
-  &__dot {
-    margin-left: var(--zeen-speech-modal-dot-margin-horizon);
-    margin-right: var(--zeen-speech-modal-dot-margin-horizon);
-    width: var(--zeen-speech-modal-dot-size);
-    height: var(--zeen-speech-modal-dot-size);
-    background: var(--zeen-speech-modal-status-color-hold);
-    border-radius: var(--zeen-speech-modal-dot-radius);
-  }
-
-  &__status {
-    font-weight: var(--zeen-speech-modal-time-weight);
-    font-size: var(--zeen-speech-modal-time-size);
-    line-height: var(--zeen-speech-modal-time-line-height);
-    color: var(--zeen-speech-modal-status-color-done);
-
-    &_online {
-      color: var(--zeen-speech-modal-status-color-online);
-    }
-    &_done {
-      color: var(--zeen-speech-modal-status-color-done);
-    }
-    &_hold {
-      color: var(--zeen-speech-modal-status-color-hold);
-    }
-  }
-
-  &__action {
-    margin-top: var(--zeen-speech-modal-action-margin-top);
-  }
-
-  &__btn {
+  &__field {
     width: 100%;
-    margin-bottom: 20px;
-    
+    margin-top: 20px;
+
     &:last-child {
-      margin-bottom: 0;
+      --button-main-color: var(--main-danger-color);
+      --main-hover-color: var(--main-danger-color);
+      --main-active-color: var(--main-danger-color);
     }
-  }
-
-  &__speakers {
-    margin-top: var(--zeen-speech-modal-speakers-margin-top);
-  }
-
-  &__speakers-title {
-    color: var(--zeen-speech-modal-speakers-color);
-    margin-bottom: var(--zeen-speech-modal-speakers-margin-bottom);
-    font-weight: var(--zeen-speech-modal-time-weight);
-    font-size: var(--zeen-speech-modal-time-size);
-    line-height: var(--zeen-speech-modal-time-line-height);
-  }
-
-  &__speakers-item {
-    display: flex;
-    justify-content: space-between;
-    padding: var(--zeen-speech-modal-speakers-item-padding) 0;
-    --speaker-item-post-color: var(--zeen-speach-speaker-color);
-  }
-
-  &__speakers-btn {
-    --button-padding-horizontal: 15px;
-    --button-padding-vertical: 10px;
-    --button-font-size: 14px;
-    
-    margin-left: 15px;
   }
 }
 </style>

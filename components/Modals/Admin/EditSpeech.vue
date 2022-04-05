@@ -26,9 +26,21 @@
           :options="statuses"
           placeholder="status"
         )
-        //- span.speech__status(:class="'speech__status_' + speech.status")
-        //-   | {{statusText[speech.status]}}
       .speech__action
+        UiTextArea.speech__btn(
+          v-model='speech.info'
+          type='textArea'
+          placeholder="Info"
+          :rows='3'
+        )
+        UiButton.speech__btn(
+          :isLoading='isLoading'
+          @click="updateSpeech"
+        ) Обновить
+        UiButton.speech__btn(
+          :isLoading='isLoading'
+          @click="deleteSpeech"
+        ) Удалить
       .speech__speakers(v-if='speech.speakers && speech.speakers.length')
         .speech__speakers-title {{speakersWord}}:
         .speech__speakers-list
@@ -42,20 +54,6 @@
 export default {
   name: 'EditSpeech',
   props: {
-    userSpeechIds: {
-      type: Array,
-      default: () => [],
-    },
-    statusText: {
-      type: Object,
-      default() {
-        return {
-          online: 'Сейчас в эфире',
-          done: 'Завершено',
-          hold: 'Не началось',
-        }
-      },
-    },
     speakersText: {
       type: Object,
       default() {
@@ -65,48 +63,16 @@ export default {
         }
       },
     },
-    buttonText: {
-      type: Object,
-      default() {
-        return {
-          done: 'Смотреть запись',
-          online: 'Смотреть',
-          add: 'Добавить в расписание',
-          delete: 'Удалить из расписания',
-          edit: 'Редактировать'
-        }
-      },
-    },
-    buttonDisabled: {
-      type: Object,
-      default() {
-        return {
-          done: false,
-          online: false,
-          add: false,
-          delete: false,
-          edit: false,
-        }
-      },
-    },
   },
   data() {
     return {
       speech: null,
       hall: null,
       status: null,
+      isLoading: false,
     }
   },
   computed: {
-    dataForEmit() {
-      return {
-        speech: this.speech ?? '',
-        hall: this.hall ?? '',
-      }
-    },
-    isInSchedule() {
-      return this.userSpeechIds.includes(this.speech.id)
-    },
     speakersWord() {
       return this.speech.speakers?.length > 1 ? this.speakersText.speakers : this.speakersText.speaker
     },
@@ -128,26 +94,29 @@ export default {
     }
   },
   methods: {
+    async updateSpeech() {
+      this.isLoading = true
+      const data = {
+        ...this.speech,
+        status: this.status.value
+      }
+      await this.$store.dispatch('speech/updateSpeech', data)
+      this.isLoading = false
+    },
+    async deleteSpeech() {
+      this.isLoading = true
+      await this.$store.dispatch('speech/deleteSpeech', this.speech.id)
+      this.isLoading = false
+    },
     editSpeaker(speaker) {
       this.$vfm.hide('edit-speech')
       this.$vfm.show('edit-speaker', speaker)
     },
     beforeOpen(event) {
-      const data = JSON.stringify(event.ref.params) !== '{}' ? event.ref.params || '' : ''
+      const data = JSON.parse(JSON.stringify(event.ref.params))
       this.speech = data.speech
       this.hall = data.hall
-    },
-    edit() {
-      this.$emit('edit', this.dataForEmit)
-    },
-    watchSpeech() {
-      this.$emit('watchSpeech', this.dataForEmit)
-    },
-    addToPersonalSchedule() {
-      this.$emit('addToPersonalSchedule', this.dataForEmit)
-    },
-    removeFromPersonalSchedule() {
-      this.$emit('removeFromPersonalSchedule', this.dataForEmit)
+      this.status = this.statuses.find(status => status.value === data.speech.status)
     },
   },
 }
@@ -157,29 +126,11 @@ export default {
 @import '~/styles/mixins.scss';
 
 .speech {
-  &__modal {
-    --modal-padding-top: var(--zeen-speech-modal-padding-top);
-    --modal-padding-horizon: var(--zeen-speech-modal-padding-horizon);
-    --modal-padding-bottom: var(--zeen-speech-modal-padding-bottom);
-    --modal-description-margin-vertical: var(--zeen-speech-modal-margin-vertical);
-  }
-
-  &__title {
-    font-weight: var(--zeen-speech-modal-title-weight);
-    font-size: var(--zeen-speech-modal-title-size);
-    line-height: var(--zeen-speech-modal-title-line-height);
-  }
 
   &__info {
     display: flex;
     align-items: center;
     margin-top: var(--zeen-speech-modal-info-margin-top);
-  }
-
-  &__time {
-    font-weight: var(--zeen-speech-modal-time-weight);
-    font-size: var(--zeen-speech-modal-time-size);
-    line-height: var(--zeen-speech-modal-time-line-height);
   }
 
   &__dot {
@@ -191,23 +142,6 @@ export default {
     border-radius: var(--zeen-speech-modal-dot-radius);
   }
 
-  &__status {
-    font-weight: var(--zeen-speech-modal-time-weight);
-    font-size: var(--zeen-speech-modal-time-size);
-    line-height: var(--zeen-speech-modal-time-line-height);
-    color: var(--zeen-speech-modal-status-color-done);
-
-    &_online {
-      color: var(--zeen-speech-modal-status-color-online);
-    }
-    &_done {
-      color: var(--zeen-speech-modal-status-color-done);
-    }
-    &_hold {
-      color: var(--zeen-speech-modal-status-color-hold);
-    }
-  }
-
   &__action {
     margin-top: var(--zeen-speech-modal-action-margin-top);
   }
@@ -217,6 +151,10 @@ export default {
     margin-bottom: 20px;
     
     &:last-child {
+      --button-main-color: var(--main-danger-color);
+      --main-hover-color: var(--main-danger-color);
+      --main-active-color: var(--main-danger-color);
+
       margin-bottom: 0;
     }
   }

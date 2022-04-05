@@ -337,24 +337,4 @@ export default {
   font-size: 12px;
   line-height: 18px;
 }
-
-.speaker-list {
-  display: grid;
-  margin: 0;
-  grid-template-columns: repeat(3, max-content);
-  gap: 20px;
-  @include desktop {
-    grid-template-columns: repeat(2, max-content);
-    gap: 20px 50px;
-  }
-  @include phones {
-    grid-template-columns: repeat(1, max-content);
-    gap: 15px;
-  }
-
-  ::v-deep &__item {
-    padding: 0;
-    max-width: 250px;
-  }
-}
 </style>

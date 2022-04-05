@@ -484,7 +484,6 @@
 --faq-row-title-open-base-color: var(--main-color); /*color*/
 --faq-row-link-hover-base-color: var(--main-hover-color); /*color*/
 --faq-row-description-color: var(--gray-3); /*color*/
---text-area-background: var(--dark-1); /*color*/
 --speaker-item-name-color: var(--main-light); /*color*/
 --speaker-item-name-hover-color: var(--main-light); /*color*/
 --speaker-item-post-color: var(--main-light); /*color*/
@@ -593,7 +592,6 @@
 --radio-correct-background-color: var(--input-correct-color); /*color*/
 --radio-disabled-label-color: var(--input-disable-color); /*color*/
 --radio-disabled-background-color: var(--input-disable-color); /*color*/
---select-background-color: var(--input-background-color); /*color*/
 --select-text-color: var(--input-main-value-color); /*color*/
 --select-label-color: var(--select-text-color); /*color*/
 --select-error-color: var(--input-error-color); /*color*/
@@ -602,9 +600,7 @@
 --select-placeholder-disabled-color: var(--input-main-placeholder-color); /*color*/
 --select-option-selected-color: var(--main-light); /*color*/
 --select-option-color: var(--input-main-value-color); /*color*/
---select-options-background-color: var(--main-disable-color); /*color*/
 --select-option-selected-background-color: var(--main-color); /*color*/
---select-border-color: rgba(0, 0, 0, 0); /*color*/
 --select-label-error-color: var(--select-error-color); /*color*/
 --select-border-error-color: var(--select-error-color); /*color*/
 --select-label-correct-color: var(--select-correct-color); /*color*/

@@ -4,6 +4,7 @@
     ModalsErrorLoginExist
     ModalsErrorUserNotFound
     ModalsNowOnline
+    ModalsUserBadge
     ModalsAdminCreateSpeech
     ModalsAdminCreateStream
     ModalsAdminCreateSpeaker

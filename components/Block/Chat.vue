@@ -4,6 +4,7 @@
     :data="messages"
     @chatBlock_sendMessage="sendMessage"
     @chatBlock_loadMoreMessages="loadMoreMessages"
+    @chatBlock_message_openBadge="openBadge"
   )
 </template>
 
@@ -51,6 +52,9 @@ export default {
     await this.$store.dispatch('chat/getRoomMessages', this.activeStreamId)
   },
   methods: {
+    openBadge(message) {
+      this.$vfm.show('user-badge', message)
+    },
     async sendMessage(text) {
       const data = {
         id: this.activeStreamId,

@@ -146,7 +146,7 @@ export default {
   --select-search-border-radius: 10px;
 
   /* Цвета */
-  --select-background-color: var(--input-background-color);
+  --select-background-color: var(--text-input-background);
   --select-text-color: var(--input-main-value-color);
   --select-label-color: var(--select-text-color);
   --select-error-color: var(--input-error-color);
@@ -155,12 +155,12 @@ export default {
   --select-placeholder-disabled-color: var(--input-main-placeholder-color);
   --select-option-selected-color: var(--main-light);
   --select-option-color: var(--input-main-value-color);
-  --select-options-background-color: var(--main-disable-color);
+  --select-options-background-color: var(--dark-1);
   --select-option-selected-background-color: var(--main-color);
   --select-opened-text-color: var(--input-main-placeholder-color);
   --select-arrow-color: var(--input-main-value-color);
 
-  --select-border-color: transparent;
+  --select-border-color: var(--main-color);
   --select-label-error-color: var(--select-error-color);
   --select-border-error-color: var(--select-error-color);
 
@@ -294,7 +294,7 @@ export default {
     transition: background 0.1s ease, color 0.25s ease;
 
     color: var(--select-option-color);
-    background: #000;
+    background: var(--select-options-background-color);
   }
 
   ::v-deep .vs__dropdown-option--selected {

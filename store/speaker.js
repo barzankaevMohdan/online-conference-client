@@ -14,15 +14,50 @@ export const mutations = {
   createSpeaker(state, speaker) {
     state.speakers[speaker.id] = speaker
   },
+  delete(state, id) {
+    delete state.speakers[id]
+  }
 }
 
 export const actions = {
   createSpeaker({commit, rootGetters}, speakerData) {
     return new Promise((resolve, reject) => {
       api
-        .createSpeaker(speakerData.login, speakerData.companyName, speakerData.name, speakerData.position, speakerData.about, speakerData.speechId)
+        .createSpeaker(speakerData)
         .then((data) => {
           commit('createSpeaker', data.data)
+          resolve(data.data)
+        })
+        .catch((error) => {
+          if (error.response?.data) {
+            reject(error.response.data)
+          }
+          reject(error)
+        })
+    })
+  },
+  updateSpeaker({commit, rootGetters}, speakerData) {
+    return new Promise((resolve, reject) => {
+      api
+        .updateSpeaker(speakerData)
+        .then((data) => {
+          console.log(data.data);
+          resolve(data.data)
+        })
+        .catch((error) => {
+          if (error.response?.data) {
+            reject(error.response.data)
+          }
+          reject(error)
+        })
+    })
+  },
+  deleteSpeaker({commit, rootGetters}, id) {
+    return new Promise((resolve, reject) => {
+      api
+        .deleteSpeaker(id)
+        .then((data) => {
+          commit('delete', data.data)
           resolve(data.data)
         })
         .catch((error) => {

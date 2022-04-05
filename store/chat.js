@@ -18,6 +18,9 @@ export const mutations = {
   newMessage(state, message) {
     state.messages.push(message)
   },
+  deleteMessage(state, id) {
+    state.messages = state.messages.filter(message => message.id !== id)
+  },
   clear(state) {
     // возвращаем все исходные значения
     limit = 10
@@ -31,7 +34,7 @@ export const actions = {
   sendMessage({commit, rootGetters}, message) {
     return new Promise((resolve, reject) => {
       api
-        .sendMessage(message.id, message.text, message.time, message.user)
+        .sendMessage(message)
         .then((data) => {
           resolve(data.data)
         })
@@ -66,6 +69,22 @@ export const actions = {
             count: data.data.count
           })
           resolve(data.data.rows)
+        })
+        .catch((error) => {
+          if (error.response?.data) {
+            reject(error.response.data)
+          }
+          reject(error)
+        })
+    })
+  },
+  deleteMessage({commit, rootGetters}, id) {
+    return new Promise((resolve, reject) => {
+      api
+        .deleteMessage(id)
+        .then((data) => {
+          commit('deleteMessage', id)
+          resolve(data.data)
         })
         .catch((error) => {
           if (error.response?.data) {

@@ -1,8 +1,8 @@
 <template>
-  <div class="message" :class="messageClass">
+  <div class="message" :class="messageClass" @click="openBadge">
     <div class="message__header">
       <div :class="{'message__admin--container': isAdmin}">
-        <div class="text" :class="{'message__name-user-ask': askToSpeaker}" @click="openBadge">
+        <div class="text" :class="{'message__name-user-ask': askToSpeaker}">
           <p class="message__name">
             {{ author.name }}
           </p>
@@ -99,9 +99,7 @@ export default {
   },
   methods: {
     openBadge() {
-      if (this.message.user) {
-        this.$emit('openBadge', this.message.user)
-      }
+      this.$emit('openBadge', this.message)
     },
     showTooltip() {
       this.tooltip = true
@@ -187,6 +185,7 @@ export default {
 
 .message {
   margin-top: var(--zeen-chat-lg-gap);
+  cursor: pointer;
 
   .text {
     font-size: var(--zeen-message-font-size);

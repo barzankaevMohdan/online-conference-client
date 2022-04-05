@@ -12,7 +12,7 @@ export const mutations = {
     }, {})
   },
   deleteRoom(state, roomId) {
-    state.rooms = delete state.rooms[roomId]
+    delete state.rooms[roomId]
   },
 }
 

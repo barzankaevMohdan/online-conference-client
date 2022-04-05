@@ -13,15 +13,34 @@ export const mutations = {
       return accumulator
     }, {})
   },
+  delete(state, id) {
+    delete state.speeches[id]
+  }
 }
 
 export const actions = {
   createSpeech({commit, rootGetters}, speechData) {
     return new Promise((resolve, reject) => {
       api
-        .createSpeech(speechData.title, speechData.info, speechData.timeBegin, speechData.timeEnd, speechData.status, speechData.streamId)
+        .createSpeech(speechData)
         .then((data) => {
           commit('update', data.data)
+          resolve(data.data)
+        })
+        .catch((error) => {
+          if (error.response?.data) {
+            reject(error.response.data)
+          }
+          reject(error)
+        })
+    })
+  },
+  updateSpeech({commit, rootGetters}, speechData) {
+    return new Promise((resolve, reject) => {
+      api
+        .updateSpeech(speechData)
+        .then((data) => {
+          console.log(data.data);
           resolve(data.data)
         })
         .catch((error) => {
@@ -37,7 +56,7 @@ export const actions = {
       api
         .deleteSpeech(id)
         .then((data) => {
-          console.log(data.data);
+          commit('delete', data.data)
           resolve(data.data)
         })
         .catch((error) => {

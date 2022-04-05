@@ -7,12 +7,10 @@
     :id="`speaker-item-${componentId}`"
     @click.prevent="openBadge(speaker.id)"
   >
-    <UiPicture
-      class="speaker-item__picture"
+    <UiAvatar
       :src="src"
-      alt="Img"
-      aspect-ratio="1:1"
-      :style="{'--picture-border-radius': '100px'}"
+      :userName='speaker.name'
+      :size='50'
     />
     <div class="speaker-item__text-block" v-if="!onlyAvatar">
       <div class="speaker-item__speaker-name">
@@ -73,7 +71,6 @@ export default {
   --speaker-item-name-size: var(--main-text-size, 16px);
   --speaker-item-post-size: var(--main-smallest-text, 12px);
   --speaker-item-company-size: var(--main-smallest-text, 12px);
-  --speaker-item-image-size: 50px;
 
   /* Цвета */
   --speaker-item-name-color: var(--main-light);
@@ -105,18 +102,14 @@ export default {
     }
   }
 
-  &__picture {
-    margin-right: 20px;
-    width: var(--speaker-item-image-size);
-    height: var(--speaker-item-image-size);
-
-    @include phones {
-      margin-right: 10px;
-    }
-  }
-
   &__text-block {
     overflow: hidden;
+
+    margin-left: 20px;
+
+    @include phones {
+      margin-left: 10px;
+    }
   }
 
   &__speaker-name {

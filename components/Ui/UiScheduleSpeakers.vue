@@ -64,25 +64,13 @@ export default {
   methods: {
     initSlider() {
       const config = {
-        slidesPerView: 2,
+        slidesPerView: 1.5,
         spaceBetween: 20,
         navigation: {
           prevEl: this.$refs.btnPrev,
           nextEl: this.$refs.btnNext,
         },
         breakpoints: {
-          1366: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
-          1024: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
-          768: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
           320: {
             slidesPerView: 1,
             spaceBetween: 20,
