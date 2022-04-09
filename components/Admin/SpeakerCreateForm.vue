@@ -7,7 +7,7 @@
       placeholder="login"
     )
     UiInput.auth-form__field(
-      v-model.trim='data.companyName'
+      v-model.trim='data.company_name'
       placeholder="companyName"
     )
     UiInput.auth-form__field(
@@ -37,15 +37,22 @@
 </template>
 
 <script>
+import { ACTIONS } from '~/helpers/socketActions'
+import socketIO from "~/mixins/socketIO"
 import formsFunctions from '../../mixins/formsFunctions'
 
 export default {
   name: 'SpeakerCreateForm',
-  mixins: [formsFunctions],
+  mixins: [formsFunctions, socketIO],
   data() {
     return {
       speechId: null,
     }
+  },
+  mounted() {
+    this.socket.on(ACTIONS.EDIT_SPEAKER, (data) => {
+      this.$store.commit('speaker/updateSpeaker', data)
+    })
   },
   computed: {
     speechIds() {
@@ -64,7 +71,9 @@ export default {
         ...this.data,
         speechId: this.speechId.value,
       }
-      await this.$store.dispatch('speaker/createSpeaker', data)
+      await this.$store.dispatch('speaker/createSpeaker', data).then(data => {
+        this.socket.emit(ACTIONS.EDIT_SPEAKER, data)
+      })
       this.isLoading = false
     }
   },

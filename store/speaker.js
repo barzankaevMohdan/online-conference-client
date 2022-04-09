@@ -1,21 +1,27 @@
 import api from '../services/SpeakerService'
 
 export const state = () => ({
-  speakers: [],
+  speakers: {},
 })
 
 export const mutations = {
-  update(state, speaker) {
+  getSpeakers(state, speaker) {
     state.speakers = speaker.reduce((accumulator, currentStream) => {
       accumulator[currentStream.id] = currentStream
       return accumulator
     }, {})
   },
-  createSpeaker(state, speaker) {
-    state.speakers[speaker.id] = speaker
+  updateSpeaker(state, speaker) {
+    state.speakers = {
+      ...state.speakers,
+      [speaker.id]: speaker,
+    }
   },
-  delete(state, id) {
+  deleteSpeaker(state, id) {
     delete state.speakers[id]
+    state.speakers = {
+      ...state.speakers,
+    }
   }
 }
 
@@ -25,7 +31,7 @@ export const actions = {
       api
         .createSpeaker(speakerData)
         .then((data) => {
-          commit('createSpeaker', data.data)
+          commit('updateSpeaker', data.data)
           resolve(data.data)
         })
         .catch((error) => {
@@ -41,7 +47,7 @@ export const actions = {
       api
         .updateSpeaker(speakerData)
         .then((data) => {
-          console.log(data.data);
+          commit('updateSpeaker', data.data)
           resolve(data.data)
         })
         .catch((error) => {
@@ -57,7 +63,7 @@ export const actions = {
       api
         .deleteSpeaker(id)
         .then((data) => {
-          commit('delete', data.data)
+          commit('deleteSpeaker', data.data)
           resolve(data.data)
         })
         .catch((error) => {
@@ -73,7 +79,7 @@ export const actions = {
       api
         .allSpeakers()
         .then((data) => {
-          commit('update', data.data)
+          commit('getSpeakers', data.data)
           resolve(data.data)
         })
         .catch((error) => {
@@ -88,12 +94,12 @@ export const actions = {
 
 export const getters = {
   allSpeakers: (state) => Object.values(state.speakers ?? {}),
-  bySpeechId: (state) => (id) => {
-    const speaker = Object.values(state.speakers ?? {}).filter(speaker => speaker.speechId === id)
+  bySpeechId: (state, getters) => (id) => {
+    const speaker = getters.allSpeakers.filter(speaker => speaker.speechId === id)
     return speaker
   },
-  byId: (state) => (id) => {
-    const speaker = Object.values(state.speakers ?? {}).filter(speaker => speaker.speechId === id)
+  byId: (state, getters) => (id) => {
+    const speaker = getters.allSpeakers.filter(speaker => speaker.speechId === id)
     return speaker
   }
 }

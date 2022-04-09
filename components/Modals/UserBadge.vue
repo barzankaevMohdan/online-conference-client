@@ -19,9 +19,12 @@
 </template>
 
 <script>
+import { ACTIONS } from '~/helpers/socketActions'
+import socketIO from "~/mixins/socketIO"
 
 export default {
   name: 'ModalsUserBadge',
+  mixins: [socketIO],
   data() {
     return {
       userBadge: {},
@@ -29,9 +32,16 @@ export default {
       isLoading: false,
     }
   },
+  mounted() {
+    this.socket.on(ACTIONS.DELETE_MESSAGE, (id) => {
+      console.log(ACTIONS.DELETE_MESSAGE, id)
+      this.$store.commit('chat/deleteMessage', id)
+    })
+  },
   methods: {
     async deleteMessage() {
       this.isLoading = true
+      this.socket.emit(ACTIONS.DELETE_MESSAGE, this.message.id)
       await this.$store.dispatch('chat/deleteMessage', this.message.id)
       this.isLoading = false
       this.$vfm.hide('user-badge')

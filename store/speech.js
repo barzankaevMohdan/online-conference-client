@@ -7,14 +7,23 @@ export const state = () => ({
 })
 
 export const mutations = {
-  update(state, speech) {
-    state.speeches = speech.reduce((accumulator, currentStream) => {
-      accumulator[currentStream.id] = currentStream
+  getSpeeches(state, speech) {
+    state.speeches = speech.reduce((accumulator, speech) => {
+      accumulator[speech.id] = speech
       return accumulator
     }, {})
   },
-  delete(state, id) {
+  updateSpeech(state, speech) {
+    state.speeches = {
+      ...state.speeches,
+      [speech.id]: speech,
+    }
+  },
+  deleteSpeech(state, id) {
     delete state.speeches[id]
+    state.speeches = {
+      ...state.speeches,
+    }
   }
 }
 
@@ -24,7 +33,7 @@ export const actions = {
       api
         .createSpeech(speechData)
         .then((data) => {
-          commit('update', data.data)
+          commit('updateSpeech', data.data)
           resolve(data.data)
         })
         .catch((error) => {
@@ -40,7 +49,7 @@ export const actions = {
       api
         .updateSpeech(speechData)
         .then((data) => {
-          console.log(data.data);
+          commit('updateSpeech', data.data)
           resolve(data.data)
         })
         .catch((error) => {
@@ -56,7 +65,7 @@ export const actions = {
       api
         .deleteSpeech(id)
         .then((data) => {
-          commit('delete', data.data)
+          commit('deleteSpeech', data.data)
           resolve(data.data)
         })
         .catch((error) => {
@@ -72,7 +81,7 @@ export const actions = {
       api
         .allSpeeches()
         .then((data) => {
-          commit('update', data.data)
+          commit('getSpeeches', data.data)
           resolve(data.data)
         })
         .catch((error) => {
@@ -86,9 +95,11 @@ export const actions = {
 }
 
 export const getters = {
-  allSpeeches: (state) => Object.values(state.speeches ?? {}),
-  byStreamId: (state) => (id) => {
-    const speech = Object.values(state.speeches ?? {}).filter(speech => speech.streamId === id)
+  allSpeeches(state) {
+    return Object.values(state.speeches ?? {})
+  },
+  byStreamId: (state, getters) => (id) => {
+    const speech = getters.allSpeeches.filter(speech => speech.streamId === id)
     return speech
   }
 }

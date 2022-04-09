@@ -35,7 +35,7 @@
         )
         UiButton.speech__btn(
           :isLoading='isLoading'
-          @click="updateSpeech"
+          @click="editSpeech"
         ) Обновить
         UiButton.speech__btn(
           :isLoading='isLoading'
@@ -50,9 +50,12 @@
 </template>
 
 <script>
+import { ACTIONS } from '~/helpers/socketActions'
+import socketIO from "~/mixins/socketIO"
 
 export default {
   name: 'EditSpeech',
+  mixins: [socketIO],
   props: {
     speakersText: {
       type: Object,
@@ -71,6 +74,16 @@ export default {
       status: null,
       isLoading: false,
     }
+  },
+  mounted() {
+    this.socket.on(ACTIONS.EDIT_SPEECH, (data) => {
+      console.log(ACTIONS.EDIT_SPEECH, data)
+      this.$store.commit('speech/updateSpeech', data)
+    })
+    this.socket.on(ACTIONS.DELETE_SPEECH, (id) => {
+      console.log(ACTIONS.DELETE_SPEECH, id)
+      this.$store.commit('speech/deleteSpeech', id)
+    })
   },
   computed: {
     speakersWord() {
@@ -94,19 +107,22 @@ export default {
     }
   },
   methods: {
-    async updateSpeech() {
+    async editSpeech() {
       this.isLoading = true
       const data = {
         ...this.speech,
         status: this.status.value
       }
+      this.socket.emit(ACTIONS.EDIT_SPEECH, data)
       await this.$store.dispatch('speech/updateSpeech', data)
       this.isLoading = false
     },
     async deleteSpeech() {
       this.isLoading = true
+      this.socket.emit(ACTIONS.DELETE_SPEECH, this.speech.id)
       await this.$store.dispatch('speech/deleteSpeech', this.speech.id)
       this.isLoading = false
+      this.$vfm.hide('edit-speech')
     },
     editSpeaker(speaker) {
       this.$vfm.hide('edit-speech')

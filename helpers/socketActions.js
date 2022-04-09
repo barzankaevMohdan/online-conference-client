@@ -11,4 +11,10 @@ export const ACTIONS = {
   SESSION_DESCRIPTION: 'session-description',
   JOIN_CHAT: 'join-chat',
   MESSAGE: 'message',
+  DELETE_MESSAGE: 'delete-message',
+  EDIT_SPEAKER: 'edit-speaker',
+  EDIT_SPEECH: 'edit-speech',
+  DELETE_SPEECH: 'delete-speech',
+  DELETE_SPEAKER: 'delete-speaker',
+  EDIT_STREAM: 'edit-stream',
 }

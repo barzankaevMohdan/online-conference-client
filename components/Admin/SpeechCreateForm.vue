@@ -11,12 +11,12 @@
       placeholder="info"
     )
     UiInput.auth-form__field(
-      v-model.trim='data.timeBegin'
+      v-model.trim='data.time_begin'
       type="time"
       placeholder="timeBegin"
     )
     UiInput.auth-form__field(
-      v-model.trim='data.timeEnd'
+      v-model.trim='data.time_end'
       type="time"
       placeholder="timeEnd"
     )
@@ -41,16 +41,23 @@
 </template>
 
 <script>
+import { ACTIONS } from '~/helpers/socketActions'
+import socketIO from "~/mixins/socketIO"
 import formsFunctions from '../../mixins/formsFunctions'
 
 export default {
   name: 'SpeechCreateForm',
-  mixins: [formsFunctions],
+  mixins: [formsFunctions, socketIO],
   data() {
     return {
       streamId: null,
       status: null,
     }
+  },
+  mounted() {
+    this.socket.on(ACTIONS.EDIT_SPEECH, (data) => {
+      this.$store.commit('speech/updateSpeech', data)
+    })
   },
   computed: {
     streamIds() {
@@ -86,7 +93,9 @@ export default {
         streamId: this.streamId.value,
         status: this.status.value
       }
-      await this.$store.dispatch('speech/createSpeech', data)
+      await this.$store.dispatch('speech/createSpeech', data).then(data => {
+        this.socket.emit(ACTIONS.EDIT_SPEECH, data)
+      })
       this.isLoading = false
     }
   },

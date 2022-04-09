@@ -5,21 +5,27 @@ export const state = () => ({
 })
 
 export const mutations = {
-  update(state, streams) {
+  getStreams(state, streams) {
     state.streams = streams.reduce((accumulator, currentStream) => {
       accumulator[currentStream.id] = currentStream
       return accumulator
     }, {})
   },
+  updateStream(state, stream) {
+    state.streams = {
+      ...state.streams,
+      [stream.id]: stream,
+    }
+  },
 }
 
 export const actions = {
-  createStream({commit, rootGetters}, streamData) {
+  createStream({commit}, streamData) {
     return new Promise((resolve, reject) => {
       api
         .createStream(streamData.name)
         .then((data) => {
-          commit('update', data.data)
+          commit('updateStream', data.data)
           resolve(data.data)
         })
         .catch((error) => {
@@ -35,7 +41,7 @@ export const actions = {
       api
         .getAllStreams()
         .then((data) => {
-          commit('update', data.data)
+          commit('getStreams', data.data)
           resolve(data.data)
         })
         .catch((error) => {
@@ -50,8 +56,8 @@ export const actions = {
 
 export const getters = {
   allStreams: (state) => Object.values(state.streams ?? {}),
-  bySpeechId: (state) => (id) => {
-    const stream = Object.values(state.streams ?? {}).filter(stream => stream.id === id)
+  bySpeechId: (state, getters) => (id) => {
+    const stream = getters.allStreams.filter(stream => stream.id === id)
     return stream
   }
 }

@@ -38,7 +38,7 @@
       )
       UiButton.speaker__field(
         :isLoading='isLoading'
-        @click="updateSpeaker"
+        @click="editSpeaker"
       ) Обновить
       UiButton.speaker__field(
         :isLoading='isLoading'
@@ -47,15 +47,28 @@
 </template>
 
 <script>
+import { ACTIONS } from '~/helpers/socketActions'
+import socketIO from "~/mixins/socketIO"
 
 export default {
   name: 'EditSpeaker',
+  mixins: [socketIO],
   data() {
     return {
       speaker: {},
       speechId: null,
       isLoading: false,
     }
+  },
+  mounted() {
+    this.socket.on(ACTIONS.EDIT_SPEAKER, (data) => {
+      console.log(ACTIONS.EDIT_SPEAKER, data)
+      this.$store.commit('speaker/updateSpeaker', data)
+    })
+    this.socket.on(ACTIONS.DELETE_SPEAKER, (id) => {
+      console.log(ACTIONS.DELETE_SPEAKER, id)
+      this.$store.commit('speaker/deleteSpeaker', id)
+    })
   },
   computed: {
     speeches() {
@@ -69,19 +82,22 @@ export default {
     }
   },
   methods: {
-    async updateSpeaker() {
+    async editSpeaker() {
       this.isLoading = true
       const data = {
         ...this.speaker,
         speechId: this.speechId.value
       }
+      this.socket.emit(ACTIONS.EDIT_SPEAKER, data)
       await this.$store.dispatch('speaker/updateSpeaker', data)
       this.isLoading = false
     },
     async deleteSpeaker() {
       this.isLoading = true
+      this.socket.emit(ACTIONS.DELETE_SPEAKER, this.speaker.id)
       await this.$store.dispatch('speaker/deleteSpeaker', this.speaker.id)
       this.isLoading = false
+      this.$vfm.hide('edit-speaker')
     },
     beforeOpen(event) {
       const speaker = JSON.parse(JSON.stringify(event.ref.params))

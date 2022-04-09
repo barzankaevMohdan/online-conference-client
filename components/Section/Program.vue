@@ -44,7 +44,6 @@ export default {
       this.$vfm.hide('ZeenSchedule')
     },
     edit(data) {
-      console.log(data)
       this.$vfm.hide('ZeenSchedule')
       this.$vfm.show('edit-speech', data)
     }

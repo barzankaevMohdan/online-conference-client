@@ -14,17 +14,27 @@
 </template>
 
 <script>
+import { ACTIONS } from '~/helpers/socketActions'
+import socketIO from "~/mixins/socketIO"
 import formsFunctions from '../../mixins/formsFunctions'
 
 export default {
   name: 'StreamCreateForm',
-  mixins: [formsFunctions],
+  mixins: [formsFunctions, socketIO],
+  mounted() {
+    this.socket.on(ACTIONS.EDIT_STREAM, (data) => {
+      console.log(ACTIONS.EDIT_STREAM, data);
+      this.$store.commit('stream/updateStream', data)
+    })
+  },
   methods: {
     async componentHandler() {
       const data = {
         ...this.data,
       }
-      await this.$store.dispatch('stream/createStream', data)
+      await this.$store.dispatch('stream/createStream', data).then(data => {
+        this.socket.emit(ACTIONS.EDIT_STREAM, data)
+      })
       this.isLoading = false
     }
   },
