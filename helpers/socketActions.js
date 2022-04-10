@@ -1,6 +1,5 @@
 export const ACTIONS = {
   JOIN: 'join',
-  LEAVE: 'leave',
   SHARE_ROOMS: 'share-rooms',
   ADD_PEER: 'add-peer',
   ADD_ROOM: 'add-room',
@@ -17,4 +16,5 @@ export const ACTIONS = {
   DELETE_SPEECH: 'delete-speech',
   DELETE_SPEAKER: 'delete-speaker',
   EDIT_STREAM: 'edit-stream',
+  DELETE_ROOM: 'delete-room',
 }

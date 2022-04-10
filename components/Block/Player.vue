@@ -13,6 +13,11 @@
       @click="joinToRoom"
       :isLoading="isLoading"
     ) Присоединиться
+    UiButton.player__join-btn.player__join-btn_delete(
+      v-if="!clients.length && !miniHandler && streamStarted"
+      @click="removeRoom"
+      :isLoading="isLoading"
+    ) Удалить стрим
     img.player__cover(
       :src="require('~/assets/img/demo/hold.png')"
       v-if="!clients.length"
@@ -36,8 +41,6 @@ import socketIO from "~/mixins/socketIO";
 import {ACTIONS} from "~/helpers/socketActions.js";
 import actualStream from "~/mixins/actualStream"
 
-const id = 45
-
 export default {
   name: 'Player',
   mixins: [socketIO, actualStream],
@@ -52,8 +55,11 @@ export default {
       miniHandler: false,
     }
   },
-  mounted() {
-    this.socket.on(ACTIONS.ADD_ROOM, this.handleRoom)
+  async mounted() {
+    this.socket.on(ACTIONS.ADD_ROOM, (room) => {
+      console.log(ACTIONS.ADD_ROOM, room);
+      this.$store.commit('player/updateRoom', room)
+    })
     this.socket.on(ACTIONS.ADD_PEER, this.handleNewPeer)
     this.socket.on(ACTIONS.SESSION_DESCRIPTION, this.setRemoteMedia)
     this.socket.on(ACTIONS.ICE_CANDIDATE, ({peerId, iceCandidate}) => {
@@ -62,18 +68,21 @@ export default {
       )
     })
     this.socket.on(ACTIONS.REMOVE_PEER, this.handleRemovePeer)
-    this.socket.on(ACTIONS.LEAVE, this.handleRemoveRoom)
+    this.socket.on(ACTIONS.DELETE_ROOM, (roomId) => {
+      console.log(ACTIONS.DELETE_ROOM, roomId);
+      this.$store.commit('player/deleteRoom', roomId)
+    })
+    await this.$store.dispatch('player/getAllRooms')
   },
   beforeDestroy() {
     this.localMediaStream?.getTracks().forEach(track => track.stop());
-    this.socket.emit(ACTIONS.LEAVE);
   },
   computed: {
     room() {
-      return this.$store.getters['player/roomById'](this.activeStreamId)
+      return this.$store.getters['player/roomByStreamId'](this.activeStreamId)
     },
     roomId() {
-      return this.room?.id ?? id
+      return this.room?.id
     },
     streamStarted() {
       return this.room ?? false
@@ -88,15 +97,14 @@ export default {
     },
     async createRoom() {
       this.isLoading = true
-      const data = {
-        roomId: this.roomId,
-        streamId: this.activeStreamId
-      }
-      await this.$store.dispatch('player/createStreamRoom', data)
+      let room
+      await this.$store.dispatch('player/createStreamRoom', this.activeStreamId).then((data) => {
+        room = data
+      })
       await this.startCapture()
         .then(() => {
-          this.socket.emit(ACTIONS.JOIN, data)
-          this.socket.emit(ACTIONS.ADD_ROOM, data)
+          this.socket.emit(ACTIONS.JOIN, room.id)
+          this.socket.emit(ACTIONS.ADD_ROOM, room)
         })
         .catch(e => console.error(e))
       this.addNewClient('LOCAL_VIDEO', this.localMediaStream)
@@ -104,12 +112,8 @@ export default {
     },
     async joinToRoom() {
       this.isLoading = true
-      const data = {
-        roomId: this.roomId,
-        streamId: this.activeStreamId
-      }
       await this.startCapture()
-        .then(() => this.socket.emit(ACTIONS.JOIN, data))
+        .then(() => this.socket.emit(ACTIONS.JOIN, this.roomId))
         .catch(e => console.error(e))
       this.addNewClient('LOCAL_VIDEO', this.localMediaStream)
       this.isLoading = false
@@ -129,9 +133,6 @@ export default {
         const videoElement = this.peerMediaElements[newClient]
         videoElement.srcObject = stream
       }, 100)
-    },
-    handleRoom({roomId, streamId}) {
-      this.$store.commit('player/createRoom', {roomId, streamId})
     },
     async handleNewPeer({peerId, createOffer}) {
       if (peerId in this.peerConnections) {
@@ -203,9 +204,9 @@ export default {
 
       this.clients = this.clients.filter(c => c !== peerId)
     },
-    handleRemoveRoom({roomId}) {
-      console.log(roomId);
-      // this.$store.commit('player/deleteRoom', roomId)
+    removeRoom() {
+      this.$store.dispatch('player/deleteStreamRoom', this.roomId)
+      this.socket.emit(ACTIONS.DELETE_ROOM, this.roomId)
     }
   }
 }
@@ -220,6 +221,10 @@ export default {
     top: 15px;
     left: 15px;
     z-index: 10;
+
+    &_delete {
+      top: 80px;
+    }
   }
 
   &__video-wrapper {

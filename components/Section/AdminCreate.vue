@@ -5,7 +5,6 @@
         UiButton(@click.prevent="openModal('create-stream-modal')").s-admin-create__btn Создать стрим
         UiButton(@click.prevent="openModal('create-speech-modal')").s-admin-create__btn Создать спича
         UiButton(@click.prevent="openModal('create-speaker-modal')").s-admin-create__btn Создать спикера
-        UiButton(@click.prevent="openModal('create-chat-modal')").s-admin-create__btn Создать чат
 </template>
 
 <script>

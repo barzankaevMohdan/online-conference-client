@@ -5,7 +5,6 @@
       'speaker-item_pointer': badge
     }"
     :id="`speaker-item-${componentId}`"
-    @click.prevent="openBadge(speaker.id)"
   >
     <UiAvatar
       :src="src"
@@ -46,11 +45,6 @@ export default {
       default: false
     },
     onlyAvatar: Boolean,
-  },
-  methods: {
-    openBadge(speaker) {
-      this.$vfm.show(speaker);
-    },
   },
   computed: {
     src() {

@@ -8,7 +8,6 @@
     ModalsAdminCreateSpeech
     ModalsAdminCreateStream
     ModalsAdminCreateSpeaker
-    ModalsAdminCreateChatRoom
     ModalsAdminEditSpeech
     ModalsAdminEditSpeaker
 </template>

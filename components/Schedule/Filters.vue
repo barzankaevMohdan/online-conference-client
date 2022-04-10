@@ -66,6 +66,38 @@ export default {
       slider: [0, 0],
     }
   },
+  data() {
+    return {
+      isMount: false,
+      text: '',
+      speaker: null,
+      stream: null,
+      slider: [0, 0],
+    }
+  },
+  mounted() {
+    this.isMount = true
+    this.initRang()
+  },
+  methods: {
+    initRang() {
+      const [rMin = 0, rMax = 0] = this.range
+      const [sMin, sMax] = this.slider
+      const inRange = (count) => {
+        return rMin <= count && count <= rMax
+      }
+      const newMin = inRange(sMin) ? sMin : rMin
+      const newMax = inRange(sMax) ? sMax : rMax
+
+      this.slider = [newMin, newMax]
+    },
+    reset() {
+      this.speaker = null
+      this.stream = null
+      this.slider = [0, 0]
+      this.text = ''
+    },
+  },
   computed: {
     interval() {
       return 1
@@ -93,7 +125,7 @@ export default {
     streamsData() {
       return [
         {
-          label: "Все",
+          label: 'Все',
           value: undefined,
         },
         ...this.streams.map((stream) => {
@@ -140,30 +172,6 @@ export default {
       }
     },
   },
-  mounted() {
-    this.isMount = true
-    this.initRang()
-  },
-  methods: {
-    initRang() {
-      const [rMin = 0, rMax = 0] = this.range
-      const [sMin, sMax] = this.slider
-      const inRange = (count) => {
-        return rMin <= count && count <= rMax
-      }
-      const newMin = inRange(sMin) ? sMin : rMin
-      const newMax = inRange(sMax) ? sMax : rMax
-
-      this.slider = [newMin, newMax]
-    },
-    reset() {
-      this.isMount = false
-      this.text = ''
-      this.speaker = null
-      this.stream = null
-      this.slider = [0, 0]
-    },
-  },
 }
 </script>
 
@@ -171,7 +179,7 @@ export default {
 @import '~/styles/mixins.scss';
 
 .filter {
-  --select-options-background-color: #000;
+  --select-search-padding: 20px 25px;
   --text-input-horizontal-padding: 25px;
   --select-border-radius: 5px;
   --text-input-border-radius: 5px;
@@ -179,7 +187,9 @@ export default {
   --select-arrow-color: var(--gray-2);
   --text-input-placeholder-color: var(--gray-2);
   --text-input-border-color: transparent;
+  --select-border-color: transparent;
   --text-input-background: var(--main-positive-color);
+  --select-background-color: var(--main-positive-color);
 
   background: #000;
   padding-top: 80px;
@@ -190,8 +200,6 @@ export default {
   }
 
   @include phones {
-    --text-input-text-size: 14px;
-
     padding-top: 20px;
   }
 
@@ -278,10 +286,10 @@ export default {
 }
 
 .time-filter {
-  --text-input-border-focus-color: transparent;
+  --text-input-border-base-focus-color: transparent;
   --text-input-color: var(--gray-2);
 
-  ::v-deep .zeen-text-input__input {
+  ::v-deep .text-input__input {
     text-align: center;
   }
 

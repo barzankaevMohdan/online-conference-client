@@ -9,25 +9,31 @@ import AllMainModalsHere from '../components/Modals/AllMainModalsHere.vue'
 
 export default {
   components: {AllMainModalsHere},
+  async beforeCreate() {
+    if (localStorage.getItem('refreshToken')) {
+      await this.$store.dispatch('user/checkAuth')
+    }
+  },
+  async created() {
+    if (localStorage.getItem('refreshToken')) {
+      await this.$store.dispatch('stream/allStreams')
+      await this.$store.dispatch('speech/allSpeeches')
+      await this.$store.dispatch('speaker/allSpeakers')
+    }
+  },
   computed: {
     isAuth() {
       return this.$store.getters['user/isAuth']
     },
   },
   watch: {
-    isAuth(valuse) {
-      if (valuse) {
+    isAuth(value) {
+      if (value) {
         this.$store.dispatch('stream/allStreams')
         this.$store.dispatch('speech/allSpeeches')
         this.$store.dispatch('speaker/allSpeakers')
-        this.$store.dispatch('player/getAllRooms')
       }
     }
-  },
-  async beforeCreate() {
-    if (localStorage.getItem('token')) {
-      await this.$store.dispatch('user/checkAuth')
-    }
-  },
+  }
 }
 </script>

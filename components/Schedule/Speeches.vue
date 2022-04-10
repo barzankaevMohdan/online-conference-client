@@ -24,12 +24,7 @@
                         :speechId='speech.id'
                       )
                   .stream-group__action(v-if="speech.status === 'done' || speech.status === 'online'")
-                    UiButton(
-                      @click.prevent='watchSpeech(speech)'
-                      v-if='speech.status === "done"'
-                      theme="outline"
-                    ) Смотреть
-                    template(v-else-if='speech.status === "online"')
+                    template(v-if='speech.status === "online"')
                       UiButton(
                         @click.prevent='watchSpeech(speech)'
                       ) Смотреть
@@ -57,7 +52,7 @@ export default {
   },
   methods: {
     getMinMaxDate(streamId) {
-      const speeches = this.$store.getters['speeches/byStreamId'](streamId) || []
+      const speeches = this.$store.getters['speech/byStreamId'](streamId) || []
       if (!speeches.length) {
         return
       }
