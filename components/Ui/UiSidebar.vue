@@ -33,14 +33,19 @@ export default {
 }
 </script>
 
-<style>
+<style lang='scss'>
+@import '~/styles/mixins.scss';
 :root {
   /* Размеры */
   --sidebar-width: 80%;
   --sidebar-filter-blur: 5px;
 
+  @include phones() {
+    --sidebar-width: 100%;
+  }
+
   /* Цвета */
-  --sidebar-background: #000;
+  --sidebar-background: var(--dark-2);
   --sidebar-overlay-background: var(--main-transparent);
 }
 </style>
@@ -67,9 +72,6 @@ export default {
     bottom: 0;
     overflow: auto;
     z-index: 2;
-    @include phones() {
-      width: 100%;
-    }
   }
 
   &__overlay {

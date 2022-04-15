@@ -21,7 +21,7 @@ export default {
 .not-found {
   padding-top: 80px;
   padding-bottom: 80px;
-  background: #000;
+  background: var(--dark-2);
 
   &__content {
     display: flex;

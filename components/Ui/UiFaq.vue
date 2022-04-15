@@ -44,7 +44,7 @@
 <script>
 
 export default {
-  name: 'ZeenFaqRow',
+  name: 'UiFaqRow',
   model: {
     prop: 'modelValue',
     event: 'change',
@@ -108,6 +108,9 @@ export default {
   --faq-row-margin-start: 0;
   --faq-row-max-height: max-content;
   --faq-row-collapsed-max-height: 400px;
+  --faq-row-description-padding: 0 20px 40px 60px;
+  --faq-radio-padding: 40px 50px 30px;
+  --faq-row-border-width: 1px;
 
   /* Цвета */
   --faq-row-title-color: var(--main-light);
@@ -115,8 +118,8 @@ export default {
   --faq-row-icon-base-color: var(--main-light);
   --faq-row-icon-open-base-color: var(--main-color);
   --faq-row-description-color: var(--main-light);
-  --faq-row-background: #000;
-  --faq-row-border-color: var(--main-positive-color);
+  --faq-row-background: var(--main-positive-color);
+  --faq-row-border-color: var(--dark-1);
   --faq-row-link-base-color: var(--main-hover-color);
   --faq-row-link-hover-base-color: var(--main-hover-color);
 }
@@ -165,8 +168,7 @@ export default {
     font-weight: normal;
     font-size: var(--faq-row-description-size);
     line-height: 1.5;
-    // todo подумать как можно задавать одинаковые отсупы по 2м переменным а не 3м
-    padding: 0 var(--faq-row-description-padding-right) var(--faq-row-description-padding-bottom) var(--faq-row-description-padding-left);
+    padding: var(--faq-row-description-padding);
     margin-top: var(--faq-row-description-offset-top);
     color: var(--faq-row-description-color);
     margin-block-start: var(--faq-row-margin-start);
@@ -205,7 +207,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--faq-radio-padding-vertical) var(--faq-radio-padding-horizontal);
+    padding: var(--faq-radio-padding);
     cursor: pointer;
   }
 }

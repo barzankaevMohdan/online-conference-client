@@ -10,6 +10,7 @@
     ModalsAdminCreateSpeaker
     ModalsAdminEditSpeech
     ModalsAdminEditSpeaker
+    ModalsAdminDeleteStream
 </template>
 
 <script>

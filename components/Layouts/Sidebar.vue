@@ -89,10 +89,7 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
+    margin-top: 50px;
   }
 
   &__button {

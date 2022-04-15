@@ -42,7 +42,7 @@
 <script>
 
 export default {
-  name: 'SpeechModal',
+  name: 'UiSpeechModal',
   props: {
     name: {
       type: String,
@@ -140,37 +140,37 @@ export default {
 
 :root {
   /* Размеры */
-  --zeen-speech-modal-padding-top: 60px;
-  --zeen-speech-modal-padding-horizon: 50px;
-  --zeen-speech-modal-padding-bottom: 50px;
-  --zeen-speech-modal-margin-vertical: 0;
-  --zeen-speech-modal-title-size: var(--main-large-size);
-  --zeen-speech-modal-title-weight: 700;
-  --zeen-speech-modal-title-line-height: 1.33;
-  --zeen-speech-modal-info-margin-top: 30px;
-  --zeen-speech-modal-time-size: var(--main-size);
-  --zeen-speech-modal-time-weight: 500;
-  --zeen-speech-modal-time-line-height: 1.37;
-  --zeen-speech-modal-dot-margin-horizon: 10px;
-  --zeen-speech-modal-dot-size: 4px;
-  --zeen-speech-modal-dot-radius: 50%;
-  --zeen-speech-modal-action-margin-top: 20px;
-  --zeen-speech-modal-speakers-margin-top: 30px;
-  --zeen-speech-modal-speakers-margin-bottom: 10px;
-  --zeen-speech-modal-speakers-item-padding: 10px;
+  --speech-modal-padding-top: 60px;
+  --speech-modal-padding-horizon: 50px;
+  --speech-modal-padding-bottom: 50px;
+  --speech-modal-margin-vertical: 0;
+  --speech-modal-title-size: var(--main-large-size);
+  --speech-modal-title-weight: 700;
+  --speech-modal-title-line-height: 1.33;
+  --speech-modal-info-margin-top: 30px;
+  --speech-modal-time-size: 14px;
+  --speech-modal-time-weight: 500;
+  --speech-modal-time-line-height: 1.37;
+  --speech-modal-dot-margin-horizon: 10px;
+  --speech-modal-dot-size: 4px;
+  --speech-modal-dot-radius: 50%;
+  --speech-modal-action-margin-top: 20px;
+  --speech-modal-speakers-margin-top: 30px;
+  --speech-modal-speakers-margin-bottom: 10px;
+  --speech-modal-speakers-item-padding: 10px;
 
   @include phones {
-    --zeen-speech-modal-padding-top: 50px;
-    --zeen-speech-modal-padding-horizon: 30px;
-    --zeen-speech-modal-padding-bottom: 40px;
+    --speech-modal-padding-top: 50px;
+    --speech-modal-padding-horizon: 30px;
+    --speech-modal-padding-bottom: 40px;
   }
 
   /* Цвета */
-  --zeen-speech-modal-status-color-hold: var(--dark-1);
-  --zeen-speech-modal-status-color-done: var(--gray-4);
-  --zeen-speech-modal-status-color-online: var(--main-danger-color);
-  --zeen-speech-modal-speakers-color: var(--gray-4);
-  --zeen-speach-speaker-color: var(--gray-4);
+  --speech-modal-status-color-hold: var(--dark-1);
+  --speech-modal-status-color-done: var(--gray-4);
+  --speech-modal-status-color-online: var(--main-danger-color);
+  --speech-modal-speakers-color: var(--gray-4);
+  --speach-speaker-color: var(--gray-4);
 }
 </style>
 
@@ -179,58 +179,58 @@ export default {
 
 .speech {
   &__modal {
-    --modal-padding-top: var(--zeen-speech-modal-padding-top);
-    --modal-padding-horizon: var(--zeen-speech-modal-padding-horizon);
-    --modal-padding-bottom: var(--zeen-speech-modal-padding-bottom);
-    --modal-description-margin-vertical: var(--zeen-speech-modal-margin-vertical);
+    --modal-padding-top: var(--speech-modal-padding-top);
+    --modal-padding-horizon: var(--speech-modal-padding-horizon);
+    --modal-padding-bottom: var(--speech-modal-padding-bottom);
+    --modal-description-margin-vertical: var(--speech-modal-margin-vertical);
   }
 
   &__title {
-    font-weight: var(--zeen-speech-modal-title-weight);
-    font-size: var(--zeen-speech-modal-title-size);
-    line-height: var(--zeen-speech-modal-title-line-height);
+    font-weight: var(--speech-modal-title-weight);
+    font-size: var(--speech-modal-title-size);
+    line-height: var(--speech-modal-title-line-height);
   }
 
   &__info {
     display: flex;
     align-items: center;
-    margin-top: var(--zeen-speech-modal-info-margin-top);
+    margin-top: var(--speech-modal-info-margin-top);
   }
 
   &__time {
-    font-weight: var(--zeen-speech-modal-time-weight);
-    font-size: var(--zeen-speech-modal-time-size);
-    line-height: var(--zeen-speech-modal-time-line-height);
+    font-weight: var(--speech-modal-time-weight);
+    font-size: var(--speech-modal-time-size);
+    line-height: var(--speech-modal-time-line-height);
   }
 
   &__dot {
-    margin-left: var(--zeen-speech-modal-dot-margin-horizon);
-    margin-right: var(--zeen-speech-modal-dot-margin-horizon);
-    width: var(--zeen-speech-modal-dot-size);
-    height: var(--zeen-speech-modal-dot-size);
-    background: var(--zeen-speech-modal-status-color-hold);
-    border-radius: var(--zeen-speech-modal-dot-radius);
+    margin-left: var(--speech-modal-dot-margin-horizon);
+    margin-right: var(--speech-modal-dot-margin-horizon);
+    width: var(--speech-modal-dot-size);
+    height: var(--speech-modal-dot-size);
+    background: var(--speech-modal-status-color-hold);
+    border-radius: var(--speech-modal-dot-radius);
   }
 
   &__status {
-    font-weight: var(--zeen-speech-modal-time-weight);
-    font-size: var(--zeen-speech-modal-time-size);
-    line-height: var(--zeen-speech-modal-time-line-height);
-    color: var(--zeen-speech-modal-status-color-done);
+    font-weight: var(--speech-modal-time-weight);
+    font-size: var(--speech-modal-time-size);
+    line-height: var(--speech-modal-time-line-height);
+    color: var(--speech-modal-status-color-done);
 
     &_online {
-      color: var(--zeen-speech-modal-status-color-online);
+      color: var(--speech-modal-status-color-online);
     }
     &_done {
-      color: var(--zeen-speech-modal-status-color-done);
+      color: var(--speech-modal-status-color-done);
     }
     &_hold {
-      color: var(--zeen-speech-modal-status-color-hold);
+      color: var(--speech-modal-status-color-hold);
     }
   }
 
   &__action {
-    margin-top: var(--zeen-speech-modal-action-margin-top);
+    margin-top: var(--speech-modal-action-margin-top);
   }
 
   &__btn {
@@ -243,20 +243,20 @@ export default {
   }
 
   &__speakers {
-    margin-top: var(--zeen-speech-modal-speakers-margin-top);
+    margin-top: var(--speech-modal-speakers-margin-top);
   }
 
   &__speakers-title {
-    color: var(--zeen-speech-modal-speakers-color);
-    margin-bottom: var(--zeen-speech-modal-speakers-margin-bottom);
-    font-weight: var(--zeen-speech-modal-time-weight);
-    font-size: var(--zeen-speech-modal-time-size);
-    line-height: var(--zeen-speech-modal-time-line-height);
+    color: var(--speech-modal-speakers-color);
+    margin-bottom: var(--speech-modal-speakers-margin-bottom);
+    font-weight: var(--speech-modal-time-weight);
+    font-size: var(--speech-modal-time-size);
+    line-height: var(--speech-modal-time-line-height);
   }
 
   &__speakers-item {
-    padding: var(--zeen-speech-modal-speakers-item-padding) 0;
-    --speaker-item-post-color: var(--zeen-speach-speaker-color);
+    padding: var(--speech-modal-speakers-item-padding) 0;
+    --speaker-item-post-color: var(--speach-speaker-color);
   }
 }
 </style>

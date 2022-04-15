@@ -51,7 +51,7 @@ export default {
     theme: {
       type: String,
       default: 'fill-main',
-      validator: (theme) => ['fill-main', 'fill-additional', 'outline', 'clean', 'no-padding'].includes(theme),
+      validator: (theme) => ['fill-main', 'fill-additional', 'outline', 'no-padding'].includes(theme),
     },
     size: {
       type: String,
@@ -92,14 +92,16 @@ export default {
 :root {
   /* Размеры */
   --button-font-size: var(--main-size);
-  --button-padding-horizontal: 29px; /*// мекет - 1px бордер*/
-  --button-padding-vertical: 15px; /*// мекет - 1px бордер*/
+  --button-padding-horizontal: 30px;
+  --button-padding-vertical: 15px;
   --button-border-radius: var(--main-input-radius);
   --button-border-width: 1px;
   --button-line-height: calc(var(--button-font-size) * 1.375);
 
   /* Цвета */
   --button-main-color: var(--main-color);
+  --button-hover-color: var(--main-hover-color);
+  --button-click-color: var(--main-active-color);
   --button-border-color: transparent;
   --button-additional-color: var(--main-light);
   --button-disabled-background-color: var(--gray-1);
@@ -112,12 +114,6 @@ export default {
 @import "~/styles/mixins.scss";
 
 .button {
-  --button-main: var(--button-background-color-base, var(--button-main-color));
-  --button-real-background-color: var(--button-background-color-base, var(--button-main-color));
-  --button-hover-color: var(--button-hover-color-base, var(--main-hover-color));
-  --button-click-color: var(--button-click-color-base, var(--main-active-color));
-  --button-text-color: var(--button-text-color-base, var(--button-additional-color));
-
   position: relative;
   display: inline-flex;
   justify-content: center;
@@ -137,7 +133,7 @@ export default {
   text-decoration: none;
   font-family: inherit;
   color: var(--button-text-color);
-  background: var(--button-real-background-color);
+  background: var(--button-main-color);
 
   &:focus,
   &:active,
@@ -163,7 +159,7 @@ export default {
 
   &_fill-additional {
     background: transparent;
-    color: var(--button-main);
+    color: var(--button-main-color);
 
     &:hover {
       color: var(--button-hover-color);
@@ -176,8 +172,8 @@ export default {
 
   &_outline {
     background: transparent;
-    color: var(--button-main);
-    border-color: var(--button-main);
+    color: var(--button-main-color);
+    border-color: var(--button-main-color);
 
     &:hover {
       color: var(--button-hover-color);
@@ -201,14 +197,9 @@ export default {
   &_is-loading:disabled:hover,
   &_is-loading:disabled:focus {
     color: var(--button-text-color);
-    background-color: var(--button-real-background-color);
+    background-color: var(--button-main-color);
   }
 
-  //&_parent-width  -> .zeen-button_parent-width
-  //.zeen-button_parent-width  -> .zeen-button .zeen-button_parent-width
-  //& &_parent-width  -> .zeen-button .zeen-button_parent-width
-  //&_mod  -> .zeen-button_mod
-  //&#{&}_mod  -> .zeen-button.zeen-button_mod
   &_parent-width {
     width: 100%;
   }

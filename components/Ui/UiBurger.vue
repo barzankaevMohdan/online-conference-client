@@ -53,7 +53,7 @@ export default {
   height: var(--burger-height);
   background: var(--burger-background);
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   outline: none;
   border: 0;
   cursor: pointer;

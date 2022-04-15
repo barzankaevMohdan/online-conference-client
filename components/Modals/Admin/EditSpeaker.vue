@@ -70,17 +70,6 @@ export default {
       this.$store.commit('speaker/deleteSpeaker', id)
     })
   },
-  computed: {
-    speeches() {
-      const speeches = this.$store.getters['speech/allSpeeches'].map((speech) => {
-        return {
-          label: speech.title,
-          value: speech.id
-        }
-      })
-      return speeches
-    }
-  },
   methods: {
     async editSpeaker() {
       this.isLoading = true
@@ -104,6 +93,17 @@ export default {
       this.speaker = speaker
       this.speechId = this.speeches.find(speech => speech.value === speaker.speechId)
     },
+  },
+  computed: {
+    speeches() {
+      const speeches = this.$store.getters['speech/allSpeeches'].map((speech) => {
+        return {
+          label: speech.title,
+          value: speech.id
+        }
+      })
+      return speeches
+    }
   },
 }
 </script>

@@ -13,12 +13,11 @@
     template(v-slot="{ params }")
       .modal__content
         slot(name='close' :close="close")
-          button.modal__close(@click.prevent='close')
-            svg(width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg")
-              path(d="M18.7595 2.91954C19.2235 2.45562 19.2235 1.70346 18.7595 1.23954C18.2956 0.775622 17.5435 0.775622 17.0795 1.23954L9.99954 8.31954L2.91954 1.23954C2.45562 0.775623 1.70346 0.775622 1.23954 1.23954C0.775622 1.70346 0.775622 2.45562 1.23954 2.91954L8.31954 9.99954L1.23954 17.0795C0.775623 17.5435 0.775622 18.2956 1.23954 18.7595C1.70346 19.2235 2.45562 19.2235 2.91954 18.7595L9.99954 11.6795L17.0795 18.7595C17.5435 19.2235 18.2956 19.2235 18.7595 18.7595C19.2235 18.2956 19.2235 17.5435 18.7595 17.0795L11.6795 9.99954L18.7595 2.91954Z")
+          UiActionIcon.modal__close(@click.prevent='close')
+            SvgIcon(name='close')
         .modal__icon(v-if='hasSlot("icon")')
           slot.modal__icon(name='icon')
-        h2.modal__title(v-if='$slots.title')
+        UiHeadline(v-if='$slots.title' tag='h4')
           slot(name='title')
         div.modal__description(v-if='hasSlot("default")')
           slot(:params="params")
@@ -111,7 +110,7 @@ export default {
   --modal-description-margin-vertical: 20px;
 
   /* Цвета */
-  --modal-content-background: #000;
+  --modal-content-background: var(--main-positive-color);
   --modal-text-color: var(--main-light);
   --modal-title-color: var(--main-light);
   --modal-close-color: var(--main-color);
@@ -158,7 +157,6 @@ export default {
     pointer-events: all;
   }
 
-  //todo replace zeentitleComponent
   &__title {
     font-weight: 600;
     font-size: var(--modal-title-size);
@@ -182,25 +180,16 @@ export default {
     position: absolute;
     top: var(--modal-close-gap);
     right: var(--modal-close-gap);
-    border: 0;
-    background: transparent;
-    padding: 0;
-    margin: 0;
-    outline: none;
-    cursor: pointer;
-    font-size: var(--modal-close-size);
 
     &,
     &:focus,
     &:visited {
       color: var(--modal-close-color);
-      text-decoration: none;
     }
 
     &:hover,
     &:active {
       color: var(--modal-close-color-hover);
-      text-decoration: none;
     }
 
     &:active {

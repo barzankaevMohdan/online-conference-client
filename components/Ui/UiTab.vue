@@ -59,7 +59,7 @@ export default {
   --zeen-tab-gap: 10px;
   --zeen-tab-border-width: 1px;
   --zeen-tab-fontsize: var(--main-smallest-text);
-  --zeen-tab-background: #000;
+  --zeen-tab-background: var(--dark-2);
   --zeen-tab-border-bottom-size: 3px;
   --zeen-tab-container-basis: 50%;
   --zeen-tab-button-container-height: 40px;
@@ -74,7 +74,7 @@ export default {
 }
 </style>
 <style lang="scss" scoped>
-@import '../../styles/mixins.scss';
+@import '~/styles/mixins.scss';
 
 .zeen-tab {
   min-height: var(--zeen-tab-full-size);

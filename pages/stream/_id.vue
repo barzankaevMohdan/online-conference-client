@@ -4,7 +4,7 @@
       :src='require("~/assets/img/demo/intro/intro-night.jpg")'
       title='IT Nights 2022'
     )
-      template(v-slot:description) Зал {{activeStreamId}}
+      template(v-slot:description) {{activeStreamName}}
     SectionPlayer
     SectionProgram
     SectionFaq

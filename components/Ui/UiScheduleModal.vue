@@ -88,52 +88,52 @@ export default {
 
 :root {
   /* Размеры */
-  --zeen-schedule-modal-padding-top: 50px;
-  --zeen-schedule-modal-padding-horizon: 50px;
-  --zeen-schedule-modal-padding-bottom: 50px;
-  --zeen-schedule-modal-description-margin-vertical: 0;
-  --zeen-schedule-modal-title-size: 36px;
-  --zeen-schedule-modal-title-line-height: 1.16;
-  --zeen-schedule-modal-title-font-weight: 700;
-  --zeen-schedule-modal-more-size: 16px;
-  --zeen-schedule-modal-more-line-height: 1.37;
-  --zeen-schedule-modal-more-font-weight: 500;
-  --zeen-schedule-modal-more-margin-top: 10px;
-  --zeen-schedule-modal-item-padding: 40px;
-  --zeen-schedule-modal-item-border-size: 1px;
-  --zeen-schedule-modal-hall-size: 24px;
-  --zeen-schedule-modal-hall-line-height: 1.33;
-  --zeen-schedule-modal-hall-font-weight: 700;
-  --zeen-schedule-modal-hall-margin-bottom: 20px;
-  --zeen-schedule-modal-hall-max-width: 75%;
-  --zeen-schedule-modal-time-size: 14px;
-  --zeen-schedule-modal-time-line-height: 1.71;
-  --zeen-schedule-modal-time-font-weight: 400;
-  --zeen-schedule-modal-speach-title-size: 18px;
-  --zeen-schedule-modal-speach-title-line-height: 1.33;
-  --zeen-schedule-modal-speach-title-font-weight: 500;
-  --zeen-schedule-modal-btn-margin-top: 40px;
+  --schedule-modal-padding-top: 50px;
+  --schedule-modal-padding-horizon: 50px;
+  --schedule-modal-padding-bottom: 50px;
+  --schedule-modal-description-margin-vertical: 0;
+  --schedule-modal-title-size: 36px;
+  --schedule-modal-title-line-height: 1.16;
+  --schedule-modal-title-font-weight: 700;
+  --schedule-modal-more-size: 16px;
+  --schedule-modal-more-line-height: 1.37;
+  --schedule-modal-more-font-weight: 600;
+  --schedule-modal-more-margin-top: 10px;
+  --schedule-modal-item-padding: 40px;
+  --schedule-modal-item-border-size: 1px;
+  --schedule-modal-hall-size: 24px;
+  --schedule-modal-hall-line-height: 1.33;
+  --schedule-modal-hall-font-weight: 700;
+  --schedule-modal-hall-margin-bottom: 20px;
+  --schedule-modal-hall-max-width: 75%;
+  --schedule-modal-time-size: 14px;
+  --schedule-modal-time-line-height: 1.71;
+  --schedule-modal-time-font-weight: 400;
+  --schedule-modal-speach-title-size: 18px;
+  --schedule-modal-speach-title-line-height: 1.33;
+  --schedule-modal-speach-title-font-weight: 600;
+  --schedule-modal-btn-margin-top: 40px;
 
   @include phones {
-    --zeen-schedule-modal-padding-horizon: 30px;
-    --zeen-schedule-modal-padding-bottom: 40px;
-    --zeen-schedule-modal-title-size: 24px;
-    --zeen-schedule-modal-title-line-height: 1.33;
-    --zeen-schedule-modal-more-size: 14px;
-    --zeen-schedule-modal-more-line-height: 1.42;
-    --zeen-schedule-modal-item-padding: 30px;
-    --zeen-schedule-modal-hall-margin-bottom: 10px;
-    --zeen-schedule-modal-hall-max-width: 100%;
-    --zeen-schedule-modal-btn-margin-top: 30px;
+    --schedule-modal-padding-horizon: 30px;
+    --schedule-modal-padding-bottom: 40px;
+    --schedule-modal-title-size: 24px;
+    --schedule-modal-title-line-height: 1.33;
+    --schedule-modal-more-size: 14px;
+    --schedule-modal-more-line-height: 1.42;
+    --schedule-modal-item-padding: 30px;
+    --schedule-modal-hall-margin-bottom: 10px;
+    --schedule-modal-hall-max-width: 100%;
+    --schedule-modal-btn-margin-top: 30px;
   }
 
   /* Цвета */
-  --zeen-schedule-modal-title-color: var(--dark-1);
-  --zeen-schedule-modal-more-color: var(--main-color);
-  --zeen-schedule-modal-hall-color: var(--main-text-color);
-  --zeen-schedule-modal-time-color: var(--gray-2);
-  --zeen-schedule-modal-speach-title-color: var(--main-text-color);
-  --zeen-schedule-modal-item-border-color: var(--gray-1);
+  --schedule-modal-title-color: var(--main-light);
+  --schedule-modal-more-color: var(--main-color);
+  --schedule-modal-hall-color: var(--main-light);
+  --schedule-modal-time-color: var(--gray-2);
+  --schedule-modal-speach-title-color: var(--main-light);
+  --schedule-modal-item-border-color: var(--dark-1);
 }
 </style>
 
@@ -141,27 +141,27 @@ export default {
 @import '~/styles/mixins.scss';
 
 .schedule-modal {
-  --modal-padding-top: var(--zeen-schedule-modal-padding-top);
-  --modal-padding-horizon: var(--zeen-schedule-modal-padding-horizon);
-  --modal-padding-bottom: var(--zeen-schedule-modal-padding-bottom);
-  --modal-description-margin-vertical: var(--zeen-schedule-modal-description-margin-vertical);
+  --modal-padding-top: var(--schedule-modal-padding-top);
+  --modal-padding-horizon: var(--schedule-modal-padding-horizon);
+  --modal-padding-bottom: var(--schedule-modal-padding-bottom);
+  --modal-description-margin-vertical: var(--schedule-modal-description-margin-vertical);
 
   &__title {
-    font-weight: var(--zeen-schedule-modal-title-font-weight);
-    font-size: var(--zeen-schedule-modal-title-size);
-    line-height: var(--zeen-schedule-modal-title-line-height);
-    color: var(--zeen-schedule-modal-title-color);
+    font-weight: var(--schedule-modal-title-font-weight);
+    font-size: var(--schedule-modal-title-size);
+    line-height: var(--schedule-modal-title-line-height);
+    color: var(--schedule-modal-title-color);
   }
 
   &__more {
     position: relative;
     display: flex;
     width: fit-content;
-    font-weight: var(--zeen-schedule-modal-more-font-weight);
-    font-size: var(--zeen-schedule-modal-more-size);
-    line-height: var(--zeen-schedule-modal-more-line-height);
-    color: var(--zeen-schedule-modal-more-color);
-    margin-top: var(--zeen-schedule-modal-more-margin-top);
+    font-weight: var(--schedule-modal-more-font-weight);
+    font-size: var(--schedule-modal-more-size);
+    line-height: var(--schedule-modal-more-line-height);
+    color: var(--schedule-modal-more-color);
+    margin-top: var(--schedule-modal-more-margin-top);
     cursor: pointer;
     text-decoration: none;
     &:before {
@@ -169,15 +169,15 @@ export default {
       content: '';
       width: 100%;
       height: 1px;
-      background: var(--zeen-schedule-modal-more-color);
+      background: var(--schedule-modal-more-color);
       top: 100%;
       left: 0;
     }
   }
 
   &__item {
-    padding: var(--zeen-schedule-modal-item-padding) 0;
-    border-bottom: var(--zeen-schedule-modal-item-border-size) solid var(--zeen-schedule-modal-item-border-color);
+    padding: var(--schedule-modal-item-padding) 0;
+    border-bottom: var(--schedule-modal-item-border-size) solid var(--schedule-modal-item-border-color);
 
     &:last-of-type {
       border: none;
@@ -186,40 +186,41 @@ export default {
   }
 
   &__item-hall {
-    font-weight: var(--zeen-schedule-modal-hall-font-weight);
-    font-size: var(--zeen-schedule-modal-hall-size);
-    line-height: var(--zeen-schedule-modal-hall-line-height);
-    color: var(--zeen-schedule-modal-hall-color);
-    margin-bottom: var(--zeen-schedule-modal-hall-margin-bottom);
-    max-width: var(--zeen-schedule-modal-hall-max-width);
+    font-weight: var(--schedule-modal-hall-font-weight);
+    font-size: var(--schedule-modal-hall-size);
+    line-height: var(--schedule-modal-hall-line-height);
+    color: var(--schedule-modal-hall-color);
+    margin-bottom: var(--schedule-modal-hall-margin-bottom);
+    max-width: var(--schedule-modal-hall-max-width);
   }
 
   &__item-info {
     display: flex;
     flex-direction: column;
+    margin-bottom: var(--schedule-modal-btn-margin-top);
   }
 
   &__item-time {
-    font-weight: var(--zeen-schedule-modal-time-font-weight);
-    font-size: var(--zeen-schedule-modal-time-size);
-    line-height: var(--zeen-schedule-modal-time-line-height);
-    color: var(--zeen-schedule-modal-time-color);
+    font-weight: var(--schedule-modal-time-font-weight);
+    font-size: var(--schedule-modal-time-size);
+    line-height: var(--schedule-modal-time-line-height);
+    color: var(--schedule-modal-time-color);
   }
 
   &__item-title {
-    font-weight: var(--zeen-schedule-modal-speach-title-font-weight);
-    font-size: var(--zeen-schedule-modal-speach-title-size);
-    line-height: var(--zeen-schedule-modal-speach-title-line-height);
-    color: var(--zeen-schedule-modal-speach-title-color);
+    font-weight: var(--schedule-modal-speach-title-font-weight);
+    font-size: var(--schedule-modal-speach-title-size);
+    line-height: var(--schedule-modal-speach-title-line-height);
+    color: var(--schedule-modal-speach-title-color);
   }
 
   &__item-btn {
-    margin-top: var(--zeen-schedule-modal-btn-margin-top);
+    margin-top: var(--schedule-modal-btn-margin-top);
     width: 100%;
   }
 
   &__speakers {
-    margin-top: var(--zeen-schedule-modal-btn-margin-top);
+    margin-top: var(--schedule-modal-btn-margin-top);
   }
 }
 </style>

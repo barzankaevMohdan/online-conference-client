@@ -1,43 +1,42 @@
 <template>
   <div>
-    <div class="zeen-over-observer" ref="zeenOver">
+    <div class="over-observer" ref="over">
 
       <div
         :class="{
-          'zeen-over': !mini,
-          'zeen-over__mini': mini,
-          'zeen-over__mini_aspect_ratio_4_3': aspectRatio === '4:3',
-          'zeen-over__mini_aspect_ratio_1_1': aspectRatio === '1:1',
+          'over': !mini,
+          'over__mini': mini,
+          'over__mini_aspect_ratio_4_3': aspectRatio === '4:3',
+          'over__mini_aspect_ratio_1_1': aspectRatio === '1:1',
         }"
         :style="{
-          '--zeen-over-mini-bottom': margin + 'px',
-          '--zeen-over-mini-left': margin + 'px',
+          '--over-mini-bottom': margin + 'px',
+          '--over-mini-left': margin + 'px',
         }"
         @mousedown="move($event)"
-        data-zeen-over="mini"
+        data-over="mini"
       >
         <UiActionIcon
-        v-if="mini && !icon"
-          :class="['zeen-over__button', {
-            'zeen-over__button_left': buttonLeft,
+          v-if="mini && !icon"
+          :class="['over__button', {
+            'over__button_left': buttonLeft,
           }]"
           @click.stop="toIcon"
           size="big"
         >
           <SvgIcon name="arrow" />
         </UiActionIcon>
-        <div class="zeen-over__slot" :style="{'pointer-events': mini ? 'none' : ''}">
+        <div class="over__slot" :style="{'pointer-events': mini ? 'none' : ''}">
           <slot></slot>
         </div>
       </div>
     </div>
 
-    <div class="zeen-over__icon" v-show="icon" @click="toIcon"></div>
+    <div class="over__icon" v-show="icon" @click="toIcon"></div>
   </div>
 </template>
 
 <script>
-import UiActionIcon from   './UiActionIcon'
 
 export default {
   name: 'UiOverMini',
@@ -60,7 +59,6 @@ export default {
       validator: (ratio) => ['16:9', '4:3', '1:1'].includes(ratio),
     },
   },
-  components: {UiActionIcon},
   data() {
     return {
       mini: false,
@@ -99,7 +97,7 @@ export default {
         })
       }
       this.observer = new IntersectionObserver(observerCall, observerOptions)
-      this.observer.observe(this.$refs.zeenOver)
+      this.observer.observe(this.$refs.over)
     },
     toIcon() {
       if (!this.icon) {
@@ -122,7 +120,7 @@ export default {
         let deltaX
         let deltaY
         document.onmousemove = (e) => {
-          if (target.dataset.zeenOver === 'mini') {
+          if (target.dataset.over === 'mini') {
             deltaX = e.clientX - offsetX
             deltaY = e.clientY - offsetY
             if (
@@ -158,27 +156,27 @@ export default {
 <style lang="scss">
 :root {
   /* Размеры */
-  --zeen-over-width: 100%;
-  --zeen-over-icon-size: 20px;
-  --zeen-over-icon-border-radius: 4px;
-  --zeen-over-button-size: var(--zeen-over-icon-size);
-  --zeen-over-mini-width: 350px;
+  --over-width: 100%;
+  --over-icon-size: 20px;
+  --over-icon-border-radius: 4px;
+  --over-button-size: var(--over-icon-size);
+  --over-mini-width: 350px;
 
   /* Позиция */
-  --zeen-over-icon-bottom: 30px;
-  --zeen-over-icon-left: 30px;
-  --zeen-over-button-rigth: -50px;
-  --zeen-over-button-left: -50px;
+  --over-icon-bottom: 30px;
+  --over-icon-left: 30px;
+  --over-button-rigth: -50px;
+  --over-button-left: -50px;
 
   /* Цвета */
-  --zeen-over-background: var(--main-color);
+  --over-background: var(--main-color);
 }
 </style>
 
 <style lang="scss" scoped>
 @import "~/styles/mixins.scss";
 
-.zeen-over {
+.over {
   position: absolute;
   top: 0 !important;
   left: 0 !important;
@@ -186,12 +184,12 @@ export default {
   bottom: 0 !important;
   width: 100%;
   height: 100%;
-  background: var(--zeen-over-background);
+  background: var(--over-background);
 
   &-observer {
     position: relative;
     display: flex;
-    width: var(--zeen-over-width);
+    width: var(--over-width);
     &::after {
       content: '';
       display: block;
@@ -201,29 +199,29 @@ export default {
   }
 
   &__icon {
-    width: var(--zeen-over-icon-size);
-    height: var(--zeen-over-icon-size);
+    width: var(--over-icon-size);
+    height: var(--over-icon-size);
     position: fixed;
     top: auto;
-    bottom: var(--zeen-over-icon-bottom);
-    left: var(--zeen-over-icon-left);
+    bottom: var(--over-icon-bottom);
+    left: var(--over-icon-left);
     z-index: 1000;
-    background: var(--zeen-over-background);
-    border-radius: var(--zeen-over-icon-border-radius);
+    background: var(--over-background);
+    border-radius: var(--over-icon-border-radius);
     cursor: pointer;
   }
 
   &__mini {
     display: flex;
-    background: var(--zeen-over-background);
-    width: var(--zeen-over-mini-width);
+    background: var(--over-background);
+    width: var(--over-mini-width);
     height: auto;
     position: fixed;
     top: auto;
     right: auto;
     cursor: grab;
-    bottom: var(--zeen-over-mini-bottom);
-    left: var(--zeen-over-mini-left);
+    bottom: var(--over-mini-bottom);
+    left: var(--over-mini-left);
     z-index: 1000;
 
     @include tablets {
@@ -256,14 +254,14 @@ export default {
   &__button {
     position: absolute;
     top: 0;
-    right: var(--zeen-over-button-rigth);
+    right: var(--over-button-rigth);
 
     svg {
       max-height: 25px;
     }
 
     &_left {
-      left: var(--zeen-over-button-left);
+      left: var(--over-button-left);
     }
   }
 }

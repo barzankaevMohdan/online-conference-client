@@ -81,7 +81,7 @@ export default {
 @import "~/styles/mixins.scss";
 
 .stream-group {
-  background: #000;
+  background: var(--dark-2);
   padding-top: 80px;
   padding-bottom: 80px;
 

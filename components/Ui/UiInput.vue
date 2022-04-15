@@ -97,6 +97,9 @@ export default {
 <style lang="scss">
 :root {
   /* Размеры кнопки */
+  --text-input-vertical-padding: 20px;
+  --text-input-horizontal-padding: 25px;
+  --text-input-border-width: 1px;
   --text-input-label-size: var(--main-input-label-size);
   --text-input-label-line-height: 1.4;
 
@@ -106,13 +109,13 @@ export default {
   --text-input-label-correct-color: var(--main-success-color);
   --text-input-border-base-focus-color: var(--main-color);
   --text-input-color: var(--main-light);
-  --text-input-background: #000;
+  --text-input-background: var(--dark-2);
 
   --text-input-border-color: var(--main-color);
   --text-input-border-error-color: var(--text-input-label-error-color);
   --text-input-border-correct-color: var(--text-input-label-correct-color);
 
-  --text-input-placeholder-color:  var(--main-light);
+  --text-input-placeholder-color: var(--main-input-placeholder-color);
   --text-input-placeholder-disable-color: var(--main-disable-color);
 }
 </style>

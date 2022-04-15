@@ -75,7 +75,7 @@ export default {
       backgroundColors: [
         '#F44336', '#FF4081', '#9C27B0', '#673AB7',
         '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', '#009688',
-        '#4CAF50', '#8BC34A', '#CDDC39', /* '#FFEB3B' , */ '#FFC107',
+        '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B' , '#FFC107',
         '#FF9800', '#FF5722', '#795548', '#9E9E9E', '#607D8B'],
       imgError: false
     }
@@ -143,8 +143,10 @@ export default {
     style () {
       const style = {
         display: this.inline ? 'inline-flex' : 'flex',
-        width: `${this.size}px`,
-        height: `${this.size}px`,
+        minWidth: `${this.size}px`,
+        minHeight: `${this.size}px`,
+        maxWidth: `${this.size}px`,
+        maxHeight: `${this.size}px`,
         borderRadius: this.rounded ? '50%' : 0,
         lineHeight: `${(this.size + Math.floor(this.size / 20))}px`,
         fontWeight: 'bold',

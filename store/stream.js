@@ -17,6 +17,12 @@ export const mutations = {
       [stream.id]: stream,
     }
   },
+  deleteStream(state, id) {
+    delete state.streams[id]
+    state.streams = {
+      ...state.streams,
+    }
+  }
 }
 
 export const actions = {
@@ -26,6 +32,22 @@ export const actions = {
         .createStream(streamData.name)
         .then((data) => {
           commit('updateStream', data.data)
+          resolve(data.data)
+        })
+        .catch((error) => {
+          if (error.response?.data) {
+            reject(error.response.data)
+          }
+          reject(error)
+        })
+    })
+  },
+  deleteStream({commit}, id) {
+    return new Promise((resolve, reject) => {
+      api
+        .deleteStream(id)
+        .then((data) => {
+          commit('deleteStream', id)
           resolve(data.data)
         })
         .catch((error) => {
@@ -59,5 +81,10 @@ export const getters = {
   bySpeechId: (state, getters) => (id) => {
     const stream = getters.allStreams.filter(stream => stream.id === id)
     return stream
-  }
+  },
+  byId: (state, getters) => (id) => {
+    const stream = getters.allStreams.find(stream => stream.id === id)
+    return stream
+  },
+  firstStream: (state, getters) => getters.allStreams[0],
 }

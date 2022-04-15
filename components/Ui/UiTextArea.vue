@@ -1,16 +1,16 @@
 <template>
   <div
-    :id="`zeen-text-area-${componentId}`"
-    class="zeen-text-area"
+    :id="`text-area-${componentId}`"
+    class="text-area"
     :class="{
-      'zeen-text-area_error': error,
-      'zeen-text-area_correct': correct,
+      'text-area_error': error,
+      'text-area_correct': correct,
     }"
   >
-    <label class="zeen-text-area__label" :for="componentId">{{ error || correct }}</label>
-    <div class="zeen-text-area__wrapper">
+    <label class="text-area__label" :for="componentId">{{ error || correct }}</label>
+    <div class="text-area__wrapper">
       <textarea
-        class="zeen-text-area__text-area"
+        class="text-area__text-area"
         :value="value"
         :placeholder="placeholder"
         :required="required"
@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: 'ZeenTextArea',
+  name: 'UiTextArea',
   props: {
     value: {
       type: String,
@@ -87,24 +87,24 @@ export default {
   --text-area-vertical-padding: 20px;
 
   /* Цвета */
-  --text-area-label-base-color: var(--input-main-placeholder-color);
-  --text-area-label-error-color: var(--input-error-color);
-  --text-area-label-correct-color: var(--input-correct-color);
-  --text-area-border-base-focus-color: var(--input-main-color);
-  --text-area-color: var(--input-main-value-color);
-  --text-area-background: #000;
+  --text-area-label-base-color: var(--main-input-placeholder-color);
+  --text-area-label-error-color: var(--main-danger-color);
+  --text-area-label-correct-color: var(--main-success-color);
+  --text-area-border-base-focus-color: var(--main-color);
+  --text-area-color: var(--main-light);
+  --text-area-background: var(--dark-2);
 
   --text-area-border-color: var(--main-color);
   --text-area-border-error-color: var(--text-area-label-error-color);
   --text-area-border-correct-color: var(--text-area-label-correct-color);
 
-  --text-area-placeholder-color: var(--input-main-placeholder-color);
+  --text-area-placeholder-color: var(--main-input-placeholder-color);
   --text-area-placeholder-disable-color: var(--input-placeholder-disable-color);
 }
 </style>
 
 <style lang="scss" scoped>
-.zeen-text-area {
+.text-area {
   --text-area-label-color: var(--text-area-label-base-color);
   --text-area-border-focus-color: var(--text-area-border-base-focus-color);
 

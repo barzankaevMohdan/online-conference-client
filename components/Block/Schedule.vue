@@ -462,17 +462,17 @@ export default {
   }
 
   /* Цвета */
-  --zeen-schedule-background: var(--main-light);
-  --zeen-schedule-col-border: var(--gray-1);
-  --zeen-schedule-time-color: var(--dark-1);
-  --zeen-schedule-time-color-done: var(--gray-2);
-  --zeen-schedule-col-line: var(--gray-1);
+  --zeen-schedule-background: var(--dark-2);
+  --zeen-schedule-col-border: var(--dark-1);
+  --zeen-schedule-time-color: var(--main-light);
+  --zeen-schedule-time-color-done: var(--dark-1);
+  --zeen-schedule-col-line: var(--dark-1);
   --zeen-schedule-online-line: var(--main-danger-color);
   --zeen-schedule-online-img: var(--main-light);
-  --zeen-schedule-hall: var(--gray-1);
+  --zeen-schedule-hall: rgba(144, 132, 148, 0.1);
   --zeen-schedule-hall-active: var(--main-transparent);
   --zeen-schedule-hall-hover: var(--main-transparent);
-  --zeen-schedule-hall-text: var(--input-main-value-color);
+  --zeen-schedule-hall-text: var(--gray-2);
   --zeen-schedule-hall-text-active: var(--main-color);
 }
 </style>

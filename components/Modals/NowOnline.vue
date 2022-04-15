@@ -36,28 +36,3 @@ export default {
   },
 }
 </script>
-
-<style scoped lang="scss">
-@import '~/styles/mixins.scss';
-
-.now-online {
-  --zeen-schedule-modal-more-font-weight: 600;
-  --zeen-schedule-modal-speach-title-font-weight: 600;
-  --zeen-schedule-modal-time-color: var(--gray-4);
-
-  ::v-deep {
-    .schedule-modal__item-info {
-      margin-bottom: 40px;
-      @include phones {
-        margin-bottom: 20px;
-      }
-    }
-
-    .schedule-modal__more {
-      &::before {
-        width: 0;
-      }
-    }
-  }
-}
-</style>

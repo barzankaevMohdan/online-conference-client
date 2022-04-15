@@ -13,33 +13,33 @@ export default {
       faq: [
         {
           id: 1,
-          title: 'TextTextText',
-          description: 'TextTextText',
+          title: 'Вопрос 1',
+          description: 'Вопрос 1',
         },
         {
           id: 2,
-          title: 'TextTextText',
-          description: 'TextTextText',
+          title: 'Вопрос 2',
+          description: 'Вопрос 2',
         },
         {
           id: 3,
-          title: 'TextTextText',
-          description: 'TextTextText',
+          title: 'Вопрос 3',
+          description: 'Вопрос 3',
         },
         {
           id: 4,
-          title: 'TextTextText',
-          description: 'TextTextText',
+          title: 'Вопрос 4',
+          description: 'Вопрос 4',
         },
         {
           id: 5,
-          title: 'TextTextText',
-          description: 'TextTextText',
+          title: 'Вопрос 5',
+          description: 'Вопрос 5',
         },
         {
           id: 6,
-          title: 'TextTextText',
-          description: 'TextTextText',
+          title: 'Вопрос 6',
+          description: 'Вопрос 6',
         },
       ],
     }
@@ -53,7 +53,7 @@ export default {
 .s-faq {
   position: relative;
   padding: var(--main-section-padding-vertical) 0;
-  background-color: #000;
+  background-color: var(--dark-2);
   overflow: hidden;
   z-index: 0;
 

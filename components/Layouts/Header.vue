@@ -51,7 +51,7 @@ export default {
 
 .header {
   padding: 20px 85px 20px 85px;
-  background: #000;
+  background: var(--dark-2);
   width: 100%;
 
   @include desktop {

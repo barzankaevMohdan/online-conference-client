@@ -56,6 +56,6 @@ export default {
 
 .s-program {
   padding: var(--main-section-padding-vertical) 0;
-  background-color: #000;
+  background-color: var(--dark-2);
 }
 </style>

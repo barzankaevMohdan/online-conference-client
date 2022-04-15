@@ -85,27 +85,6 @@ export default {
       this.$store.commit('speech/deleteSpeech', id)
     })
   },
-  computed: {
-    speakersWord() {
-      return this.speech.speakers?.length > 1 ? this.speakersText.speakers : this.speakersText.speaker
-    },
-    statuses() {
-      return [
-        {
-          label: 'online',
-          value: 'online'
-        },
-        {
-          label: 'hold',
-          value: 'hold'
-        },
-        {
-          label: 'done',
-          value: 'done'
-        },
-      ]
-    }
-  },
   methods: {
     async editSpeech() {
       this.isLoading = true
@@ -135,6 +114,27 @@ export default {
       this.status = this.statuses.find(status => status.value === data.speech.status)
     },
   },
+  computed: {
+    speakersWord() {
+      return this.speech.speakers?.length > 1 ? this.speakersText.speakers : this.speakersText.speaker
+    },
+    statuses() {
+      return [
+        {
+          label: 'online',
+          value: 'online'
+        },
+        {
+          label: 'hold',
+          value: 'hold'
+        },
+        {
+          label: 'done',
+          value: 'done'
+        },
+      ]
+    }
+  },
 }
 </script>
 
@@ -146,20 +146,37 @@ export default {
   &__info {
     display: flex;
     align-items: center;
-    margin-top: var(--zeen-speech-modal-info-margin-top);
+    margin-top: var(--speech-modal-info-margin-top);
+
+    @include phones() {
+      flex-direction: column;
+    }
+  }
+
+  &__time {
+    @include phones() {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+  }
+
+  &__status {
+    @include phones() {
+      width: 100%;
+    }
   }
 
   &__dot {
-    margin-left: var(--zeen-speech-modal-dot-margin-horizon);
-    margin-right: var(--zeen-speech-modal-dot-margin-horizon);
-    width: var(--zeen-speech-modal-dot-size);
-    height: var(--zeen-speech-modal-dot-size);
-    background: var(--zeen-speech-modal-status-color-hold);
-    border-radius: var(--zeen-speech-modal-dot-radius);
+    margin-left: var(--speech-modal-dot-margin-horizon);
+    margin-right: var(--speech-modal-dot-margin-horizon);
+    width: var(--speech-modal-dot-size);
+    height: var(--speech-modal-dot-size);
+    background: var(--speech-modal-status-color-hold);
+    border-radius: var(--speech-modal-dot-radius);
   }
 
   &__action {
-    margin-top: var(--zeen-speech-modal-action-margin-top);
+    margin-top: var(--speech-modal-action-margin-top);
   }
 
   &__btn {
@@ -176,22 +193,28 @@ export default {
   }
 
   &__speakers {
-    margin-top: var(--zeen-speech-modal-speakers-margin-top);
+    margin-top: var(--speech-modal-speakers-margin-top);
   }
 
   &__speakers-title {
-    color: var(--zeen-speech-modal-speakers-color);
-    margin-bottom: var(--zeen-speech-modal-speakers-margin-bottom);
-    font-weight: var(--zeen-speech-modal-time-weight);
-    font-size: var(--zeen-speech-modal-time-size);
-    line-height: var(--zeen-speech-modal-time-line-height);
+    color: var(--speech-modal-speakers-color);
+    margin-bottom: var(--speech-modal-speakers-margin-bottom);
+    font-weight: var(--speech-modal-time-weight);
+    font-size: var(--speech-modal-time-size);
+    line-height: var(--speech-modal-time-line-height);
   }
 
   &__speakers-item {
+    --speaker-item-post-color: var(--speach-speaker-color);
+
     display: flex;
     justify-content: space-between;
-    padding: var(--zeen-speech-modal-speakers-item-padding) 0;
-    --speaker-item-post-color: var(--zeen-speach-speaker-color);
+    padding: var(--speech-modal-speakers-item-padding) 0;
+
+    @include phones() {
+      justify-content: flex-start;
+      flex-direction: column;
+    }
   }
 
   &__speakers-btn {
@@ -200,6 +223,11 @@ export default {
     --button-font-size: 14px;
     
     margin-left: 15px;
+
+    @include phones() {
+      margin-left: 0;
+      margin-top: 10px;
+    }
   }
 }
 </style>

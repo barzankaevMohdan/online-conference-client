@@ -35,21 +35,13 @@ export default {
       ],
     }
   },
-  computed: {
-    user() {
-      return this.$store.getters['user/user']
-    },
-    messages() {
-      return this.$store.getters['chat/messages'] ?? []
-    }
-  },
   async mounted() {
+    await this.$store.dispatch('chat/getRoomMessages', this.activeStreamId)
     this.socket.emit(ACTIONS.JOIN_CHAT, this.activeStreamId)
-
     this.socket.on(ACTIONS.MESSAGE, (message) => {
+      console.log(message);
       this.$store.commit('chat/newMessage', message)
     })
-    await this.$store.dispatch('chat/getRoomMessages', this.activeStreamId)
   },
   methods: {
     openBadge(message) {
@@ -74,6 +66,14 @@ export default {
         // eslint-disable-next-line node/no-callback-literal
         callback(false)
       }
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters['user/user']
+    },
+    messages() {
+      return this.$store.getters['chat/messages'] ?? []
     }
   },
 }

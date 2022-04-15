@@ -176,7 +176,7 @@ export default {
 
   /* Цвета */
   --zeen-message-text-color-secondary: var(--gray-4);
-  --zeen-message-text-color: var(--main-positive-color);
+  --zeen-message-text-color: var(--main-light);
   --zeen-chat-tooltip-background: var(--dark-1);
   --zeen-chat-tooltip-color: var(--main-light);
 }

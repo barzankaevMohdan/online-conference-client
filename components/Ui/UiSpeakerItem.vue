@@ -34,7 +34,7 @@
 <script>
 
 export default {
-  name: 'SpeakerItem',
+  name: 'UiSpeakerItem',
   props: {
     speaker: {
       type: Object,
@@ -62,9 +62,9 @@ export default {
 
 :root {
   /* Размеры */
-  --speaker-item-name-size: var(--main-text-size, 16px);
-  --speaker-item-post-size: var(--main-smallest-text, 12px);
-  --speaker-item-company-size: var(--main-smallest-text, 12px);
+  --speaker-item-name-size: var(--main-text-size);
+  --speaker-item-post-size: var(--main-smallest-text);
+  --speaker-item-company-size: var(--main-smallest-text);
 
   /* Цвета */
   --speaker-item-name-color: var(--main-light);
@@ -75,8 +75,8 @@ export default {
   @include phones {
     /* Размеры */
     --speaker-item-image-size: 40px;
-    --speaker-item-name-size: var(--main-text-size, 14px);
-    --speaker-item-post-size: var(--main-smallest-text, 10px);
+    --speaker-item-name-size: var(--main-text-size);
+    --speaker-item-post-size: var(--main-smallest-text);
 
   }
 }

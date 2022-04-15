@@ -1,4 +1,4 @@
-@import "./variables";
+@import "./variables/variables.scss";
 
 @mixin desktopHd() {
   @media screen and (max-width: $bp-desktop-hd) {

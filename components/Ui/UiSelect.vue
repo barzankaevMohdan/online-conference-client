@@ -1,13 +1,13 @@
 <template>
   <div
-    :id="`zeen-select-${componentId}`"
-    class="zeen-select"
+    :id="`select-${componentId}`"
+    class="select"
     :class="{
-      'zeen-select_error': error,
-      'zeen-select_correct': correct,
+      'select_error': error,
+      'select_correct': correct,
     }"
   >
-    <label v-if="error || correct" class="zeen-select__label" :for="componentId">{{ error || correct }}</label>
+    <label v-if="error || correct" class="select__label" :for="componentId">{{ error || correct }}</label>
     <vSelect
       ref="select"
       :id="componentId"
@@ -21,10 +21,10 @@
       @close="closeSelect"
       v-bind="$attrs"
       :disabled="disabled"
-      class="zeen-select__select"
+      class="select__select"
     >
       <template v-slot:open-indicator="{attributes}">
-        <span class="zeen-select__arrow" v-bind="attributes">
+        <span class="select__arrow" v-bind="attributes">
           <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M1 1L6 6L11 1" stroke="#908494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
@@ -134,7 +134,7 @@ export default {
 
 :root {
   /* Размеры */
-  --select-label-size: var(--checkbox-size);
+  --select-label-size: 21px;
   --select-border-radius: var(--main-input-radius);
   --select-border-width: var(--main-input-border-width);
   --select-drop-max-width: 268px;
@@ -146,19 +146,19 @@ export default {
   --select-search-border-radius: 10px;
 
   /* Цвета */
-  --select-background-color: var(--text-input-background);
-  --select-text-color: var(--input-main-value-color);
+  --select-background-color: var(--dark-2);
+  --select-text-color: var(--main-light);
   --select-label-color: var(--select-text-color);
-  --select-error-color: var(--input-error-color);
-  --select-correct-color: var(--input-correct-color);
-  --select-placeholder-color: var(--input-main-placeholder-color);
-  --select-placeholder-disabled-color: var(--input-main-placeholder-color);
+  --select-error-color: var(--main-danger-color);
+  --select-correct-color: var(--main-success-color);
+  --select-placeholder-color: var(--main-input-placeholder-color);
+  --select-placeholder-disabled-color: var(--main-disable-color);
   --select-option-selected-color: var(--main-light);
-  --select-option-color: var(--input-main-value-color);
+  --select-option-color: var(--main-light);
   --select-options-background-color: var(--dark-1);
   --select-option-selected-background-color: var(--main-color);
-  --select-opened-text-color: var(--input-main-placeholder-color);
-  --select-arrow-color: var(--input-main-value-color);
+  --select-opened-text-color: var(--main-input-placeholder-color);
+  --select-arrow-color: var(--main-light);
 
   --select-border-color: var(--main-color);
   --select-label-error-color: var(--select-error-color);
@@ -170,7 +170,7 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-.zeen-select {
+.select {
   &__label {
     display: block;
     font-size: var(--select-label-size);
@@ -244,7 +244,7 @@ export default {
   ::v-deep .vs__selected {
     background: transparent;
     margin: 0;
-    padding: 15px 20px 15px 25px;
+    padding: var(--text-input-vertical-padding) var(--text-input-horizontal-padding);
     border-radius: var(--select-border-radius);
     display: flex;
     align-items: center;
@@ -335,6 +335,7 @@ export default {
     .vs__selected {
       color: var(--select-text-color);
       font-weight: var(--select-text-weight);
+      font-size: var(--select-search-font-size);
     }
 
     .vs__search,

@@ -12,10 +12,6 @@ export default {
   async beforeCreate() {
     if (localStorage.getItem('refreshToken')) {
       await this.$store.dispatch('user/checkAuth')
-    }
-  },
-  async created() {
-    if (localStorage.getItem('refreshToken')) {
       await this.$store.dispatch('stream/allStreams')
       await this.$store.dispatch('speech/allSpeeches')
       await this.$store.dispatch('speaker/allSpeakers')

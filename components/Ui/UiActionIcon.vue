@@ -1,12 +1,12 @@
 <template>
   <button
-    class="zeen-action-icon"
+    class="action-icon"
     :class="{
-      'zeen-action-icon_middle': size === 'middle',
-      'zeen-action-icon_big': size === 'big',
-      [`zeen-action-icon_theme-${theme}`]: theme,
+      'action-icon_middle': size === 'middle',
+      'action-icon_big': size === 'big',
+      [`action-icon_theme-${theme}`]: theme,
     }"
-    :id="`zeen-action-icon-${componentId}`"
+    :id="`action-icon-${componentId}`"
     v-on="$listeners"
     v-bind="$attrs"
     :disabled="disabled"
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: 'ZeenActionIcon',
+  name: 'UiActionIcon',
   props: {
     size: {
       type: String,
@@ -66,7 +66,7 @@ export default {
 
 <style lang="scss" scoped>
 
-.zeen-action-icon {
+.action-icon {
   --action-icon-color-real: var(--action-icon-color);
   background-color: transparent;
   padding: 0;

@@ -18,7 +18,7 @@
 import Swiper from 'swiper/bundle'
 
 export default {
-  name: 'ZeenScheduleSpeakers',
+  name: 'ScheduleSpeakers',
   props: {
     speakers: {
       type: Array,
@@ -92,24 +92,24 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../styles/mixins.scss';
+@import '~/styles/mixins.scss';
 
 :root {
   /* Размеры */
-  --zeen-schedule-speakers-top-margin-bottom: 30px;
-  --zeen-schedule-speakers-title-size: var(--main-bigger-size);
-  --zeen-schedule-speakers-title-font-weight: 500;
-  --zeen-schedule-speakers-title-line-height: 1.33;
-  --zeen-schedule-speakers-arrow-margin-right: 25px;
+  --schedule-speakers-top-margin-bottom: 30px;
+  --schedule-speakers-title-size: var(--main-bigger-size);
+  --schedule-speakers-title-font-weight: 500;
+  --schedule-speakers-title-line-height: 1.33;
+  --schedule-speakers-arrow-margin-right: 25px;
 
   /* Цвета */
-  --zeen-schedule-speakers-title-color: var(--main-text-color);
-  --zeen-schedule-speakers-speaker-color: var(--gray-4);
+  --schedule-speakers-title-color: var(--gray-2);
+  --schedule-speakers-speaker-color: var(--gray-4);
 }
 </style>
 
 <style lang="scss" scoped>
-@import '../../styles/mixins.scss';
+@import '~/styles/mixins.scss';
 
 .schedule-speakers {
   &__actions {
@@ -121,14 +121,14 @@ export default {
   &__top {
     display: flex;
     justify-content: space-between;
-    margin-bottom: var(--zeen-schedule-speakers-top-margin-bottom);
+    margin-bottom: var(--schedule-speakers-top-margin-bottom);
   }
 
   &__title {
-    font-weight: var(--zeen-schedule-speakers-title-font-weight);
-    font-size: var(--zeen-schedule-speakers-title-size);
-    line-height: var(--zeen-schedule-speakers-title-line-height);
-    color: var(--zeen-schedule-speakers-title-color);
+    font-weight: var(--schedule-speakers-title-font-weight);
+    font-size: var(--schedule-speakers-title-size);
+    line-height: var(--schedule-speakers-title-line-height);
+    color: var(--schedule-speakers-title-color);
   }
 
   &__arrow {
@@ -139,7 +139,7 @@ export default {
     cursor: pointer;
     fill: var(--action-icon-color);
     &.rotate {
-      margin-right: var(--zeen-schedule-speakers-arrow-margin-right);
+      margin-right: var(--schedule-speakers-arrow-margin-right);
       transform: rotateY(180deg);
     }
     &:hover {
@@ -156,8 +156,9 @@ export default {
       fill: var(--action-icon-disable-color);
     }
   }
+
   &__speaker {
-    --speaker-item-post-color: var(--zeen-schedule-speakers-speaker-color);
+    --speaker-item-post-color: var(--schedule-speakers-speaker-color);
   }
 }
 </style>

@@ -191,7 +191,7 @@ export default {
   --text-input-background: var(--main-positive-color);
   --select-background-color: var(--main-positive-color);
 
-  background: #000;
+  background: var(--dark-2);
   padding-top: 80px;
   padding-bottom: 20px;
 

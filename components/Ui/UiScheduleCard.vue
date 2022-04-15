@@ -139,59 +139,59 @@ export default {
 @import '~/styles/mixins.scss';
 :root {
   /* Размеры */
-  --zeen-schedule-card-min-width: 110px;
-  --zeen-schedule-card-padding-vertical: var(--main-padding);
-  --zeen-schedule-card-padding-horizontal: var(--main-padding);
-  --zeen-schedule-card-border-radius: 5px;
+  --schedule-card-min-width: 105px;
+  --schedule-card-padding-vertical: var(--main-padding);
+  --schedule-card-padding-horizontal: var(--main-padding);
+  --schedule-card-border-radius: 5px;
 
-  --zeen-schedule-card-title-size: var(--main-small-text);
-  --zeen-schedule-card-title-line-height: 1.42;
-  --zeen-schedule-card-title-font-weight: 500;
+  --schedule-card-title-size: var(--main-small-text);
+  --schedule-card-title-line-height: 1.42;
+  --schedule-card-title-font-weight: 500;
 
-  --zeen-schedule-card-subtitle-size: var(--main-smallest-text);
-  --zeen-schedule-card-subtitle-line-height: 1.5;
-  --zeen-schedule-card-subtitle-font-weight: 400;
-  --zeen-schedule-card-subtitle-margin-top: 10px;
+  --schedule-card-subtitle-size: var(--main-smallest-text);
+  --schedule-card-subtitle-line-height: 1.5;
+  --schedule-card-subtitle-font-weight: 400;
+  --schedule-card-subtitle-margin-top: 10px;
 
-  --zeen-schedule-card-live-padding-vertical: 4px;
-  --zeen-schedule-card-live-padding-horizontal: 5px;
-  --zeen-schedule-card-live-margin-right: 10px;
-  --zeen-schedule-card-live-border-radius: 5px;
-  --zeen-schedule-card-live-img-size: var(--action-icon-min-width-middle);
-  --zeen-schedule-card-live-text: var(--main-smallest-text);
-  --zeen-schedule-card-live-text-line-height: 1.33;
-  --zeen-schedule-card-live-text-font-weight: 600;
-  --zeen-schedule-card-live-text-margin-left: 4px;
+  --schedule-card-live-padding-vertical: 4px;
+  --schedule-card-live-padding-horizontal: 5px;
+  --schedule-card-live-margin-right: 10px;
+  --schedule-card-live-border-radius: 5px;
+  --schedule-card-live-img-size: 15px;
+  --schedule-card-live-text: var(--main-smallest-text);
+  --schedule-card-live-text-line-height: 1.33;
+  --schedule-card-live-text-font-weight: 600;
+  --schedule-card-live-text-margin-left: 4px;
 
-  --zeen-schedule-card-time-text: var(--main-small-text);
-  --zeen-schedule-card-time-text-line-height: 1.42;
-  --zeen-schedule-card-time-text-font-weight: 400;
+  --schedule-card-time-text: var(--main-small-text);
+  --schedule-card-time-text-line-height: 1.42;
+  --schedule-card-time-text-font-weight: 400;
 
-  --zeen-schedule-card-button-size: 16px;
-  --zeen-schedule-card-footer-margin-top: 30px;
+  --schedule-card-button-size: 16px;
+  --schedule-card-footer-margin-top: 30px;
 
   @include phones {
-    --zeen-schedule-card-padding-vertical: 10px;
-    --zeen-schedule-card-padding-horizontal: 15px;
-    --zeen-schedule-card-live-text: 10px;
-    --zeen-schedule-card-live-text-line-height: 1.4;
+    --schedule-card-padding-vertical: 10px;
+    --schedule-card-padding-horizontal: 15px;
+    --schedule-card-live-text: 10px;
+    --schedule-card-live-text-line-height: 1.4;
   }
 
   /* Цвета */
-  --zeen-schedule-card-color: var(--main-color);
-  --zeen-schedule-card-color-hold: rgba(24, 24, 24, 0.9);
-  --zeen-schedule-card-color-done: rgba(24, 24, 24, 0.9);
-  --zeen-schedule-card-box-shadow-color: rgba(0, 0, 0, 0.05);
+  --schedule-card-color: var(--main-color);
+  --schedule-card-color-hold: rgba(24, 24, 24, 0.9);
+  --schedule-card-color-done: rgba(24, 24, 24, 0.9);
+  --schedule-card-box-shadow-color: rgba(0, 0, 0, 0.05);
 
-  --zeen-schedule-card-live-color: var(--main-light);
-  --zeen-schedule-card-text-color: var(--main-light);
-  --zeen-schedule-card-text-color-hold: var(--main-light);
-  --zeen-schedule-card-text-color-done: var(--main-light);
+  --schedule-card-live-color: var(--main-light);
+  --schedule-card-text-color: var(--main-light);
+  --schedule-card-text-color-hold: var(--main-light);
+  --schedule-card-text-color-done: var(--main-light);
 
-  --zeen-schedule-card-live-img-color: var(--main-danger-color);
-  --zeen-schedule-card-button-color: var(--main-light);
-  --zeen-schedule-card-button-color-hold: var(--main-color);
-  --zeen-schedule-card-button-color-done: var(--main-color);
+  --schedule-card-live-img-color: var(--main-danger-color);
+  --schedule-card-button-color: var(--main-light);
+  --schedule-card-button-color-hold: var(--main-color);
+  --schedule-card-button-color-done: var(--main-color);
 }
 </style>
 
@@ -200,15 +200,15 @@ export default {
 
 .schedule-card {
   box-sizing: border-box;
-  min-width: var(--zeen-schedule-card-min-width);
+  min-width: var(--schedule-card-min-width);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  padding: var(--zeen-schedule-card-padding-vertical) var(--zeen-schedule-card-padding-horizontal);
-  background: var(--zeen-schedule-card-color);
-  border-radius: var(--zeen-schedule-card-border-radius);
-  box-shadow: 0px 3px 20px var(--zeen-schedule-card-box-shadow-color);
+  padding: var(--schedule-card-padding-vertical) var(--schedule-card-padding-horizontal);
+  background: var(--schedule-card-color);
+  border-radius: var(--schedule-card-border-radius);
+  box-shadow: 0px 3px 20px var(--schedule-card-box-shadow-color);
   cursor: pointer;
 
   &__wrapper-text {
@@ -226,19 +226,19 @@ export default {
     overflow: hidden;
 
     margin: 0;
-    font-size: var(--zeen-schedule-card-title-size);
-    line-height: var(--zeen-schedule-card-title-line-height);
-    font-weight: var(--zeen-schedule-card-title-font-weight);
-    color: var(--zeen-schedule-card-text-color);
+    font-size: var(--schedule-card-title-size);
+    line-height: var(--schedule-card-title-line-height);
+    font-weight: var(--schedule-card-title-font-weight);
+    color: var(--schedule-card-text-color);
   }
 
   &__subtitle {
     margin: 0;
-    font-size: var(--zeen-schedule-card-subtitle-size);
-    line-height: var(--zeen-schedule-card-subtitle-line-height);
-    font-weight: var(--zeen-schedule-card-subtitle-font-weight);
-    color: var(--zeen-schedule-card-text-color);
-    margin-top: var(--zeen-schedule-card-subtitle-margin-top);
+    font-size: var(--schedule-card-subtitle-size);
+    line-height: var(--schedule-card-subtitle-line-height);
+    font-weight: var(--schedule-card-subtitle-font-weight);
+    color: var(--schedule-card-text-color);
+    margin-top: var(--schedule-card-subtitle-margin-top);
     &:nth-child(3) {
       margin-top: 0;
     }
@@ -249,7 +249,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin-top: var(--zeen-schedule-card-footer-margin-top);
+    margin-top: var(--schedule-card-footer-margin-top);
     &_mini {
       .schedule-card__time {
         flex: 0 0 auto;
@@ -262,35 +262,35 @@ export default {
 
   &__live {
     flex: 0 0 auto;
-    padding: var(--zeen-schedule-card-live-padding-vertical) var(--zeen-schedule-card-live-padding-horizontal);
-    margin-right: var(--zeen-schedule-card-live-margin-right);
+    padding: var(--schedule-card-live-padding-vertical) var(--schedule-card-live-padding-horizontal);
+    margin-right: var(--schedule-card-live-margin-right);
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    background: var(--zeen-schedule-card-live-color);
-    border-radius: var(--zeen-schedule-card-live-border-radius);
+    background: var(--schedule-card-live-color);
+    border-radius: var(--schedule-card-live-border-radius);
   }
 
   &__live-img {
-    width: var(--zeen-schedule-card-live-img-size);
-    height: var(--zeen-schedule-card-live-img-size);
-    fill: var(--zeen-schedule-card-live-img-color);
+    width: var(--schedule-card-live-img-size);
+    height: var(--schedule-card-live-img-size);
+    fill: var(--schedule-card-live-img-color);
   }
 
   &__live-text {
-    font-size: var(--zeen-schedule-card-live-text);
-    line-height: var(--zeen-schedule-card-live-text-line-height);
-    font-weight: var(--zeen-schedule-card-live-text-font-weight);
-    color: var(--zeen-schedule-card-live-img-color);
-    margin-left: var(--zeen-schedule-card-live-text-margin-left);
+    font-size: var(--schedule-card-live-text);
+    line-height: var(--schedule-card-live-text-line-height);
+    font-weight: var(--schedule-card-live-text-font-weight);
+    color: var(--schedule-card-live-img-color);
+    margin-left: var(--schedule-card-live-text-margin-left);
   }
 
   &__time {
     flex: 1 1 auto;
-    color: var(--zeen-schedule-card-text-color);
-    font-size: var(--zeen-schedule-card-time-text);
-    line-height: var(--zeen-schedule-card-time-text-line-height);
-    font-weight: var(--zeen-schedule-card-time-text-font-weight);
+    color: var(--schedule-card-text-color);
+    font-size: var(--schedule-card-time-text);
+    line-height: var(--schedule-card-time-text-line-height);
+    font-weight: var(--schedule-card-time-text-font-weight);
     white-space: nowrap;
     &_mini {
       margin-top: 10px;
@@ -298,41 +298,41 @@ export default {
   }
 
   &__button {
-    width: var(--zeen-schedule-card-button-size);
-    height: var(--zeen-schedule-card-button-size);
-    fill: var(--zeen-schedule-card-button-color);
+    width: var(--schedule-card-button-size);
+    height: var(--schedule-card-button-size);
+    fill: var(--schedule-card-button-color);
     cursor: pointer;
   }
 
   &__hold {
-    background: var(--zeen-schedule-card-color-hold);
+    background: var(--schedule-card-color-hold);
     .schedule-card__title {
-      color: var(--zeen-schedule-card-text-color-hold);
+      color: var(--schedule-card-text-color-hold);
     }
     .schedule-card__subtitle {
-      color: var(--zeen-schedule-card-text-color-hold);
+      color: var(--schedule-card-text-color-hold);
     }
     .schedule-card__time {
-      color: var(--zeen-schedule-card-button-color-hold);
+      color: var(--schedule-card-button-color-hold);
     }
     .schedule-card__button {
-      fill: var(--zeen-schedule-card-button-color-hold);
+      fill: var(--schedule-card-button-color-hold);
     }
   }
 
   &__done {
-    background: var(--zeen-schedule-card-color-done);
+    background: var(--schedule-card-color-done);
     .schedule-card__title {
-      color: var(--zeen-schedule-card-text-color-done);
+      color: var(--schedule-card-text-color-done);
     }
     .schedule-card__subtitle {
-      color: var(--zeen-schedule-card-text-color-done);
+      color: var(--schedule-card-text-color-done);
     }
     .schedule-card__time {
-      color: var(--zeen-schedule-card-text-color-done);
+      color: var(--schedule-card-text-color-done);
     }
     .schedule-card__button {
-      fill: var(--zeen-schedule-card-button-color-done);
+      fill: var(--schedule-card-button-color-done);
     }
   }
 }
