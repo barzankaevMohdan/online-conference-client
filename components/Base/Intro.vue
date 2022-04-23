@@ -4,13 +4,12 @@
     :class='{[`s-intro__${theme}`]: theme}'
   )
     LayoutsContainer
-      .s-intro__relative
-        .s-intro__row
-          .s-intro__text-box
-            UiHeadline.s-intro__text(v-html='title' tag='h1')
-            UiHeadline.s-intro__text(v-html='description' tag='h4')
-          .s-intro__kv
-            slot(name='kv')
+      .s-intro__row
+        .s-intro__text-box
+          UiHeadline(v-html='title' tag='h1')
+          UiHeadline(v-html='description' tag='h4')
+        .s-intro__kv
+          slot(name='kv')
 </template>
 
 <script>
@@ -45,20 +44,6 @@ export default {
   background-size: cover;
   overflow: hidden;
 
-  &__relative {
-    position: relative;
-    padding: 142px 0 162px;
-    @include desktop() {
-      padding: 94px 0 116px;
-    }
-    @include tablets() {
-      padding: 110px 0 110px;
-    }
-    @include phones() {
-      padding: 52px 0 241px;
-    }
-  }
-
   &__row {
     display: flex;
     justify-content: space-between;
@@ -72,82 +57,66 @@ export default {
   }
 
   &__text-box {
-    z-index: 1;
+    width: 70%;
     @include phones() {
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-    }
-  }
-
-  &__text {
-    @include phones() {
-      text-align: center;
+      width: 100%;
+      margin-top: 50px;
     }
   }
 
   &__kv {
     display: flex;
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-
-    @include tablets() {
-      right: -100px;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    @include phones() {
+      width: 100%;
+      height: 220px;
+      margin-top: 30px;
     }
 
-    @include phones() {
-      right: 50%;
-      transform: translateX(50%);
-      top: auto;
-      bottom: 0;
-      height: 220px;
+    & img {
+      max-width: 100%;
+      max-height: 100%;
     }
   }
 
   &__schedule {
-    .s-intro__relative {
-      padding: 110px 0 90px;
-      @include desktop() {
-        padding: 95px 0 100px;
-      }
-      @include tablets() {
-        padding: 110px 0 85px;
-      }
-      @include phones() {
-        padding: 40px 0 54px;
-      }
-    }
-
-    .s-intro__text {
-      @include phones() {
-        text-align: left;
-      }
-    }
-
-    .s-intro__kv {
-      @include desktop() {
-        right: -15px;
+    .s-intro {
+      &__row {
+        @include phones() {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
       }
 
-      @include phones() {
-        height: 130px;
-        right: 0;
-        transform: translateX(0);
-      }
-    }
+      &__text-box {
+        @include tablets() {
+          --headline-size-h1: 36px;
+        }
 
-    .s-intro__row {
-      @include phones() {
-        align-items: flex-start;
-      }
-    }
+        @include phones() {
+          width: 50%;
+          align-items: flex-start;
+          margin-top: 0;
+        }
 
-    .s-intro__text-box {
-      @include phones() {
-        align-items: flex-start;
+        @include phones-small() {
+          --headline-size-h1: 22px;
+        }
+      }
+
+      &__kv {
+        @include phones() {
+          width: 50%;
+          height: 100%;
+          margin-top: 0;
+        }
       }
     }
   }

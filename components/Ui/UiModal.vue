@@ -113,7 +113,7 @@ export default {
   --modal-content-background: var(--main-positive-color);
   --modal-text-color: var(--main-light);
   --modal-title-color: var(--main-light);
-  --modal-close-color: var(--main-color);
+  --modal-close-color: var(--main-light);
   --modal-close-color-hover: var(--main-hover-color);
   --modal-close-color-click: var(--main-active-color);
   --modal-icon-color: var(--main-color);
@@ -186,6 +186,7 @@ export default {
     margin: 0;
     outline: none;
     cursor: pointer;
+    transition: 0.2s;
 
     &,
     &:focus,

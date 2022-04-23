@@ -68,7 +68,7 @@ export default {
     }
   },
   mounted() {
-    if(this.isActive) {
+    if(this.isActive && !this.phone) {
       this.observerFunc()
     }
   },
@@ -150,6 +150,11 @@ export default {
       }
     },
   },
+  computed: {
+    phone() {
+      return document.documentElement.clientWidth < 768
+    }
+  }
 }
 </script>
 

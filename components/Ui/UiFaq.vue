@@ -101,6 +101,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "~/styles/mixins.scss";
+
 :root {
   /* Размеры */
   --faq-row-title-size: var(--main-large-size);
@@ -111,6 +113,12 @@ export default {
   --faq-row-description-padding: 0 20px 40px 60px;
   --faq-radio-padding: 40px 50px 30px;
   --faq-row-border-width: 1px;
+  --faq-icon-size: 24px;
+
+  @include phones() {
+    --faq-radio-padding: 30px 25px;
+    --faq-icon-size: 16px;
+  }
 
   /* Цвета */
   --faq-row-title-color: var(--main-light);
@@ -216,15 +224,10 @@ export default {
   transition: 0.6s;
   color: var(--faq-row-icon-color);
 
-  svg {
+  & svg {
     fill: currentColor;
-  }
-
-  @include desktop {
-    & svg {
-      width: var(--faq-icon-width);
-      height: var(--faq-icon-height);
-    }
+    max-width: var(--faq-icon-size);
+    max-height: var(--faq-icon-size);
   }
 }
 

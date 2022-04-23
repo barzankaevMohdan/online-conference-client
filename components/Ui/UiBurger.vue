@@ -54,6 +54,7 @@ export default {
   background: var(--burger-background);
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
   outline: none;
   border: 0;
   cursor: pointer;
