@@ -86,7 +86,7 @@ export default {
   display: flex;
   flex: 0 0 auto;
   margin: auto;
-  padding: 30px var(--main-horizontal-padding);
+  padding: 30px 16px;
   pointer-events: none;
 }
 
@@ -98,7 +98,7 @@ export default {
   --modal-padding-top: 70px;
   --modal-padding-horizon: 50px;
   --modal-border-radius: 20px;
-  --modal-text-size: var(--main-text-size);
+  --modal-text-size: var(--main-size);
   --modal-text-line-height: 1.5;
   --modal-title-size: var(--main-larger-size);
   --modal-title-line-height: 1.3;

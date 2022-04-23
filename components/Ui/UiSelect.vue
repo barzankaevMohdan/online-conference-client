@@ -134,7 +134,7 @@ export default {
 
 :root {
   /* Размеры */
-  --select-label-size: 21px;
+  --select-label-size: var(--main-input-label-size);
   --select-border-radius: var(--main-input-radius);
   --select-border-width: var(--main-input-border-width);
   --select-drop-max-width: 268px;
@@ -142,7 +142,7 @@ export default {
   --select-opened-text-weight: var(--select-text-weight);
   --select-opened-text-opacity: 1;
   --select-search-padding: 15px 25px;
-  --select-search-font-size: 16px;
+  --select-search-font-size: var(--main-size);
   --select-search-border-radius: 10px;
 
   /* Цвета */
@@ -286,7 +286,7 @@ export default {
   ::v-deep .vs__dropdown-option {
     position: relative;
     padding: 8px 30px;
-    font-size: 16px;
+    font-size: var(--select-search-font-size);
     line-height: 24px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -314,7 +314,7 @@ export default {
 
   ::v-deep .vs__no-options {
     padding: 14px 20px;
-    font-size: 16px;
+    font-size: var(--select-search-font-size);
     line-height: 24px;
     text-align: center;
   }

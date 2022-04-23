@@ -62,7 +62,7 @@ export default {
 
 :root {
   /* Размеры */
-  --speaker-item-name-size: var(--main-text-size);
+  --speaker-item-name-size: var(--main-size);
   --speaker-item-post-size: var(--main-smallest-text);
   --speaker-item-company-size: var(--main-smallest-text);
 
@@ -75,7 +75,7 @@ export default {
   @include phones {
     /* Размеры */
     --speaker-item-image-size: 40px;
-    --speaker-item-name-size: var(--main-text-size);
+    --speaker-item-name-size: var(--main-size);
     --speaker-item-post-size: var(--main-smallest-text);
 
   }

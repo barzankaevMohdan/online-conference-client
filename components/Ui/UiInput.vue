@@ -101,7 +101,8 @@ export default {
   --text-input-horizontal-padding: 25px;
   --text-input-border-width: 1px;
   --text-input-label-size: var(--main-input-label-size);
-  --text-input-label-line-height: 1.4;
+  --text-input-text-size: var(--main-size);
+  --text-input-border-radius: var(--main-input-radius);
 
   /* Цвета кнопки */
   --text-input-label-base-color: var(--main-light);
@@ -139,7 +140,7 @@ export default {
   &__label {
     display: block;
     font-size: var(--text-input-label-size);
-    line-height: var(--text-input-label-line-height);
+    line-height: 1.4;
     color: var(--text-input-label-color);
     margin: var(--main-input-label-offset-top) 0 0 var(--main-input-label-offset-left);
   }
