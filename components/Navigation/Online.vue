@@ -13,7 +13,7 @@ export default {
   methods: {
     showModalNowOnline() {
       this.$emit('open')
-      this.$vfm.show('nowOnline')
+      this.$vfm.show('now-online')
     },
   },
 }

@@ -3,8 +3,10 @@
     BaseIntro(
       :src='require("~/assets/img/demo/intro/intro-night.jpg")'
       title='IT Nights 2022'
+      :description='activeStreamName'
     )
-      template(v-slot:description) {{activeStreamName}}
+      template(#kv)
+        img(:src="require('~/assets/img/demo/intro/kv-2.svg')")
     SectionPlayer
     SectionProgram
     SectionFaq

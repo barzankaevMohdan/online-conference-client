@@ -1,5 +1,5 @@
 <template lang="pug">
-  header.header(:class="{'header_absolute': absolute}")
+  header.header
     .header__content
       .header__logo
         BaseLogoWithLink
@@ -7,7 +7,8 @@
         BaseNavigation(v-if="isAuth")
       .header__actions
         .header__user(v-if="isAuth") {{user.name}}
-        BaseLoginLogOutBtns.header__button
+        .header__button
+          BaseLoginLogOutBtns
         UiBurger.header__burger(
           @click-menu="sidebar = !sidebar"
           :showMenu="sidebar"
@@ -24,12 +25,6 @@
 
 export default {
   name: 'Header',
-  props: {
-    absolute: {
-      type: Boolean,
-      default: false,
-    },
-  },
   data() {
     return {
       sidebar: false,
@@ -50,7 +45,11 @@ export default {
 @import '~/styles/mixins.scss';
 
 .header {
-  padding: 20px 85px 20px 85px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  padding: 20px 85px;
   background: var(--dark-2);
   width: 100%;
 
@@ -67,13 +66,6 @@ export default {
   @include phones() {
     padding-right: 15px;
     padding-left: 15px;
-  }
-
-  &_absolute {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 100;
   }
 
   &__logo {
@@ -100,7 +92,7 @@ export default {
 
   &__button {
     @include tablets() {
-      display: none !important;
+      display: none;
     }
   }
 

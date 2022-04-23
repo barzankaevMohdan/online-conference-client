@@ -8,7 +8,6 @@
       'text-input_correct': correct,
     }"
   >
-    <label v-if="error || correct" class="text-input__label" :for="componentId">{{ error || correct }}</label>
     <div class="text-input__wrapper">
       <input
         class="text-input__input"
@@ -34,6 +33,7 @@
         <slot name="img"></slot>
       </div>
     </div>
+    <label v-if="error || correct" class="text-input__label" :for="componentId">{{ error || correct }}</label>
   </div>
 </template>
 
@@ -141,7 +141,7 @@ export default {
     font-size: var(--text-input-label-size);
     line-height: var(--text-input-label-line-height);
     color: var(--text-input-label-color);
-    margin: 0 0 var(--main-input-label-offset-bottom) var(--main-input-label-offset-left);
+    margin: var(--main-input-label-offset-top) 0 0 var(--main-input-label-offset-left);
   }
 
   &__wrapper {

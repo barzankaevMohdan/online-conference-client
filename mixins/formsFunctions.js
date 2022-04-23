@@ -53,24 +53,6 @@ export default {
         return
       }
 
-      if (['not_enough_points'].includes(serverError.message)) {
-        this.$vfm.show('error-shop', {
-          title: this.$t('modals.not_enough_points.title'),
-          points: this.notEnoughPoints,
-          icon: 'error',
-        })
-        return
-      }
-
-      if (['out_of_stock'].includes(serverError.message)) {
-        this.$vfm.show('error-shop', {
-          title: this.$t('modals.sold_out.title'),
-          description: this.$t('modals.sold_out.description'),
-          icon: 'soldout',
-        })
-        return
-      }
-
       // если не удалось найти соответствующую модалку - выводим ошибку под формой по умолчанию
       throw new Error(serverError.message)
     },

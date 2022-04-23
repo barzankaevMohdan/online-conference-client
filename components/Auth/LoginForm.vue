@@ -13,8 +13,8 @@
       :error='errors["password"]'
       placeholder="Пароль"
     )
+    span.auth-form__error(v-if='serverError') {{serverError}}
     .auth-form__footer
-      span.auth-form__error(v-if='serverError') {{serverError}}
       UiButton(
         size='parentWidth'
         :isLoading='isLoading'
@@ -44,7 +44,7 @@ export default {
       this.$vfm.hide('authenticate')
     },
     forgotYourPassword() {
-      this.$vfm.show('password-forgot', this.data.login)
+      this.$vfm.show('password-forgot', this.data.login) // to do
     },
   },
   computed: {
@@ -78,14 +78,10 @@ export default {
 
   &__error {
     display: block;
-    font-size: 10px;
-    line-height: 14px;
+    font-size: var(--main-input-label-size);
+    line-height: 1.4;
     color: var(--main-danger-color);
-    margin: 0 0 25px 25px;
+    margin: var(--main-input-label-offset-top) 0 0 var(--main-input-label-offset-left);
   }
-}
-
-.not-now {
-  text-align: center;
 }
 </style>

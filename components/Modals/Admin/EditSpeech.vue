@@ -70,7 +70,6 @@ export default {
   data() {
     return {
       speech: null,
-      hall: null,
       status: null,
       isLoading: false,
     }
@@ -86,6 +85,9 @@ export default {
     })
   },
   methods: {
+    close() {
+      this.$vfm.hide('edit-speech')
+    },
     async editSpeech() {
       this.isLoading = true
       const data = {
@@ -101,17 +103,16 @@ export default {
       this.socket.emit(ACTIONS.DELETE_SPEECH, this.speech.id)
       await this.$store.dispatch('speech/deleteSpeech', this.speech.id)
       this.isLoading = false
-      this.$vfm.hide('edit-speech')
+      this.close()
     },
     editSpeaker(speaker) {
-      this.$vfm.hide('edit-speech')
+      this.close()
       this.$vfm.show('edit-speaker', speaker)
     },
     beforeOpen(event) {
       const data = JSON.parse(JSON.stringify(event.ref.params))
-      this.speech = data.speech
-      this.hall = data.hall
-      this.status = this.statuses.find(status => status.value === data.speech.status)
+      this.speech = data
+      this.status = this.statuses.find(status => status.value === data.status)
     },
   },
   computed: {

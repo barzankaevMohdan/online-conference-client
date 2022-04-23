@@ -1,14 +1,12 @@
 <template lang='pug'>
   .main
     Nuxt
-    AllMainModalsHere
+    ModalsAllMainModalsHere
 </template>
 
 <script>
-import AllMainModalsHere from '../components/Modals/AllMainModalsHere.vue'
 
 export default {
-  components: {AllMainModalsHere},
   async beforeCreate() {
     if (localStorage.getItem('refreshToken')) {
       await this.$store.dispatch('user/checkAuth')

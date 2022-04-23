@@ -1,79 +1,29 @@
-<template  lang='pug'>
-  .zeen-chat
-    UiTab(:tab-options='tabOptions')
-      template(#tab-name)
-        slot(name='tab-name')
-      template(#tab-content-chat)
-        slot(name='tab-content-chat')
-          ChatContainer(
-            key='chat'
-            :data='data'
-            v-on='chatBlockEvents'
-            v-bind='$props'
-          )
-            template(v-for='(slot, slotName) in chatSlots' v-slot:[slotName]='params')
-              slot(:name='`${chatPrefix}${slotName}`' v-bind='params')
-      template(#tab-content-questions)
-        slot(name='tab-content-questions')
-          ChatContainer(
-            key='questions'
-            :data='speakerData'
-            isSpeakerSection
-            v-on='chatBlockEvents'
-            v-bind='$props'
-          )
-            template(#chat-footer)
-              slot(name='chat-footer')
-                UiButton.zeen-chat__question-btn(
-                  @click.prevent='$emit("startQuestion")'
-                  no-radius
-                ) {{ speakerBtnText }}
-            template(v-for='(slot, slotName) in chatSlots' v-slot:[slotName]='params')
-              slot(:name='`${chatPrefix}${slotName}`' v-bind='params')
+<template lang='pug'>
+  .chat
+    .chat__header Чат
+    .chat__content
+      UiChatContainer(
+        :data='data'
+        v-on='chatBlockEvents'
+        v-bind='$props'
+      )
 </template>
 
 <script>
-import {createEventsFor, createSlotsFor} from '../../../helpers/createBlockData'
-import ChatContainer from './ChatContainer'
+import {createEventsFor} from '~/helpers/createBlockData'
 
 export default {
-  name: 'ZeenChat',
-  components: {
-    ChatContainer,
-  },
+  name: 'Chat',
   props: {
-    tabOptions: {
-      type: Array,
-      default: () => [],
-    },
     data: {
       type: Array,
       default: () => [],
     },
-    speakerData: {
-      type: Array,
-      default: () => [],
-    },
-    speakerBtnText: {
-      type: String,
-      default: 'Задать вопрос',
-    },
-    sortByNew: String,
-    sortByLikes: String,
-    hideLikes: Boolean,
-    hideSort: Boolean,
     newMessagePlaceholder: String,
-    messageProps: Object,
   },
   computed: {
     chatBlockEvents() {
-      return createEventsFor(this, this.chatPrefix)
-    },
-    chatPrefix() {
-      return 'chatBlock_'
-    },
-    chatSlots() {
-      return createSlotsFor(this, this.chatPrefix)
+      return createEventsFor(this, 'chatBlock_')
     },
   },
 }
@@ -81,28 +31,43 @@ export default {
 <style lang="scss">
 :root {
   /* Размеры */
-  --zeen-chat-scrollable-height: 511px;
-  --zeen-chat-sm-gap: 5px;
-  --zeen-chat-md-gap: 10px;
-  --zeen-chat-lg-gap: 20px;
-  --zeen-chat-xl-gap: 30px;
+  --chat-sm-gap: 5px;
+  --chat-md-gap: 10px;
+  --chat-lg-gap: 20px;
+  --chat-xl-gap: 30px;
 
   /* Цвета */
-  --zeen-chat-general-color: var(--main-color);
-  --zeen-chat-new-message-icon-bgcolor: var(--main-danger-color);
-  --zeen-chat-white: var(--main-light);
+  --chat-general-color: var(--main-color);
+  --chat-white: var(--main-light);
 }
 </style>
 <style lang="scss" scoped>
-.zeen-chat {
-  --zeen-tab-full-size: calc(100% + 4px);
 
+.chat {
+  position: relative;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
   flex: 1 1 auto;
   width: 100%;
-  height: 100%;
 
-  &__question-btn {
-    height: var(--player-footer-height)
+  &__content {
+    position: relative;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    background: var(--dark-2);
+  }
+
+  &__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--chat-md-gap);
+    font-size: var(--main-smallest-text);
+    color: var(--main-color);
+    border-bottom: 1px solid var(--main-color);
+    background: var(--dark-2);
   }
 }
 </style>

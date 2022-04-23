@@ -14,8 +14,8 @@ export default {
     },
   },
   computed: {
-    streamsDayWithSpeechesAndSpeakers() {
-      const arrStreams = this.streamsProgram?.map((stream) => {
+    streamsWithSpeechesAndSpeakers() {
+      const arrStreams = this.streams?.map((stream) => {
         return {
           ...stream,
           speeches: this.getSpeechesWithSpeakers(stream.id),
@@ -23,7 +23,7 @@ export default {
       })
       return arrStreams ?? []
     },
-    streamsProgram() {
+    streams() {
       return this.$store.getters['stream/allStreams']
     },
   },

@@ -125,7 +125,7 @@ export default {
     font-size: var(--text-area-label-size);
     line-height: var(--text-area-label-line-height);
     color: var(--text-area-label-color);
-    margin: 0 0 var(--main-input-label-offset-bottom) var(--main-input-label-offset-left);
+    margin: var(--main-input-label-offset-top) 0 0 var(--main-input-label-offset-left);
   }
 
   &__wrapper {

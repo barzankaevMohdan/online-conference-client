@@ -1,9 +1,7 @@
 <template lang='pug'>
   LayoutsPageContent
-    LayoutsHeader(
-      :absolute='absoluteHeader'
-    )
-    .content.content-gap(v-if='absoluteHeader && gap')
+    LayoutsHeader
+    .content.content-gap(v-if='gap')
       slot
     .content(v-else)
       slot
@@ -14,7 +12,6 @@
 export default {
   name: 'PageWithHeader',
   props: {
-    absoluteHeader: Boolean,
     gap: {
       type: Boolean,
       default: true,
@@ -22,6 +19,18 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+@import '~/styles/mixins.scss';
+
+:root {
+  --header-gap: 94px;
+  
+  @include tablets() {
+    --header-gap: 81px;
+  }
+}
+</style>
 
 <style scoped lang="scss">
 @import '~/styles/mixins.scss';
@@ -32,11 +41,7 @@ export default {
   flex: 1 1 auto;
 
   &-gap {
-    padding-top: 94px;
-
-    @include phones() {
-      padding-top: 81px;
-    }
+    padding-top: var(--header-gap);
   }
 }
 </style>

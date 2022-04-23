@@ -4,6 +4,7 @@
     ModalsErrorLoginExist
     ModalsErrorUserNotFound
     ModalsNowOnline
+    ModalsSpeech
     ModalsUserBadge
     ModalsAdminCreateSpeech
     ModalsAdminCreateStream
@@ -16,13 +17,7 @@
 <script>
 export default {
   name: 'AllMainModalsHere',
-  data() {
-    return {
-      mountedKey: false,
-    }
-  },
   mounted() {
-    this.mountedKey = true
     const event = new Event('modalsReady', {bubbles: true})
     this.$refs.modalRoot.dispatchEvent(event)
   },

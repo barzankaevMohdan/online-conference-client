@@ -13,7 +13,7 @@
     template(v-slot="{ params }")
       .modal__content
         slot(name='close' :close="close")
-          UiActionIcon.modal__close(@click.prevent='close')
+          button.modal__close(@click.prevent='close')
             SvgIcon(name='close')
         .modal__icon(v-if='hasSlot("icon")')
           slot.modal__icon(name='icon')
@@ -180,6 +180,12 @@ export default {
     position: absolute;
     top: var(--modal-close-gap);
     right: var(--modal-close-gap);
+    border: 0;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    cursor: pointer;
 
     &,
     &:focus,
@@ -197,8 +203,8 @@ export default {
     }
 
     svg {
-      width: var(--modal-close-size);
-      height: var(--modal-close-size);
+      max-width: var(--modal-close-size);
+      max-height: var(--modal-close-size);
       fill: currentColor;
     }
   }

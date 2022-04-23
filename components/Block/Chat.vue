@@ -1,6 +1,5 @@
 <template  lang='pug'>
-  Chat(
-    :tab-options="tabOptions"
+  UiChat(
     :data="messages"
     @chatBlock_sendMessage="sendMessage"
     @chatBlock_loadMoreMessages="loadMoreMessages"
@@ -9,7 +8,6 @@
 </template>
 
 <script>
-import Chat from '../Ui/Chat/index'
 import socketIO from "~/mixins/socketIO";
 import actualStream from "~/mixins/actualStream";
 import {getCurrentTime} from "~/helpers/timeConverter";
@@ -17,29 +15,11 @@ import {ACTIONS} from "~/helpers/socketActions.js";
 
 export default {
   name: 'BlockChat',
-  components: {
-    Chat,
-  },
   mixins: [actualStream, socketIO],
-  data() {
-    return {
-      tabOptions: [
-        {
-          id: 'chat',
-          data:{
-            title: 'Чат',
-            isAvailabel: true,
-            emptyText: "Будьте первыми в чате",
-          },
-        },
-      ],
-    }
-  },
   async mounted() {
     await this.$store.dispatch('chat/getRoomMessages', this.activeStreamId)
     this.socket.emit(ACTIONS.JOIN_CHAT, this.activeStreamId)
     this.socket.on(ACTIONS.MESSAGE, (message) => {
-      console.log(message);
       this.$store.commit('chat/newMessage', message)
     })
   },
@@ -54,16 +34,15 @@ export default {
         time: getCurrentTime('HH:mm'),
         user: this.user
       }
-      this.socket.emit(ACTIONS.MESSAGE, {...data})
-      await this.$store.dispatch('chat/sendMessage', data)
+      await this.$store.dispatch('chat/sendMessage', data).then(data => {
+        this.socket.emit(ACTIONS.MESSAGE, data)
+      })
     },
     async loadMoreMessages(callback) {
       const messages = await this.$store.dispatch('chat/getRoomMessages', this.activeStreamId)
       if (!messages.length) {
-        // eslint-disable-next-line node/no-callback-literal
         callback(true)
       } else {
-        // eslint-disable-next-line node/no-callback-literal
         callback(false)
       }
     }

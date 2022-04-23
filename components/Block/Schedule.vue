@@ -1,20 +1,10 @@
 <template lang="pug">
-  section.zeen-schedule
-    UiSpeechModal(
-      name='ZeenSchedule'
-      :speech='modalSpeech'
-      :hall='modalHall'
-      v-bind="speechModalProps"
-      @watchSpeech='watchSpeech'
-      @addToPersonalSchedule='addToPersonalSchedule'
-      @removeFromPersonalSchedule='removeFromPersonalSchedule'
-      @edit='edit'
-    )
+  section.schedule
     LayoutsContainer
-      .zeen-schedule__top
+      .schedule__top
         slot(name='title')
-        .zeen-schedule__arrows
-          UiActionIcon.zeen-schedule__arrow(
+        .schedule__arrows
+          UiActionIcon.schedule__arrow(
             size='big'
             @click='prev'
             :disabled='prevDisabled'
@@ -26,41 +16,41 @@
             :disabled='nextDisabled'
           )
             SvgIcon(name="arrow-slider")
-    .zeen-schedule__container
-      .zeen-schedule__hall(
+    .schedule__container
+      .schedule__hall(
         v-for='(hall, i) in streams' :key='i'
         :class='activeHall[i]'
         @click='hallClick(hall)'
         :style='hallLinkStyles[i]'
       ) {{hall.name}}
         slot(name='hall-arrow')
-          SvgIcon.zeen-schedule__hall-arrow(name="arrow-slim")
-      .zeen-schedule__main(ref='schWidth')
+          SvgIcon.schedule__hall-arrow(name="arrow")
+      .schedule__main(ref='schWidth')
         .swiper-slider
           .swiper-container(ref='slider')
             .swiper-wrapper(:style='{transform: `translateX(${customTranslate}px)`}')
               .swiper-slide
-                .zeen-schedule__wrapper
-                  .zeen-schedule__online-line(
+                .schedule__wrapper
+                  .schedule__online-line(
                     :style='onlineLeftSpacing'
                     v-if='onlineLeftSpacing'
                   )
-                      span.zeen-schedule__online-circle
-                        span.zeen-schedule__online-img
+                      span.schedule__online-circle
+                        span.schedule__online-img
                           slot(name='online-line-icon')
                             SvgIcon(name="online-icon")
-                  ul.zeen-schedule__col(ref='timeRow')
-                    li.zeen-schedule__time(
+                  ul.schedule__col(ref='timeRow')
+                    li.schedule__time(
                       v-for='(time, idx) in timeArray'
                       :key='idx'
                       ref='timeCol'
                       :class='timeRowDone[idx]'
                     ) {{time}}
-                      span.zeen-schedule__time-line(ref='colLine')
+                      span.schedule__time-line(ref='colLine')
                         svg(width='100%' height='100%' viewBox='0 0 1 730' fill='none' xmlns='http://www.w3.org/2000/svg')
                           line(x1='0.5' y1='-2.12908e-08' x2='0.50005' y2='1113' stroke-dasharray='6 10')
-                  .zeen-schedule__row(v-for='(hall, i) in streams' :key='i' ref='cardsRow')
-                    UiScheduleCard.zeen-schedule__card(
+                  .schedule__row(v-for='(hall, i) in streams' :key='i' ref='cardsRow')
+                    UiScheduleCard.schedule__card(
                       v-for='(speech, i) in hall.speeches'
                       :key='i'
                       :speech='speech'
@@ -79,13 +69,12 @@
                       template(#button-icon)
                         slot(name='button-icon-card')
               .swiper-slide
-                span.zeen-schedule__span-slider
+                span.schedule__span-slider
 </template>
 
 <script>
 import Swiper from 'swiper/bundle'
-import {getMinutes, toStringTime, getCurrentTime} from '../../helpers/timeConverter'
-import {SPEECH_TIME_FORMAT} from '../../store/speech'
+import {getMinutes, toStringTime, getCurrentTime} from '~/helpers/timeConverter'
 
 export default {
   name: 'Schedule',
@@ -107,7 +96,6 @@ export default {
       default: 50,
     },
     cardSpeakersText: Object,
-    speechModalProps: Object,
     timeRowStep: {
       type: Number,
       default: 5,
@@ -120,166 +108,12 @@ export default {
       diffBetweenSliderAndSch: 0,
       nextDisabled: false,
       prevDisabled: false,
-      modalSpeech: null,
-      modalHall: null,
       timeCoordsAndTime: [],
       colWidthAndTimeArray: null,
       coordsToHall: [],
       date: null,
       intervalToCurrentTime: null,
     }
-  },
-  computed: {
-    // получаем координаты для линии показывающее текущее время
-    onlineLineCoords() {
-      const timeColWidthAndDiff = this.timeArray.map((time, i) => {
-        if (i >= this.timeArray.length - 1) return null
-        const diff = getMinutes(this.timeArray[i + 1]) - getMinutes(time)
-        return {
-          width: this.colWidthAndTimeArray?.width / diff,
-          diff,
-        }
-      })
-      let now = getMinutes(this.date) - this.beginTime
-      let coord = this.colWidthAndTimeArray?.width * 0.25
-      timeColWidthAndDiff.forEach((item) => {
-        switch (true) {
-          case now > item?.diff:
-            coord += item?.diff * item?.width
-            break
-          case now > 0:
-            coord += now * item?.width
-            break
-        }
-        now -= item?.diff
-      })
-      return coord
-    },
-    // получаем массив для временной шкалы
-    timeArray() {
-      let speechesTime = this.speechesTime
-      // Дополнительное время для временной шкалы
-      this.speechesTimeBeginEnd.forEach((speech) => {
-        // Разница между началом спича и окончанием
-        let diff = speech.time_end - speech.time_begin
-        // Временные отрезки которые будут добавлены между началом спича и окончанием
-        const timeStep = 5
-        const bigTimeStep = 10
-        let count = 1
-        const toMoreSteps = () => {
-          diff -= timeStep
-          ++count
-          speechesTime.push(diff + speech.time_begin)
-          if (diff >= bigTimeStep && count < this.timeRowStep) {
-            toMoreSteps()
-          }
-        }
-        switch (true) {
-          case diff < bigTimeStep && diff > timeStep:
-            speechesTime.push(bigTimeStep - diff + speech.time_begin)
-            break
-          case diff >= bigTimeStep:
-            toMoreSteps()
-        }
-      })
-      // Удаляем одинаковые временные отрезки и сортируем по возрастанию
-      speechesTime = [...new Set(speechesTime)].sort((a, b) => a - b)
-      // Преобразуем минуты в часовой формат
-      speechesTime = speechesTime.map((step) => toStringTime(step * 60 * 1000, SPEECH_TIME_FORMAT))
-      return speechesTime
-    },
-    // получаем всех спичей со всех стримов
-    speeches() {
-      const arrSpeeches = []
-      this.streams.forEach((stream) => {
-        stream.speeches?.forEach((speech) => arrSpeeches.push(speech))
-      })
-      return arrSpeeches
-    },
-    // получаем id первого по времение онлайн спича из всех стримов
-    onlineCardId() {
-      const arrOnlineCards = []
-      this.speeches.forEach((speech) => {
-        if (speech.status === 'online') {
-          arrOnlineCards.push(speech)
-        }
-      })
-      if (arrOnlineCards?.length) {
-        const minTime = Math.min(...arrOnlineCards.map((card) => getMinutes(card.time_begin)))
-        const firstOnlineCard = arrOnlineCards.find((card) => {
-          if (getMinutes(card.time_begin) === minTime) {
-            return card
-          } return null
-        })
-        return firstOnlineCard?.id
-      }
-      return 0
-    },
-    // получаем времена спичей в формате начало спича и конец
-    speechesTimeBeginEnd() {
-      const speechesTimeBeginEnd = []
-      this.speeches.forEach((speech) => {
-        speechesTimeBeginEnd.push({
-          time_begin: getMinutes(speech.time_begin),
-          time_end: getMinutes(speech.time_end),
-        })
-      })
-      return speechesTimeBeginEnd
-    },
-    // получаем все времена спичей
-    speechesTime() {
-      const speechTimeArr = []
-      this.speeches.forEach((speech) => {
-        speechTimeArr.push(getMinutes(speech.time_begin))
-        speechTimeArr.push(getMinutes(speech.time_end))
-      })
-      return speechTimeArr
-    },
-    // получаем время начала первого спича
-    beginTime() {
-      return Math.min(...this.speechesTime)
-    },
-    // получаем время окончания последнего спича
-    endTime() {
-      return Math.max(...this.speechesTime)
-    },
-    // меняем класс у времени если текущее время больше
-    timeRowDone() {
-      const arrTimeDone = this.timeCoordsAndTime.map((item) => {
-        return this.onlineLineCoords > item.coord ? 'zeen-schedule__time_done' : ''
-      })
-      return arrTimeDone ?? []
-    },
-    // меняем класс у активного зала
-    activeHall() {
-      return this.streams.map((stream) => {
-        if (stream.id === this.activeStreamId) {
-          return 'zeen-schedule__hall_active'
-        }
-        return undefined
-      })
-    },
-    hallLinkStyles() {
-      return this.streams.map((_, i) => {
-        return {top: this.coordsToHall[i] + 'px'}
-      })
-    },
-    // меняем поизицию у линии показывающее текущее время в соответсвии с полученными координатами
-    onlineLeftSpacing() {
-      return this.onlineLineCoords ? {left: `${this.onlineLineCoords}px`} : false
-    },
-  },
-  watch: {
-    onlineCardId() {
-      setTimeout(() => {
-        this.updateSlider()
-      }, 1000)
-    },
-    streams() {
-      setTimeout(() => {
-        this.updateSlider()
-      }, 1000)
-    },
   },
   async mounted() {
     await this.$nextTick()
@@ -382,35 +216,13 @@ export default {
       }
     },
     cardClick(data) {
-      this.$vfm.show('ZeenSchedule')
-      this.modalSpeech = data.speech
-      this.modalHall = data.hall
       this.$emit('cardClick', data)
     },
     cardButtonClick(data) {
-      if (data.speech.status === 'hold') {
-        this.$vfm.show('ZeenSchedule')
-        this.modalSpeech = data.speech
-        this.modalHall = data.hall
-        this.$emit('cardButtonClickHold', data)
-      } else {
-        this.$emit('cardButtonClick', data)
-      }
+      this.$emit('cardButtonClick', data)
     },
     hallClick(data) {
       this.$emit('hallClick', data)
-    },
-    watchSpeech(data) {
-      this.$emit('watchSpeech', data)
-    },
-    edit(data) {
-      this.$emit('edit', data)
-    },
-    addToPersonalSchedule(data) {
-      this.$emit('addToPersonalSchedule', data)
-    },
-    removeFromPersonalSchedule(data) {
-      this.$emit('removeFromPersonalSchedule', data)
     },
     coordsToHallFunc() {
       const col = this.$refs.timeRow?.getBoundingClientRect().top
@@ -418,6 +230,158 @@ export default {
         return row?.getBoundingClientRect().top - col
       })
       this.coordsToHall = hall ?? []
+    },
+  },
+  computed: {
+    // получаем координаты для линии показывающее текущее время
+    onlineLineCoords() {
+      const timeColWidthAndDiff = this.timeArray.map((time, i) => {
+        if (i >= this.timeArray.length - 1) return null
+        const diff = getMinutes(this.timeArray[i + 1]) - getMinutes(time)
+        return {
+          width: this.colWidthAndTimeArray?.width / diff,
+          diff,
+        }
+      })
+      let now = getMinutes(this.date) - this.beginTime
+      let coord = this.colWidthAndTimeArray?.width * 0.25
+      timeColWidthAndDiff.forEach((item) => {
+        switch (true) {
+          case now > item?.diff:
+            coord += item?.diff * item?.width
+            break
+          case now > 0:
+            coord += now * item?.width
+            break
+        }
+        now -= item?.diff
+      })
+      return coord
+    },
+    // получаем массив для временной шкалы
+    timeArray() {
+      let speechesTime = this.speechesTime
+      // Дополнительное время для временной шкалы
+      this.speechesTimeBeginEnd.forEach((speech) => {
+        // Разница между началом спича и окончанием
+        let diff = speech.time_end - speech.time_begin
+        // Временные отрезки которые будут добавлены между началом спича и окончанием
+        const timeStep = 5
+        const bigTimeStep = 10
+        let count = 1
+        const toMoreSteps = () => {
+          diff -= timeStep
+          ++count
+          speechesTime.push(diff + speech.time_begin)
+          if (diff >= bigTimeStep && count < this.timeRowStep) {
+            toMoreSteps()
+          }
+        }
+        switch (true) {
+          case diff < bigTimeStep && diff > timeStep:
+            speechesTime.push(bigTimeStep - diff + speech.time_begin)
+            break
+          case diff >= bigTimeStep:
+            toMoreSteps()
+        }
+      })
+      // Удаляем одинаковые временные отрезки и сортируем по возрастанию
+      speechesTime = [...new Set(speechesTime)].sort((a, b) => a - b)
+      // Преобразуем минуты в часовой формат
+      speechesTime = speechesTime.map((step) => toStringTime(step * 60 * 1000, this.timeFormat))
+      return speechesTime
+    },
+    // получаем всех спичей со всех стримов
+    speeches() {
+      const arrSpeeches = []
+      this.streams.forEach((stream) => {
+        stream.speeches?.forEach((speech) => arrSpeeches.push(speech))
+      })
+      return arrSpeeches
+    },
+    // получаем id первого по времение онлайн спича из всех стримов
+    onlineCardId() {
+      const arrOnlineCards = []
+      this.speeches.forEach((speech) => {
+        if (speech.status === 'online') {
+          arrOnlineCards.push(speech)
+        }
+      })
+      if (arrOnlineCards?.length) {
+        const minTime = Math.min(...arrOnlineCards.map((card) => getMinutes(card.time_begin)))
+        const firstOnlineCard = arrOnlineCards.find((card) => {
+          if (getMinutes(card.time_begin) === minTime) {
+            return card
+          } return null
+        })
+        return firstOnlineCard?.id
+      }
+      return 0
+    },
+    // получаем времена спичей в формате начало спича и конец
+    speechesTimeBeginEnd() {
+      const speechesTimeBeginEnd = []
+      this.speeches.forEach((speech) => {
+        speechesTimeBeginEnd.push({
+          time_begin: getMinutes(speech.time_begin),
+          time_end: getMinutes(speech.time_end),
+        })
+      })
+      return speechesTimeBeginEnd
+    },
+    // получаем все времена спичей
+    speechesTime() {
+      const speechTimeArr = []
+      this.speeches.forEach((speech) => {
+        speechTimeArr.push(getMinutes(speech.time_begin))
+        speechTimeArr.push(getMinutes(speech.time_end))
+      })
+      return speechTimeArr
+    },
+    // получаем время начала первого спича
+    beginTime() {
+      return Math.min(...this.speechesTime)
+    },
+    // получаем время окончания последнего спича
+    endTime() {
+      return Math.max(...this.speechesTime)
+    },
+    // меняем класс у времени если текущее время больше
+    timeRowDone() {
+      const arrTimeDone = this.timeCoordsAndTime.map((item) => {
+        return this.onlineLineCoords > item.coord ? 'schedule__time_done' : ''
+      })
+      return arrTimeDone ?? []
+    },
+    // меняем класс у активного зала
+    activeHall() {
+      return this.streams.map((stream) => {
+        if (stream.id === this.activeStreamId) {
+          return 'schedule__hall_active'
+        }
+        return undefined
+      })
+    },
+    hallLinkStyles() {
+      return this.streams.map((_, i) => {
+        return {top: this.coordsToHall[i] + 'px'}
+      })
+    },
+    // меняем поизицию у линии показывающее текущее время в соответсвии с полученными координатами
+    onlineLeftSpacing() {
+      return this.onlineLineCoords ? {left: `${this.onlineLineCoords}px`} : false
+    },
+  },
+  watch: {
+    onlineCardId() {
+      setTimeout(() => {
+        this.updateSlider()
+      }, 1000)
+    },
+    streams() {
+      setTimeout(() => {
+        this.updateSlider()
+      }, 1000)
     },
   },
 }
@@ -428,74 +392,74 @@ export default {
 
 :root {
   /* Размеры */
-  --zeen-schedule-header-margin-bottom: 32px;
-  --zeen-schedule-container-max-width: 100%;
-  --zeen-schedule-arrows-width: 80px;
-  --zeen-schedule-col-padding-bottom: 36px;
-  --zeen-schedule-time-text-size: var(--main-large-size);
-  --zeen-schedule-time-line-height: 1.5;
-  --zeen-schedule-time-font-weight: 400;
-  --zeen-schedule-time-width: 130px;
-  --zeen-schedule-col-line-size: 750px;
-  --zeen-schedule-row-height: 235px;
-  --zeen-schedule-hall-text-size: var(--main-small-text);
-  --zeen-schedule-hall-line-height: 1.42;
-  --zeen-schedule-hall-font-weight: 700;
-  --zeen-schedule-hall-padding-vertical: 5px;
-  --zeen-schedule-hall-padding-horizontal: 30px;
-  --zeen-schedule-hall-arrow-size: 11px;
-  --zeen-schedule-hall-arrow-margin-left: 10px;
-  --zeen-schedule-online-img-size: 16px;
-  --zeen-schedule-card-height: 160px;
+  --schedule-header-margin-bottom: 32px;
+  --schedule-container-max-width: 100%;
+  --schedule-arrows-width: 80px;
+  --schedule-col-padding-bottom: 36px;
+  --schedule-time-text-size: var(--main-large-size);
+  --schedule-time-line-height: 1.5;
+  --schedule-time-font-weight: 400;
+  --schedule-time-width: 130px;
+  --schedule-col-line-size: 750px;
+  --schedule-row-height: 235px;
+  --schedule-hall-text-size: var(--main-small-text);
+  --schedule-hall-line-height: 1.42;
+  --schedule-hall-font-weight: 700;
+  --schedule-hall-padding-vertical: 5px;
+  --schedule-hall-padding-horizontal: 30px;
+  --schedule-hall-arrow-size: 11px;
+  --schedule-hall-arrow-margin-left: 10px;
+  --schedule-online-img-size: 16px;
+  --schedule-card-height: 160px;
 
   @include phones {
-    --zeen-schedule-col-padding-bottom: 28px;
-    --zeen-schedule-row-height: 210px;
-    --zeen-schedule-time-text-size: 14px;
-    --zeen-schedule-time-line-height: 1.42;
-    --zeen-schedule-hall-text-size: 10px;
-    --zeen-schedule-hall-line-height: 1.6;
-    --zeen-schedule-hall-padding-vertical: 6px;
-    --zeen-schedule-hall-padding-horizontal: 15px;
-    --zeen-schedule-online-img-size: 13px;
-    --zeen-schedule-card-height: 131px;
+    --schedule-col-padding-bottom: 28px;
+    --schedule-row-height: 210px;
+    --schedule-time-text-size: 14px;
+    --schedule-time-line-height: 1.42;
+    --schedule-hall-text-size: 10px;
+    --schedule-hall-line-height: 1.6;
+    --schedule-hall-padding-vertical: 6px;
+    --schedule-hall-padding-horizontal: 15px;
+    --schedule-online-img-size: 13px;
+    --schedule-card-height: 131px;
   }
 
   /* Цвета */
-  --zeen-schedule-background: var(--dark-2);
-  --zeen-schedule-col-border: var(--dark-1);
-  --zeen-schedule-time-color: var(--main-light);
-  --zeen-schedule-time-color-done: var(--dark-1);
-  --zeen-schedule-col-line: var(--dark-1);
-  --zeen-schedule-online-line: var(--main-danger-color);
-  --zeen-schedule-online-img: var(--main-light);
-  --zeen-schedule-hall: rgba(144, 132, 148, 0.1);
-  --zeen-schedule-hall-active: var(--main-transparent);
-  --zeen-schedule-hall-hover: var(--main-transparent);
-  --zeen-schedule-hall-text: var(--gray-2);
-  --zeen-schedule-hall-text-active: var(--main-color);
+  --schedule-background: var(--dark-2);
+  --schedule-col-border: var(--dark-1);
+  --schedule-time-color: var(--main-light);
+  --schedule-time-color-done: var(--dark-1);
+  --schedule-col-line: var(--dark-1);
+  --schedule-online-line: var(--main-danger-color);
+  --schedule-online-img: var(--main-light);
+  --schedule-hall: rgba(144, 132, 148, 0.1);
+  --schedule-hall-active: var(--main-transparent);
+  --schedule-hall-hover: var(--main-transparent);
+  --schedule-hall-text: var(--gray-2);
+  --schedule-hall-text-active: var(--main-color);
 }
 </style>
 
 <style scoped lang="scss">
 @import "~/styles/mixins.scss";
 
-.zeen-schedule {
-  background: var(--zeen-schedule-background);
+.schedule {
+  background: var(--schedule-background);
   overflow: hidden;
 
   &__top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--zeen-schedule-header-margin-bottom);
+    margin-bottom: var(--schedule-header-margin-bottom);
   }
 
   &__arrows {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: var(--zeen-schedule-arrows-width);
+    width: var(--schedule-arrows-width);
     @include phones {
       display: none;
     }
@@ -508,7 +472,7 @@ export default {
   &__container {
     position: relative;
     width: 100%;
-    max-width: var(--zeen-schedule-container-max-width);
+    max-width: var(--schedule-container-max-width);
     margin-left: auto;
     margin-right: auto;
   }
@@ -526,18 +490,18 @@ export default {
     padding: 0;
     margin: 0;
     list-style-type: none;
-    padding-bottom: var(--zeen-schedule-col-padding-bottom);
-    border-bottom: 1px solid var(--zeen-schedule-col-border);
+    padding-bottom: var(--schedule-col-padding-bottom);
+    border-bottom: 1px solid var(--schedule-col-border);
   }
 
   &__time {
     user-select: none;
     position: relative;
-    font-size: var(--zeen-schedule-time-text-size);
-    line-height: var(--zeen-schedule-time-line-height);
-    font-weight: var(--zeen-schedule-time-font-weight);
-    color: var(--zeen-schedule-time-color);
-    width: var(--zeen-schedule-time-width);
+    font-size: var(--schedule-time-text-size);
+    line-height: var(--schedule-time-line-height);
+    font-weight: var(--schedule-time-font-weight);
+    color: var(--schedule-time-color);
+    width: var(--schedule-time-width);
 
     &:nth-child(2n) {
       color: transparent;
@@ -546,7 +510,7 @@ export default {
         position: absolute;
         width: 2px;
         height: 10px;
-        background: var(--zeen-schedule-time-color);
+        background: var(--schedule-time-color);
         border-radius: 2px;
         top: 50%;
         transform: translateY(-50%);
@@ -558,11 +522,11 @@ export default {
     }
 
     &_done {
-      color: var(--zeen-schedule-time-color-done);
+      color: var(--schedule-time-color-done);
 
       &:nth-child(2n) {
         &:before {
-          background: var(--zeen-schedule-time-color-done);
+          background: var(--schedule-time-color-done);
         }
       }
     }
@@ -570,11 +534,11 @@ export default {
 
   &__time-line {
     position: absolute;
-    top: calc(100% + var(--zeen-schedule-col-padding-bottom));
+    top: calc(100% + var(--schedule-col-padding-bottom));
     left: 25%;
-    height: var(--zeen-schedule-col-line-size);
+    height: var(--schedule-col-line-size);
     width: 1px;
-    stroke: var(--zeen-schedule-col-line);
+    stroke: var(--schedule-col-line);
     @include phones {
       left: 20%;
     }
@@ -594,7 +558,7 @@ export default {
     position: absolute;
     top: 32px;
     left: 50px;
-    background: var(--zeen-schedule-online-line);
+    background: var(--schedule-online-line);
     width: 2px;
     height: 100%;
    
@@ -613,7 +577,7 @@ export default {
     transform: translateX(-50%);
     width: 26px;
     height: 26px;
-    background: var(--zeen-schedule-online-line);
+    background: var(--schedule-online-line);
     border-radius: 100%;
     @include phones {
       top: 5px;
@@ -626,8 +590,8 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    fill: var(--zeen-schedule-online-img);
-    width: var(--zeen-schedule-online-img-size);
+    fill: var(--schedule-online-img);
+    width: var(--schedule-online-img-size);
     height: auto;
   }
 
@@ -636,8 +600,8 @@ export default {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    height: var(--zeen-schedule-row-height);
-    border-bottom: 1px solid var(--zeen-schedule-col-border);
+    height: var(--schedule-row-height);
+    border-bottom: 1px solid var(--schedule-col-border);
     &:last-child {
       border-bottom: none;
     }
@@ -647,30 +611,30 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
-    padding: var(--zeen-schedule-hall-padding-vertical) var(--zeen-schedule-hall-padding-horizontal);
-    background: var(--zeen-schedule-hall);
-    color: var(--zeen-schedule-hall-text);
-    font-size: var(--zeen-schedule-hall-text-size);
-    font-weight: var(--zeen-schedule-hall-font-weight);
-    line-height: var(--zeen-schedule-hall-line-height);
+    padding: var(--schedule-hall-padding-vertical) var(--schedule-hall-padding-horizontal);
+    background: var(--schedule-hall);
+    color: var(--schedule-hall-text);
+    font-size: var(--schedule-hall-text-size);
+    font-weight: var(--schedule-hall-font-weight);
+    line-height: var(--schedule-hall-line-height);
     text-transform: uppercase;
     cursor: pointer;
     transition: 0.2s;
     z-index: 2;
     &:hover {
-      background: var(--zeen-schedule-hall-hover);
+      background: var(--schedule-hall-hover);
     }
     &_active {
-      color: var(--zeen-schedule-hall-text-active);
-      background: var(--zeen-schedule-hall-active);
+      color: var(--schedule-hall-text-active);
+      background: var(--schedule-hall-active);
     }
   }
 
   &__hall-arrow {
-    width: var(--zeen-schedule-hall-arrow-size);
-    height: var(--zeen-schedule-hall-arrow-size);
-    fill: var(--zeen-schedule-hall-text-active);
-    margin-left: var(--zeen-schedule-hall-arrow-margin-left);
+    width: var(--schedule-hall-arrow-size);
+    height: var(--schedule-hall-arrow-size);
+    fill: var(--schedule-hall-text-active);
+    margin-left: var(--schedule-hall-arrow-margin-left);
     transform: rotate(-90deg);
   }
 
@@ -679,8 +643,8 @@ export default {
     left: 0;
     bottom: 25px;
     z-index: 1;
-    --zeen-schedule-card-footer-margin-top: 0;
-    height: var(--zeen-schedule-card-height);
+    --schedule-card-footer-margin-top: 0;
+    height: var(--schedule-card-height);
   }
 }
 </style>

@@ -1,62 +1,65 @@
 @import './breackpoints';
 
 :root {
---main-notbigget-size: 64px; /*dimension*/
---main-largest-size: 48px; /*dimension*/
---main-larger-size: 36px; /*dimension*/
---main-large-size: 24px; /*dimension*/
---main-bigger-size: 18px; /*dimension*/
---main-size: 16px; /*dimension*/
---main-small-text: 14px; /*dimension*/
---main-smallest-text: 12px; /*dimension*/
---main-horizontal-padding: var(--main-size); /*dimension*/
---main-input-label-size: 16px; /*dimension*/
---main-input-radius: 0; /*dimension*/
---main-input-border-width: 1px; /*dimension*/
---main-input-label-offset-left: 27px; /*dimension*/
---main-padding: 20px; /*dimension*/
---main-section-padding-vertical: 100px; /*dimension*/
---main-big-padding: 40px; /*dimension*/
---main-input-label-offset-bottom: 3px; /*dimension*/
---main-input-horizontal-padding: 15px; /*dimension*/
---main-input-vertical-padding: var(--main-padding); /*dimension*/
---main-text-size: var(--main-size); /*dimension*/
+  /*dimension*/
+--main-notbigget-size: 64px;
+--main-largest-size: 48px;
+--main-larger-size: 36px;
+--main-large-size: 24px;
+--main-bigger-size: 18px;
+--main-size: 16px;
+--main-small-text: 14px;
+--main-smallest-text: 12px;
+--main-horizontal-padding: var(--main-size);
+--main-input-label-size: 12px;
+--main-input-radius: 0;
+--main-input-border-width: 1px;
+--main-input-label-offset-left: 27px;
+--main-padding: 20px;
+--main-section-padding-vertical: 100px;
+--main-big-padding: 40px;
+--main-input-label-offset-top: 5px;
+--main-input-horizontal-padding: 15px;
+--main-input-vertical-padding: var(--main-padding);
+--main-text-size: var(--main-size);
 --main-scrollbar-width: 5px;
 --main-scrollbar-thumb-borderradius: 10px;
---main-color: #FF00FB; /*color*/
---main-light-color: #86FF00; /*color*/
---main-transparent: rgba(255, 0, 255, 0.1); /*color*/
---main-dark-color: #a904a6; /*color*/
---main-success-color: rgb(4, 191, 16); /*color*/
---main-danger-color: rgb(255, 77, 77); /*color*/
---main-hover-color: #c505c2; /*color*/
---main-active-color: var(--main-dark-color); /*color*/
---main-positive-color: #181818; /*color*/
---main-text-color: var(--main-positive-color); /*color*/
---main-negative-color: rgb(26, 26, 26); /*color*/
---main-input-placeholder-color: var(--main-light); /*color*/
---main-light: #fff; /*color*/
---gray-1: rgb(237, 237, 237); /*color*/
---gray-2: #908494; /*color*/
---gray-3: #B3B1B4; /*color*/
---dark-1: #363636; /*color*/
---dark-2: #000; /*color*/
---main-disable-color: var(--gray-1); /*color*/
---main-disable-text-color: var(--gray-2); /*color*/
---switch-disable-pointer: var(--input-disable-color); /*color*/
+
+  /*color*/
+--main-color: #FF00FB;
+--main-light-color: #86FF00;
+--main-transparent: rgba(255, 0, 255, 0.1);
+--main-dark-color: #a904a6;
+--main-success-color: rgb(4, 191, 16);
+--main-danger-color: rgb(255, 77, 77);
+--main-hover-color: #c505c2;
+--main-active-color: var(--main-dark-color);
+--main-positive-color: #181818;
+--main-text-color: var(--main-positive-color);
+--main-negative-color: rgb(26, 26, 26);
+--main-input-placeholder-color: var(--main-light);
+--main-light: #fff;
+--gray-1: rgb(237, 237, 237);
+--gray-2: #908494;
+--gray-3: #B3B1B4;
+--dark-1: #363636;
+--dark-2: #000;
+--main-disable-color: var(--gray-1);
+--main-disable-text-color: var(--gray-2);
+--switch-disable-pointer: var(--input-disable-color);
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: $bp-phones) {
   :root {
-    --main-section-padding-vertical: 50px; /*dimension*/
-    --main-notbigget-size: 48px; /*dimension*/
-    --main-largest-size: 36px; /*dimension*/
-    --main-larger-size: 24px; /*dimension*/
-    --main-large-size: 18px; /*dimension*/
-    --main-bigger-size: 16px; /*dimension*/
-    --main-small-text: 12px; /*dimension*/
-    --main-smallest-text: 10px; /*dimension*/
-    --main-big-padding: 20px; /*dimension*/
+    --main-section-padding-vertical: 50px;
+    --main-notbigget-size: 36px;
+    --main-largest-size: 36px;
+    --main-larger-size: 24px;
+    --main-large-size: 18px;
+    --main-bigger-size: 16px;
+    --main-small-text: 12px;
+    --main-smallest-text: 10px;
+    --main-big-padding: 20px;
   }
 }
 

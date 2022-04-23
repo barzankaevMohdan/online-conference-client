@@ -5,28 +5,40 @@ let offset = 0
 let chatId = 0
 
 export const state = () => ({
-  messages: [],
-  count: 1000,
+  messages: {},
+  count: limit,
 })
 
 export const mutations = {
   update(state, {messages, count}) {
     state.count = count
-    state.messages.push(...messages)
-    state.messages.sort((messageA, messageB) => messageA.id - messageB.id)
+    const newMessages = messages.reduce((accumulator, message) => {
+      accumulator[message.id] = message
+      return accumulator
+    }, {})
+    state.messages = {
+      ...state.messages,
+      ...newMessages
+    }
   },
   newMessage(state, message) {
-    state.messages.push(message)
+    state.messages = {
+      ...state.messages,
+      [message.id]: message,
+    }
   },
   deleteMessage(state, id) {
-    state.messages = state.messages.filter(message => message.id !== id)
+    delete state.messages[id]
+    state.messages = {
+      ...state.messages,
+    }
   },
   clear(state) {
     // возвращаем все исходные значения
     limit = 10
     offset = 0
     state.messages = []
-    state.count = 1000
+    state.count = limit
   },
 }
 
@@ -52,13 +64,9 @@ export const actions = {
       commit('clear')
     }
     // получаем разницу между общим числом сообщений и смещения
-    const stop = state.count - offset
-    if (stop < limit && stop > 0) {
-      // если разница меньше лимита то лимит приравниваем к разнице
-      limit = stop
-    }
+    const diff = state.count - offset
     // если разница меньше нуля, невыполняем запрос
-    if (stop <= 0) return []
+    if (diff <= 0) return []
     return new Promise((resolve, reject) => {
       api
         .getRoomMessages(id, limit, offset)
@@ -83,7 +91,6 @@ export const actions = {
       api
         .deleteMessage(id)
         .then((data) => {
-          commit('deleteMessage', id)
           resolve(data.data)
         })
         .catch((error) => {
@@ -97,5 +104,8 @@ export const actions = {
 }
 
 export const getters = {
-  messages: (state) => state.messages,
+  messages(state) {
+    const messages = Object.values(state.messages ?? {})
+    return messages.sort((messageA, messageB) => messageA.id - messageB.id)
+  },
 }

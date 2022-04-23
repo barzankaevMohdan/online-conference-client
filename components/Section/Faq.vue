@@ -2,7 +2,8 @@
   section.s-faq(id="faq")
     .s-faq__bg
     BlockFaq(:list="faq")
-      template(#title) Помощь
+      template(#title)
+        UiHeadline(tag='h2') Помощь
 </template>
 
 <script>
@@ -64,7 +65,7 @@ export default {
     bottom: 0;
     right: 0;
     z-index: -1;
-    background: url(~/assets/img/faq/faq-bg.png);
+    background: url('~/assets/img/faq/faq-bg.png');
   }
 }
 </style>

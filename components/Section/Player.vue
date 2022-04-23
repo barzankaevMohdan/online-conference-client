@@ -1,5 +1,5 @@
 <template lang="pug">
-  section.s-player
+  section.s-player#player
     LayoutsContainer
       .s-player__block
         BlockPlayer
@@ -19,6 +19,7 @@ export default {
 
 .s-player {
   padding-top: 100px;
+  background: var(--dark-2);
 
   &__block {
     position: relative;

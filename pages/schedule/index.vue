@@ -7,10 +7,7 @@
       theme='schedule'
     )
       template(v-slot:kv)
-        img(:src="require('~/assets/img/demo/intro/kv-3.png')")
-      template(v-slot:kv-phone)
-        img(:src="require('~/assets/img/demo/intro/kv-3-phone.png')")
-
+        img(:src="require('~/assets/img/demo/intro/kv-3.svg')")
     ScheduleContent
 </template>
 

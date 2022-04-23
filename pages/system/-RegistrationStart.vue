@@ -1,11 +1,11 @@
 <template lang="pug">
-  div
-    LayoutsHeader(absolute)
+  LayoutsPageWithHeader
     .reg-content
       .reg-content__left
+        img.reg-content__left__logo(src='~/assets/img/auth/logo.svg')
       .reg-content__right
         .reg-content__form
-          h1.reg-content__form-title Регистрация
+          UiHeadline.reg-content__form-title(tag='h3') Регистрация
           AuthRegistrationForm
 </template>
 
@@ -33,93 +33,67 @@ export default {
   }
 
   &__left {
+    position: relative;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    background-image: url('../../assets/img/auth/bg.png');
-    min-height: 100vh;
+    background-image: url('~/assets/img/auth/bg.png');
+    min-height: calc(100vh - var(--header-gap));
     width: 50%;
 
     @include tablets() {
-      background-image: url('~/assets/img/auth/bg-tablets.png');
-      background-attachment: scroll;
-      background-position: center;
-      background-size: cover;
       min-height: 455px;
       width: 100%;
     }
 
     @include phones() {
-      margin-top: 81px;
       min-height: 300px;
+    }
+
+    &__logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 353px;
+      height: 384px;
+
+      @include tablets() {
+        width: 195px;
+        height: 212px;
+      }
     }
   }
 
   &__right {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    margin-top: auto;
+    margin-bottom: auto;
     width: 50%;
-    max-height: 100vh;
-    background: var(--main-positive-color);
-    overflow: auto;
+    max-height: calc(100vh - var(--header-gap));
+    overflow-y: auto;
 
     @include tablets() {
       width: 100%;
-      min-height: auto;
-      max-height: 100%;
-      overflow: visible;
-    }
-  }
-
-  &__subtitle {
-    display: block;
-    font-size: 24px;
-    line-height: 32px;
-    font-weight: 400;
-    color: var(--main-light);
-
-    @include phones() {
-      font-size: 14px;
-      line-height: 20px;
+      max-height: auto;
+      overflow-y: visible;
     }
   }
 
   &__form {
-    max-width: 100%;
-    width: 350px;
-    padding-top: 120px;
-    padding-bottom: 120px;
-
-    @include tablets() {
-      padding-top: 60px;
-      padding-bottom: 100px;
-    }
-
-    @include phones() {
-      padding: 10px 15px 30px 15px;
-      width: 100%;
-    }
+    max-width: 350px;
+    width: 100%;
+    padding: 50px 15px;
   }
 
   &__form-title {
-    font-style: normal;
-    font-weight: 700;
-    font-size: 36px;
-    line-height: 48px;
     text-align: center;
-    color: var(--main-light);
     margin-bottom: 40px;
-
-    @include tablets() {
-      font-size: 24px;
-      line-height: 32px;
-    }
 
     @include phones() {
       margin-bottom: 30px;
-      font-size: 18px;
-      line-height: 24px;
     }
   }
 }

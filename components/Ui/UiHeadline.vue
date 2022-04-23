@@ -31,8 +31,8 @@ export default {
   --headline-size-line-height: 1.44;
   --headline-padding-vertical: 0;
   --headline-padding-horizontal: 0;
-  --headline-margin-vertical: 15px;
-  --headline-margin-horizontal: 15px;
+  --headline-margin-vertical: 0;
+  --headline-margin-horizontal: 0;
 
   /* Цвета */
   --headline-color: var(--main-light);

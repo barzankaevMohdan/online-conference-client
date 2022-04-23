@@ -176,7 +176,7 @@ export default {
     font-size: var(--select-label-size);
     line-height: 1.4;
     color: var(--select-label-color);
-    margin: 0 0 var(--main-input-label-offset-bottom) var(--main-input-label-offset-left);
+    margin: var(--main-input-label-offset-top) 0 0 var(--main-input-label-offset-left);
   }
 
   &__arrow {

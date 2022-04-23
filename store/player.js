@@ -63,7 +63,6 @@ export const actions = {
       api
         .deleteStreamRoom(roomId)
         .then((data) => {
-          commit('deleteRoom', roomId)
           resolve(data.data)
         })
         .catch((error) => {

@@ -65,7 +65,6 @@ export const actions = {
       api
         .deleteSpeech(id)
         .then((data) => {
-          commit('deleteSpeech', data.data)
           resolve(data.data)
         })
         .catch((error) => {

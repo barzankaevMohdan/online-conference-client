@@ -43,38 +43,17 @@ export default {
       slider: null,
     }
   },
-  computed: {
-    speakersWord() {
-      return this.speakers?.length > 1 ? this.speakersText.speakers : this.speakersText.speaker
-    },
-  },
-  watch: {
-    opened() {
-      this.initSlider()
-    },
-    speakers() {
-      setTimeout(() => {
-        this.updateSlider()
-      }, 1000)
-    },
-  },
-   destroyed() {
+  destroyed() {
     this.slider?.destroy(true, true)
   },
   methods: {
     initSlider() {
       const config = {
-        slidesPerView: 1.5,
+        slidesPerView: 1,
         spaceBetween: 20,
         navigation: {
           prevEl: this.$refs.btnPrev,
           nextEl: this.$refs.btnNext,
-        },
-        breakpoints: {
-          320: {
-            slidesPerView: 1,
-            spaceBetween: 20,
-          },
         },
       }
       this.slider = new Swiper(this.$refs.slider, config)
@@ -86,6 +65,23 @@ export default {
       }
       await this.$nextTick()
       this.slider.update()
+    },
+  },
+  computed: {
+    speakersWord() {
+      return this.speakers?.length > 1 ? this.speakersText.speakers : this.speakersText.speaker
+    },
+  },
+  watch: {
+    opened() {
+      setTimeout(() => {
+        this.initSlider()
+      }, 1000)
+    },
+    speakers() {
+      setTimeout(() => {
+        this.updateSlider()
+      }, 1000)
     },
   },
 }
@@ -101,6 +97,7 @@ export default {
   --schedule-speakers-title-font-weight: 500;
   --schedule-speakers-title-line-height: 1.33;
   --schedule-speakers-arrow-margin-right: 25px;
+  --schedule-speakers-arrow-size: 20px;
 
   /* Цвета */
   --schedule-speakers-title-color: var(--gray-2);
@@ -154,6 +151,11 @@ export default {
     &:disabled {
       cursor: auto;
       fill: var(--action-icon-disable-color);
+    }
+
+    & svg {
+      max-width: var(--schedule-speakers-arrow-size);
+      max-height: var(--schedule-speakers-arrow-size);
     }
   }
 

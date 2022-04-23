@@ -1,7 +1,6 @@
 <template lang="pug">
   LayoutsContainer
-    UiHeadline
-      slot(name='title')
+    slot(name='title')
     ul.faq-list
       li(
         v-for="(item, idx) in list"

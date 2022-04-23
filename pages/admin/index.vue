@@ -4,7 +4,8 @@
       :src='require("~/assets/img/demo/intro/intro-night.jpg")'
       title='Master'
     )
-
+      template(#kv)
+        img(:src="require('~/assets/img/demo/intro/kv-2.svg')")
     SectionAdminCreate
 </template>
 

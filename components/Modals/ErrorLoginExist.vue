@@ -41,6 +41,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "~/styles/mixins.scss";
+
 .modal-icon {
   width: 70px;
   height: 70px;

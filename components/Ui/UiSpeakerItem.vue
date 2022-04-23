@@ -70,7 +70,7 @@ export default {
   --speaker-item-name-color: var(--main-light);
   --speaker-item-name-hover-color: var(--main-color);
   --speaker-item-post-color: var(--main-light);
-  --speaker-item-company-color: var(--main-light);
+  --speaker-item-company-color: var(--gray-2);
 
   @include phones {
     /* Размеры */

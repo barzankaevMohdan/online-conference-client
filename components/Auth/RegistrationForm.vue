@@ -45,7 +45,7 @@
           SvgIcon.reg-form__eye-icon(name="eye-icon")
 
     .reg-form__footer
-      span.reg-form__error
+      span.reg-form__error(v-if='serverError') {{serverError}}
       UiButton(
         size='parentWidth'
         :isLoading='isLoading'
@@ -63,6 +63,22 @@ export default {
     return {
       typeOfPasswordInput: 'password'
     }
+  },
+  methods: {
+    async componentHandler() {
+      const userData = {
+        email: this.data.login.toLowerCase().trim(),
+        login: this.data.login.toLowerCase().trim(),
+        name: `${this.data.name} ${this.data.last_name}`,
+        password: this.data.password,
+      }
+
+      await this.$store.dispatch('user/registration', userData)
+      console.log('succes')
+    },
+    showPassword() {
+      this.typeOfPasswordInput = this.typeOfPasswordInput === 'password' ? 'text' : 'password'
+    },
   },
   computed: {
     rules() {
@@ -83,22 +99,6 @@ export default {
       }
     },
   },
-  methods: {
-    async componentHandler() {
-      const userData = {
-        email: this.data.login.toLowerCase().trim(),
-        login: this.data.login.toLowerCase().trim(),
-        name: `${this.data.name} ${this.data.last_name}`,
-        password: this.data.password,
-      }
-
-      await this.$store.dispatch('user/registration', userData)
-      console.log('succes')
-    },
-    showPassword() {
-      this.typeOfPasswordInput = this.typeOfPasswordInput === 'password' ? 'text' : 'password'
-    },
-  },
 }
 </script>
 
@@ -116,10 +116,10 @@ export default {
 
   &__error {
     display: block;
-    font-size: 10px;
-    line-height: 14px;
-    color: rgb(255, 77, 77);
-    margin: 0 0 3px 27px;
+    font-size: var(--main-input-label-size);
+    line-height: 1.4;
+    color: var(--main-danger-color);
+    margin: var(--main-input-label-offset-top) 0 0 var(--main-input-label-offset-left);
   }
 
   &__button-eye {
@@ -137,9 +137,5 @@ export default {
     max-height: 20px;
     fill: var(--main-light);
   }
-}
-
-.not-now {
-  text-align: center;
 }
 </style>

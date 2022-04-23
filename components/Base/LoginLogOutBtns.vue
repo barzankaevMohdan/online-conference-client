@@ -1,15 +1,8 @@
 <template lang="pug">
   UiButton(
     :theme="theme"
-    v-if='isAuth'
-    @click.prevent='logout'
-  ) Выйти
-  UiButton(
-    :theme="theme"
-    @click.prevent='login'
-    v-else
-  ) Войти
-
+    @click.prevent='submit'
+  ) {{text}}
 </template>
 
 <script>
@@ -29,11 +22,17 @@ export default {
       this.$store.dispatch('user/logOut')
       this.$router.push('/')
     },
+    submit() {
+      this.isAuth ? this.logout() : this.login()
+    }
   },
   computed: {
     isAuth() {
       return this.$store.getters['user/isAuth']
     },
+    text() {
+      return this.isAuth ? 'Выйти' : 'Войти'
+    }
   },
 }
 </script>

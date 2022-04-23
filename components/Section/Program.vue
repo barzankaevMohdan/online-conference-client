@@ -1,12 +1,10 @@
 <template lang="pug">
   BlockSchedule.s-program(
-    :streams="streamsDayWithSpeechesAndSpeakers"
+    :streams="streamsWithSpeechesAndSpeakers"
     :activeStreamId="activeStreamId"
-    :speechModalProps="speechModalProps"
     @cardButtonClick="cardButtonClick"
+    @cardClick='cardClick'
     @hallClick="hallClick"
-    @watchSpeech="watchSpeechModal"
-    @edit="edit"
   )
     template(#title)
       UiHeadline(tag="h2") Программа
@@ -18,35 +16,16 @@ import streamsWithSpeechesAndSpeakers from '../../mixins/streamsWithSpeechesAndS
 export default {
   name: 'Program',
   mixins: [streamsWithSpeechesAndSpeakers],
-  data() {
-    return {
-      speechModalProps: {
-        buttonDisabled: {
-          done: true,
-          online: true,
-          add: true,
-          delete: true,
-          edit: false,
-        },
-      },
-    }
-  },
   methods: {
+    cardClick(data) {
+      this.$vfm.show('speech-modal', data.speech)
+    },
     cardButtonClick(data) {
-      // this.watchSpeech(data.speech)
-      this.$vfm.hide('ZeenSchedule')
+      this.$vfm.show('speech-modal', data.speech)
     },
     hallClick(stream) {
       this.$router.push(`/stream/${stream.id}`)
     },
-    watchSpeechModal(data) {
-      // this.watchSpeech(data.speech)
-      this.$vfm.hide('ZeenSchedule')
-    },
-    edit(data) {
-      this.$vfm.hide('ZeenSchedule')
-      this.$vfm.show('edit-speech', data)
-    }
   },
 }
 </script>

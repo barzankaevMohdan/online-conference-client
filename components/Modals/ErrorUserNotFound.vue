@@ -33,7 +33,7 @@ export default {
     },
     requestPassword() {
       this.close()
-      this.$vfm.show('password-forgot', this.info)
+      this.$vfm.show('password-forgot', this.info) //to do
     },
   },
 }
