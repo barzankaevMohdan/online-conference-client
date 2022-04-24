@@ -1,5 +1,5 @@
 <template lang='pug'>
-  LayoutsPageWithHeader(absoluteHeader)
+  LayoutsPageWithHeader
     BaseIntro(
       :src='require("~/assets/img/demo/intro/intro-night.jpg")'
       title='Master'

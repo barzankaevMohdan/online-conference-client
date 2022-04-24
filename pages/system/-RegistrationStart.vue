@@ -25,6 +25,7 @@ export default {
 @import '~/styles/mixins.scss';
 
 .reg-content {
+  flex: 1 1 auto;
   display: flex;
   justify-content: space-between;
 
@@ -38,16 +39,15 @@ export default {
     background-position: center;
     background-size: cover;
     background-image: url('~/assets/img/auth/bg.png');
-    min-height: calc(100vh - var(--header-gap));
     width: 50%;
 
     @include tablets() {
-      min-height: 455px;
+      height: 455px;
       width: 100%;
     }
 
     @include phones() {
-      min-height: 300px;
+      height: 300px;
     }
 
     &__logo {
@@ -66,19 +66,16 @@ export default {
   }
 
   &__right {
+    flex: 1 1 auto;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    margin-top: auto;
-    margin-bottom: auto;
+    align-items: center;
     width: 50%;
-    max-height: calc(100vh - var(--header-gap));
-    overflow-y: auto;
+    background: var(--main-positive-color);
 
     @include tablets() {
+      align-items: flex-start;
       width: 100%;
-      max-height: auto;
-      overflow-y: visible;
     }
   }
 

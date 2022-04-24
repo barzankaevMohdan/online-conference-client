@@ -1,12 +1,10 @@
 <template lang='pug'>
   .not-found
-    LayoutsContainer
-      .not-found__content
-        .not-found__img-wrapper
-          img.not-found__img(src="~assets/img/schedule/not-found.png")
-          img.not-found__img(src="~assets/img/schedule/not-found.png")
-          img.not-found__img(src="~assets/img/schedule/not-found.png")
-        p.not-found__text Ничего не найдено
+    .not-found__img-wrapper
+      img.not-found__img(src="~assets/img/schedule/not-found.png")
+      img.not-found__img(src="~assets/img/schedule/not-found.png")
+      img.not-found__img(src="~assets/img/schedule/not-found.png")
+    UiHeadline.not-found__text(tag='h3') Ничего не найдено
 </template>
 
 <script>
@@ -19,16 +17,10 @@ export default {
 @import "~/styles/mixins.scss";
 
 .not-found {
-  padding-top: 80px;
-  padding-bottom: 80px;
-  background: var(--dark-2);
-
-  &__content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 
   &__img-wrapper {
     display: flex;
@@ -52,16 +44,7 @@ export default {
   }
 
   &__text {
-    margin: 0;
-    padding: 0;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 36px;
-    line-height: 48px;
-    color: #FF4D4D;
-    @include phones() {
-      font-size: 26px;
-    }
+    --headline-color: var(--main-danger-color);
   }
 }
 </style>

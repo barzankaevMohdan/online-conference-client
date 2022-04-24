@@ -18,8 +18,8 @@
 --main-section-padding-vertical: 100px;
 --main-big-padding: 40px;
 --main-input-label-offset-top: 5px;
---main-input-horizontal-padding: 15px;
---main-input-vertical-padding: var(--main-padding);
+--main-input-horizontal-padding: 25px;
+--main-input-vertical-padding: 20px;
 --main-scrollbar-width: 5px;
 --main-scrollbar-thumb-borderradius: 10px;
 
@@ -36,6 +36,8 @@
 --main-text-color: var(--main-positive-color);
 --main-negative-color: rgb(26, 26, 26);
 --main-input-placeholder-color: var(--main-light);
+--main-input-border-color: var(--main-color);
+--main-input-background-color: var(--dark-2);
 --main-light: #fff;
 --gray-1: rgb(237, 237, 237);
 --gray-2: #908494;
@@ -44,7 +46,6 @@
 --dark-2: #000;
 --main-disable-color: var(--gray-1);
 --main-disable-text-color: var(--gray-2);
---switch-disable-pointer: var(--input-disable-color);
 }
 
 @media screen and (max-width: $bp-phones) {

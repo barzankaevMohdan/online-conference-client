@@ -2,50 +2,45 @@
   section.filter
     LayoutsContainer(:key='`filters_mount${isMount}`')
       .filter__header
-        h2.filter__title Фильтры
+        UiHeadline(tag='h4') Фильтры
         UiButton(@click.prevent="reset" theme="fill-additional") Сбросить
       .filter__content
-        .filter__col
-          //- временной интервал
-          .filter__time
-            .filter__time-col
-              UiInput.time-filter.time-filter_start(:value='fromValue' readonly)
-            .filter__time-col
-              UiInput.time-filter.time-filter_end(:value='toValue' readonly)
-            .filter__time-slider
-              VueSlider(
-                v-model="slider"
-                :min="range[0]"
-                :max="range[1]"
-                tooltip="none"
-                :disabled="range[0] === range[1]"
-                :interval="interval"
-              )
-        .filter__col
-          //- выбор зала
-          UiSelect(
-            placeholder='Выберите зал'
-            v-model='stream'
-            :options='streamsData'
-          )
-      .filter__content
-        .filter__col
-          //- выбор спикера
-          UiSelect(
-            placeholder='Выберите спикера'
-            v-model='speaker'
-            :options='speakersData'
-          )
-        .filter__col
-          //- поиск
-          UiInput(v-model='text' autocomplete='off' placeholder='Поиск')
-            template(#btn)
-              SvgIcon.filter__search-icon(name="magnifier")
+        //- временной интервал
+        .filter__time
+          .filter__time-col
+            UiInput.time-filter.time-filter_start(:value='fromValue' readonly)
+          .filter__time-col
+            UiInput.time-filter.time-filter_end(:value='toValue' readonly)
+          .filter__time-slider
+            VueSlider(
+              v-model="slider"
+              :min="range[0]"
+              :max="range[1]"
+              tooltip="none"
+              :disabled="range[0] === range[1]"
+              :interval="interval"
+            )
+        //- выбор зала
+        UiSelect(
+          placeholder='Выберите зал'
+          v-model='stream'
+          :options='streamsData'
+        )
+        //- выбор спикера
+        UiSelect(
+          placeholder='Выберите спикера'
+          v-model='speaker'
+          :options='speakersData'
+        )
+        //- поиск
+        UiInput(v-model='text' autocomplete='off' placeholder='Поиск')
+          template(#btn)
+            SvgIcon.filter__search-icon(name="magnifier")
 </template>
 
 <script>
-import {toStringTime} from '../../helpers/timeConverter'
-import {SPEECH_TIME_FORMAT} from '../../store/speech'
+import {toStringTime} from '~/helpers/timeConverter'
+import {SPEECH_TIME_FORMAT} from '~/store/speech'
 
 export default {
   name: 'ScheduleFilters',
@@ -56,15 +51,6 @@ export default {
       type: Array,
       default: () => [0, 0],
     },
-  },
-  data() {
-    return {
-      isMount: false,
-      text: '',
-      speaker: null,
-      stream: null,
-      slider: [0, 0],
-    }
   },
   data() {
     return {
@@ -112,7 +98,7 @@ export default {
       return [
         {
           label: 'Все',
-          value: undefined,
+          value: null,
         },
         ...this.speakers.map((speaker) => {
           return {
@@ -126,7 +112,7 @@ export default {
       return [
         {
           label: 'Все',
-          value: undefined,
+          value: null,
         },
         ...this.streams.map((stream) => {
           return {
@@ -155,7 +141,7 @@ export default {
         return
       }
       if (!newVal?.value) {
-        this.stream = null
+        this.reset()
       }
     },
     speaker(newVal) {
@@ -163,7 +149,7 @@ export default {
         return
       }
       if (!newVal?.value) {
-        this.speaker = null
+        this.reset()
       }
     },
     filterData(newValue, oldValue) {
@@ -179,8 +165,6 @@ export default {
 @import '~/styles/mixins.scss';
 
 .filter {
-  --select-search-padding: 20px 25px;
-  --text-input-horizontal-padding: 25px;
   --select-border-radius: 5px;
   --text-input-border-radius: 5px;
   --select-placeholder-color: var(--gray-2);
@@ -215,46 +199,25 @@ export default {
     }
   }
 
-  &__title {
-    font-size: var(--main-large-size);
-    line-height: 32px;
-    font-weight: 700;
-    color: var(--main-light);
-  }
-
   &__content {
-    display: flex;
-    margin: 0 -10px;
-
-    @include phones() {
-      flex-direction: column;
-    }
-  }
-
-  &__col {
-    flex: 1 1 auto;
-    width: 50%;
-    padding: 10px 10px 0;
-    align-content: center;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 15px;
+    margin-top: 15px;
 
     @include phones {
-      width: 100%;
-    }
-
-    @include phones() {
-      width: 100%;
+      grid-template-columns: repeat(1, 1fr);
+      grid-column-gap: 0;
     }
   }
 
   &__time {
-    display: flex;
     position: relative;
-    border-radius: 5px;
+    display: flex;
 
     ::v-deep {
       .vue-slider-dot-handle {
-        box-shadow: none;
         background: var(--main-color);
         width: 16px;
         height: 16px;
@@ -266,18 +229,18 @@ export default {
         background: var(--main-color);
       }
     }
+  }
 
-    &-col {
-      width: 50%;
-    }
+  &__time-col {
+    width: 50%;
+  }
 
-    &-slider {
-      position: absolute;
-      bottom: 0;
-      transform: translateY(50%);
-      left: 0;
-      right: 0;
-    }
+  &__time-slider {
+    position: absolute;
+    bottom: 0;
+    transform: translateY(50%);
+    left: 0;
+    right: 0;
   }
 
   &__search-icon {

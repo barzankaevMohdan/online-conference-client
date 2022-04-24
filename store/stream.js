@@ -78,10 +78,6 @@ export const actions = {
 
 export const getters = {
   allStreams: (state) => Object.values(state.streams ?? {}),
-  bySpeechId: (state, getters) => (id) => {
-    const stream = getters.allStreams.filter(stream => stream.id === id)
-    return stream
-  },
   byId: (state, getters) => (id) => {
     const stream = getters.allStreams.find(stream => stream.id === id)
     return stream

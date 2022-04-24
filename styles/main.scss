@@ -25,7 +25,7 @@ body {
   width: 100%;
   min-height: 100vh;
   box-sizing: border-box;
-  background: var(--main-positive-color);
+  background: var(--dark-2);
   scrollbar-color: transparent;
   scrollbar-width: var(--main-scrollbar-width);
 }
@@ -79,6 +79,7 @@ a {
   transition-property: transform;
 }
 
+.main,
 #__nuxt,
 #__layout {
   flex: 1 1 auto;

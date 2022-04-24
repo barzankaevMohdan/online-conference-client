@@ -7,23 +7,26 @@
       :range='minMaxRange'
     )
     ScheduleSpeeches(
-      v-if="!notFound"
       :groupSpeeches='groupSpeeches'
       :streamsInSchedule='streamsForId'
+      :isHaveSpeech='notFound'
     )
-    ScheduleNotFound(v-else)
 </template>
 
 <script>
-import {getMinutes} from '../../helpers/timeConverter'
+import {getMinutes} from '~/helpers/timeConverter'
 
 export default {
   name: 'ScheduleContent',
   data() {
     return {
       filter: {},
-      notFound: false,
     }
+  },
+  methods: {
+    setFilter(data) {
+      this.filter = data
+    },
   },
   computed: {
     speeches() {
@@ -63,7 +66,6 @@ export default {
         const timeBegin = getMinutes(speech.time_begin)
         const timeEnd = getMinutes(speech.time_end)
 
-
         return timeBegin >= this.filter?.fromTime && timeEnd <= this.filter?.toTime
       })
     },
@@ -81,7 +83,7 @@ export default {
     },
     groupSpeeches() {
       return this.speechesByTime.reduce((acc, speech) => {
-        const streamId = this.$store.getters['stream/bySpeechId'](speech.streamId)?.id
+        const streamId = this.$store.getters['stream/byId'](speech.streamId)?.id
         acc[streamId] = [
           ...acc[streamId] ?? [],
           speech,
@@ -106,33 +108,9 @@ export default {
 
       return [min, max]
     },
+    notFound() {
+      return !Object.keys(this.groupSpeeches).length
+    }
   },
-  watch: {
-    groupSpeeches(newValue) {
-      this.notFound = !Object.keys(newValue).length
-    },
-  },
-  methods: {
-    setFilter(data) {
-      this.filter = data
-    },
-  }
 }
 </script>
-
-<style scoped lang='scss'>
-@import "~/styles/mixins.scss";
-
-.speakers-desktop {
-  @include phones {
-    display: none;
-  }
-}
-
-.speakers-phone {
-  display: none;
-  @include phones {
-    display: block;
-  }
-}
-</style>

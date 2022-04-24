@@ -97,8 +97,4 @@ export const getters = {
     const speaker = getters.allSpeakers.filter(speaker => speaker.speechId === id)
     return speaker
   },
-  byId: (state, getters) => (id) => {
-    const speaker = getters.allSpeakers.filter(speaker => speaker.speechId === id)
-    return speaker
-  }
 }

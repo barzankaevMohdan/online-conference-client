@@ -141,12 +141,11 @@ export default {
   --select-text-weight: inherit;
   --select-opened-text-weight: var(--select-text-weight);
   --select-opened-text-opacity: 1;
-  --select-search-padding: 15px 25px;
   --select-search-font-size: var(--main-size);
   --select-search-border-radius: 10px;
 
   /* Цвета */
-  --select-background-color: var(--dark-2);
+  --select-background-color: var(--main-input-background-color);
   --select-text-color: var(--main-light);
   --select-label-color: var(--select-text-color);
   --select-error-color: var(--main-danger-color);
@@ -160,7 +159,7 @@ export default {
   --select-opened-text-color: var(--main-input-placeholder-color);
   --select-arrow-color: var(--main-light);
 
-  --select-border-color: var(--main-color);
+  --select-border-color: var(--main-input-border-color);
   --select-label-error-color: var(--select-error-color);
   --select-border-error-color: var(--select-error-color);
 
@@ -198,7 +197,7 @@ export default {
     width: 100%;
     box-sizing: border-box;
     border-radius: var(--select-search-border-radius);
-    padding: var(--select-search-padding);
+    padding: var(--text-input-vertical-padding) var(--text-input-horizontal-padding);
     font-size: var(--select-search-font-size);
     line-height: 1.4;
     -webkit-appearance: none;

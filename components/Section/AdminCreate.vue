@@ -22,7 +22,7 @@ export default {
 <style lang="scss" scoped>
 @import "~/styles/mixins.scss";
 
-.s-admin-create{
+.s-admin-create {
   padding: var(--main-section-padding-vertical) 0;
   background-color: var(--dark-2);
 

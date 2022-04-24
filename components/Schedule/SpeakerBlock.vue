@@ -4,7 +4,6 @@
       v-for="speaker in speakers"
     )
       UiSpeakerItem(
-       class='speaker-list__speaker'
         :speaker='speaker'
       )
 </template>
@@ -17,7 +16,7 @@ export default {
   },
   computed: {
     speakers() {
-      return this.$store.getters['speaker/byId'](this.speechId)
+      return this.$store.getters['speaker/bySpeechId'](this.speechId)
     },
   },
 }
@@ -27,21 +26,12 @@ export default {
 @import "~/styles/mixins.scss";
 
 .speaker-list {
-  --speaker-item-post-color: var(--gray-2);
-  --speaker-item-company-color: var(--main-light);
-
   margin: 0 -10px;
   display: flex;
   flex-wrap: wrap;
 
   &__item {
     padding: 15px 10px;
-
-    ::v-deep {
-      .speaker-item__company {
-        -webkit-line-clamp: 2;
-      }
-    }
   }
 }
 </style>

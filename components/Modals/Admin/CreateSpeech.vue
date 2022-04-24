@@ -29,7 +29,7 @@
         :options="statuses"
         placeholder="status"
       )
-      UiSelect.auth-form__field.select(
+      UiSelect.auth-form__field.auth-form_select(
         v-model='streamId'
         :value='streamIds'
         placeholder="streamId"
@@ -113,7 +113,7 @@ export default {
     margin-top: 20px;
   }
 
-  .select {
+  &_select {
     margin-bottom: 50px;
   }
 

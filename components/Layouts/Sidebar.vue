@@ -7,6 +7,8 @@
         .sidebar-content__item
           NavigationLink(to='/schedule' theme='sidebar' @click="$emit('close')") Программа
         .sidebar-content__item
+          NavigationLink(to='/admin' theme='sidebar' @click="$emit('close')") Панель Админа
+        .sidebar-content__item
           NavigationScroll(scrollTo='#faq' routTo='/' theme='sidebar' @scroll="$emit('close')") Faq
         .sidebar-content__footer
           span.sidebar-content__name {{user.name}}
