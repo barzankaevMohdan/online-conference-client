@@ -45,7 +45,7 @@ export default {
       default: null,
     },
     to: {
-      validator: (prop) => typeof prop === 'object' || typeof prop === 'string',
+      type: [String, Object],
       default: null,
     },
     theme: {

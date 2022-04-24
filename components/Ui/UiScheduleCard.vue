@@ -24,8 +24,7 @@
       :class="{'schedule-card__footer_mini': cardSizeHandler === 2}"
     )
       .schedule-card__live(v-if="speech.status === 'online'")
-        slot(name="live-icon")
-          SvgIcon.schedule-card__live-img(name="online-icon")
+        SvgIcon.schedule-card__live-img(name="online-icon")
         span.schedule-card__live-text(v-if="cardSizeHandler === 3") LIVE
       span.schedule-card__time(
         v-if="speech.time_begin && cardSizeHandler > 1"
@@ -33,11 +32,9 @@
       span(v-if="cardSizeHandler === 1 && speech.status !== 'online'")
       span.schedule-card__button(@click.stop="cardButton")
         template(v-if="speech.status === 'done'")
-          slot(name="button-icon-done")
-            SvgIcon.schedule-card__button(name="card-button-icon-done")
+          SvgIcon.schedule-card__button(name="card-button-icon-done")
         template(v-else)
-          slot(name="button-icon")
-            SvgIcon.schedule-card__button(name="card-button-icon")
+          SvgIcon.schedule-card__button(name="card-button-icon")
 </template>
 
 <script>

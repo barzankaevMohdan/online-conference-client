@@ -40,7 +40,7 @@
 <script>
 
 export default {
-  name: 'UiTextInput',
+  name: 'UiInput',
   props: {
     value: {
       type: [String, Number],

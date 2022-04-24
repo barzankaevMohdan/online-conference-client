@@ -1,9 +1,7 @@
 <template lang="pug">
-  div(v-show="sidebar")
-    .sidebar
-      .sidebar__content
-        slot
-      .sidebar__overlay(@click="$emit('sidebar')")
+  UiSlideToggle.sidebar(:open="sidebar")
+    .sidebar__content
+      slot
 </template>
 
 <script>
@@ -36,17 +34,7 @@ export default {
 <style lang='scss'>
 @import '~/styles/mixins.scss';
 :root {
-  /* Размеры */
-  --sidebar-width: 80%;
-  --sidebar-filter-blur: 5px;
-
-  @include phones() {
-    --sidebar-width: 100%;
-  }
-
-  /* Цвета */
   --sidebar-background: var(--dark-2);
-  --sidebar-overlay-background: var(--main-transparent);
 }
 </style>
 
@@ -57,32 +45,19 @@ export default {
   position: fixed;
   right: 0;
   top: 0;
-  left: 0;
-  bottom: 0;
   z-index: 100;
-  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
 
   &__content {
-    max-width: 100%;
-    width: var(--sidebar-width);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1 1 auto;
+    width: 100%;
     background: var(--sidebar-background);
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    overflow: auto;
-    z-index: 2;
-  }
-
-  &__overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 1;
-    background: var(--sidebar-overlay-background);
-    backdrop-filter: blur(var(--sidebar-filter-blur));
   }
 }
 </style>

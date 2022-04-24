@@ -5,11 +5,9 @@
     form.auth-form(
       @submit.prevent='submit'
     )
-      UiSelect.auth-form__field.select(
+      UiSelect.auth-form__field.auth-form__select(
         v-model='streamId'
-        :value='streamIds'
         placeholder="stream"
-        :searchable="false"
         :options="streamIds"
       )
       .auth-form__footer
@@ -59,20 +57,20 @@ export default {
     margin-top: 20px;
   }
 
-  .select {
-    margin-bottom: 50px;
-  }
-
   &__footer {
     margin-top: 30px;
   }
 
   &__error {
     display: block;
-    font-size: 10px;
-    line-height: 14px;
+    font-size: var(--main-input-label-size);
+    line-height: 1.4;
     color: var(--main-danger-color);
-    margin: 0 0 25px 25px;
+    margin: var(--main-input-label-offset-top) 0 0 var(--main-input-label-offset-left);
+  }
+
+  &_select {
+    margin-bottom: 50px;
   }
 }
 </style>

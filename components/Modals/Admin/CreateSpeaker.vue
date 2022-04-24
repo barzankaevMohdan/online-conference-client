@@ -25,11 +25,9 @@
         v-model.trim='data.about'
         placeholder="about"
       )
-      UiSelect.auth-form__field.select(
+      UiSelect.auth-form__field.auth-form__select(
         v-model='speechId'
-        :value='speechIds'
         placeholder="speechId"
-        :searchable="false"
         :options="speechIds"
       )
       .auth-form__footer
@@ -87,13 +85,8 @@ export default {
 @import "~/styles/mixins.scss";
 
 .auth-form {
-
   &__field {
     margin-top: 20px;
-  }
-
-  .select {
-    margin-bottom: 50px;
   }
 
   &__footer {
@@ -102,11 +95,14 @@ export default {
 
   &__error {
     display: block;
-    font-size: 10px;
-    line-height: 14px;
+    font-size: var(--main-input-label-size);
+    line-height: 1.4;
     color: var(--main-danger-color);
-    margin: 0 0 25px 25px;
+    margin: var(--main-input-label-offset-top) 0 0 var(--main-input-label-offset-left);
+  }
+
+  &_select {
+    margin-bottom: 50px;
   }
 }
-
 </style>

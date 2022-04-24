@@ -1,11 +1,6 @@
 <template>
   <button
     class="action-icon"
-    :class="{
-      'action-icon_middle': size === 'middle',
-      'action-icon_big': size === 'big',
-      [`action-icon_theme-${theme}`]: theme,
-    }"
     :id="`action-icon-${componentId}`"
     v-on="$listeners"
     v-bind="$attrs"
@@ -19,16 +14,6 @@
 export default {
   name: 'UiActionIcon',
   props: {
-    size: {
-      type: String,
-      default: 'small',
-      validator: (size) => ['small', 'middle', 'big'].includes(size),
-    },
-    theme: {
-      type: String,
-      default: 'default',
-      validator: (theme) => ['default', 'dark'].includes(theme),
-    },
     disabled: {
       type: Boolean,
       required: false,
@@ -45,86 +30,50 @@ export default {
 <style lang="scss">
 :root {
   /* Размеры */
-  --action-icon-width: 10px;
-  --action-icon-min-width-middle: 15px;
-  --action-icon-min-width-large: 26px;
+  --action-icon-size: 15px;
 
   /* Цвета */
   --action-icon-color: var(--main-color);
   --action-icon-hover-color: var(--main-hover-color);
   --action-icon-focus-color: var(--main-hover-color);
   --action-icon-active-color: var(--main-active-color);
-  --action-icon-disable-color: var(--main-disable-text-color);
-
-  --action-icon-dark-color: var(--gray-1);
-  --action-icon-dark-hover-color: var(--gray-2);
-  --action-icon-dark-focus-color: var(--gray-2);
-  --action-icon-dark-active-color: var(--gray-1);
-  --action-icon-dark-disable-color: var(--gray-1);
+  --action-icon-disable-color: var(--main-disable-color);
 }
 </style>
 
 <style lang="scss" scoped>
 
 .action-icon {
-  --action-icon-color-real: var(--action-icon-color);
   background-color: transparent;
   padding: 0;
   outline: none;
   border: 0;
   display: inline-flex;
   cursor: pointer;
-  color: var(--action-icon-color-real);
+  color: var(--action-icon-color);
+  transition: 0.2s;
 
   &:hover {
-    --action-icon-color-real: var(--action-icon-hover-color);
+    color: var(--action-icon-hover-color);
   }
 
   &:focus {
-    --action-icon-color-real: var(--action-icon-focus-color);
+    color: var(--action-icon-focus-color);
   }
 
   &:active {
-    --action-icon-color-real: var(--action-icon-active-color);
+    color: var(--action-icon-active-color);
   }
 
   &:disabled {
     cursor: auto;
-    --action-icon-color-real: var(--action-icon-disable-color);
-  }
-
-  &_theme-dark {
-    --action-icon-color-real: var(--action-icon-dark-color);
-    &:hover {
-      --action-icon-color-real: var(--action-icon-dark-hover-color);
-    }
-    &:focus {
-      --action-icon-color-real: var(--action-icon-dark-focus-color);
-    }
-    &:active {
-      --action-icon-color-real: var(--action-icon-dark-active-color);
-    }
-    &:disabled {
-      --action-icon-color-real: var(--action-icon-dark-disable-color);
-    }
+    color: var(--action-icon-disable-color);
   }
 
   svg {
-    width: var(--action-icon-width);
-    height: auto;
+    max-width: var(--action-icon-size);
+    max-height: var(--action-icon-size);
     fill: currentColor;
-  }
-
-  &_middle {
-    svg {
-      min-width: var(--action-icon-min-width-middle);
-    }
-  }
-
-  &_big {
-    svg {
-      min-width: var(--action-icon-min-width-large);
-    }
   }
 }
 </style>

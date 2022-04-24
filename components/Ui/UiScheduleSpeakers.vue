@@ -1,13 +1,12 @@
 <template lang="pug">
-  div.schedule-speakers
+  .schedule-speakers
     .schedule-speakers__top(v-if="speakers.length")
       .schedule-speakers__title {{speakersWord}}:
       .schedule-speakers__actions(v-if='speakers.length > 2')
-        slot(name="arrows")
-          button.schedule-speakers__arrow.rotate(ref='btnPrev')
-            SvgIcon(name="arrow-slider")
-          button.schedule-speakers__arrow(ref='btnNext')
-            SvgIcon(name="arrow-slider")
+        button.schedule-speakers__arrow.rotate(ref='btnPrev')
+          SvgIcon(name="arrow-slider")
+        button.schedule-speakers__arrow(ref='btnNext')
+          SvgIcon(name="arrow-slider")
     .swiper-container(ref='slider' )
       .swiper-wrapper
         .swiper-slide(v-for='speaker in speakers' :key="speaker.id")

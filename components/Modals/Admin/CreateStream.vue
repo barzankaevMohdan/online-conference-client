@@ -58,10 +58,10 @@ export default {
 
   &__error {
     display: block;
-    font-size: 10px;
-    line-height: 14px;
+    font-size: var(--main-input-label-size);
+    line-height: 1.4;
     color: var(--main-danger-color);
-    margin: 0 0 25px 25px;
+    margin: var(--main-input-label-offset-top) 0 0 var(--main-input-label-offset-left);
   }
 }
 </style>

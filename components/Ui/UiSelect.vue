@@ -7,7 +7,6 @@
       'select_correct': correct,
     }"
   >
-    <label v-if="error || correct" class="select__label" :for="componentId">{{ error || correct }}</label>
     <vSelect
       ref="select"
       :id="componentId"
@@ -17,17 +16,13 @@
       :clearable="false"
       :searchable="searchable"
       @input="onSelect"
-      @open="notSearchable"
-      @close="closeSelect"
       v-bind="$attrs"
       :disabled="disabled"
       class="select__select"
     >
       <template v-slot:open-indicator="{attributes}">
         <span class="select__arrow" v-bind="attributes">
-          <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 1L6 6L11 1" stroke="#908494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
+          <SvgIcon name='arrow'></SvgIcon>
         </span>
       </template>
       <template v-slot:no-options="{}">
@@ -37,6 +32,7 @@
         <div class="vs__selected">{{ option.label }}</div>
       </template>
     </vSelect>
+    <label v-if="error || correct" class="select__label" :for="componentId">{{ error || correct }}</label>
   </div>
 </template>
 
@@ -45,11 +41,6 @@ import vSelect from 'vue-select'
 
 export default {
   name: 'UiSelect',
-  data() {
-    return {
-      isOpen: '',
-    }
-  },
   props: {
     value: {
       validator: (prop) => prop === null || typeof prop === 'object',
@@ -98,27 +89,6 @@ export default {
   methods: {
     onSelect(val) {
       this.$emit('input', val)
-    },
-    notSearchable() {
-      this.isOpen = true
-      const searchStyle = this.$refs.select.$refs.search.style
-
-      if (!this.searchable && this.$refs.select.$refs.selectedOptions.children.length > 1) {
-        searchStyle.zIndex = '-1'
-      } else if (!this.searchable) {
-        searchStyle.pointerEvents = 'none'
-      }
-
-      if (this.isOpen) {
-        this.$refs.select.$refs.selectedOptions.children[0].textContent = this.placeholder
-      }
-    },
-    closeSelect() {
-      this.isOpen = false
-
-      if (!this.isOpen && this.value) {
-        return (this.$refs.select.$refs.selectedOptions.children[0].textContent = this.value.label)
-      }
     },
   },
   computed: {
@@ -179,143 +149,21 @@ export default {
   }
 
   &__arrow {
-    width: 12px;
-    height: 7px;
+    width: 15px;
+    height: 15px;
     display: flex;
+    color: var(--main-light);
 
-    & path {
-      stroke: var(--select-arrow-color);
+    & svg {
+      max-width: 15px;
+      max-height: 15px;
+      fill: currentColor;
     }
   }
 
   &__select {
     border: var(--select-border-width) solid var(--select-border-color);
     border-radius: var(--select-border-radius);
-  }
-
-  ::v-deep .vs__search {
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: var(--select-search-border-radius);
-    padding: var(--text-input-vertical-padding) var(--text-input-horizontal-padding);
-    font-size: var(--select-search-font-size);
-    line-height: 1.4;
-    -webkit-appearance: none;
-    outline: none;
-    margin: 0;
-
-    &::placeholder {
-      font-size: inherit;
-      line-height: inherit;
-      color: var(--select-placeholder-color);
-    }
-
-    &:disabled {
-      --select-placeholder-color: var(--select-placeholder-disabled-color);
-    }
-
-    &:focus,
-    &:active {
-      margin: 0;
-    }
-  }
-
-  ::v-deep .vs__dropdown-toggle {
-    padding: 0;
-    border-radius: var(--select-border-radius);
-    border: 0;
-    transition: background 0.25s ease;
-  }
-
-  ::v-deep .vs--open .vs__dropdown-toggle {
-    border-radius: var(--select-border-radius) var(--select-border-radius) 0 0;
-  }
-
-  ::v-deep .vs__selected-options {
-    padding: 0;
-    min-width: 1px;
-    flex-wrap: nowrap;
-    white-space: nowrap;
-    overflow: hidden;
-    border-radius: var(--select-border-radius);
-  }
-
-  ::v-deep .vs__selected {
-    background: transparent;
-    margin: 0;
-    padding: var(--text-input-vertical-padding) var(--text-input-horizontal-padding);
-    border-radius: var(--select-border-radius);
-    display: flex;
-    align-items: center;
-
-    + .vs__selected {
-      margin-left: -2px;
-
-      &::before {
-        display: inline-block;
-        content: ',';
-        position: absolute;
-        left: -13px;
-        top: 13px;
-      }
-    }
-
-    + .vs__search {
-      margin-left: -2px;
-    }
-  }
-
-  ::v-deep .vs__actions {
-    padding: 0 24px 0 24px;
-    border-radius: var(--select-border-radius);
-  }
-
-  ::v-deep .vs__dropdown-menu {
-    top: 100%;
-    width: calc(100% + 2px);
-    left: -1px;
-    padding: 0;
-    box-shadow: none;
-    border: 0 !important;
-    border-radius: 0 0 var(--select-border-radius) var(--select-border-radius);
-    max-height: var(--select-drop-max-width) !important;
-    background: var(--select-options-background-color);
-  }
-
-  ::v-deep .vs__dropdown-option {
-    position: relative;
-    padding: 8px 30px;
-    font-size: var(--select-search-font-size);
-    line-height: 24px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    transition: background 0.1s ease, color 0.25s ease;
-
-    color: var(--select-option-color);
-    background: var(--select-options-background-color);
-  }
-
-  ::v-deep .vs__dropdown-option--selected {
-    padding-right: 45px;
-
-    &::after {
-      display: inline-block;
-      content: ' ';
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 9px;
-      height: 7px;
-    }
-  }
-
-  ::v-deep .vs__no-options {
-    padding: 14px 20px;
-    font-size: var(--select-search-font-size);
-    line-height: 24px;
-    text-align: center;
   }
 
   &_error {
@@ -329,6 +177,132 @@ export default {
   }
 
   ::v-deep {
+    .vs__search {
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: var(--select-search-border-radius);
+      padding: var(--text-input-vertical-padding) var(--text-input-horizontal-padding);
+      font-size: var(--select-search-font-size);
+      line-height: 1.4;
+      -webkit-appearance: none;
+      outline: none;
+      margin: 0;
+
+      &::placeholder {
+        font-size: inherit;
+        line-height: inherit;
+        color: var(--select-placeholder-color);
+      }
+
+      &:disabled {
+        --select-placeholder-color: var(--select-placeholder-disabled-color);
+      }
+
+      &:focus,
+      &:active {
+        margin: 0;
+      }
+    }
+
+    .vs__dropdown-toggle {
+      padding: 0;
+      border-radius: var(--select-border-radius);
+      border: 0;
+      transition: background 0.25s ease;
+    }
+
+    .vs--open .vs__dropdown-toggle {
+      border-radius: var(--select-border-radius) var(--select-border-radius) 0 0;
+    }
+
+    .vs__selected-options {
+      padding: 0;
+      min-width: 1px;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      overflow: hidden;
+      border-radius: var(--select-border-radius);
+    }
+
+    .vs__selected {
+      background: transparent;
+      margin: 0;
+      padding: var(--text-input-vertical-padding) var(--text-input-horizontal-padding);
+      border-radius: var(--select-border-radius);
+      display: flex;
+      align-items: center;
+
+      + .vs__selected {
+        margin-left: -2px;
+
+        &::before {
+          display: inline-block;
+          content: ',';
+          position: absolute;
+          left: -13px;
+          top: 13px;
+        }
+      }
+
+      + .vs__search {
+        margin-left: -2px;
+      }
+    }
+
+    .vs__actions {
+      padding: 0 24px 0 24px;
+      border-radius: var(--select-border-radius);
+    }
+
+    .vs__dropdown-menu {
+      top: 100%;
+      width: calc(100% + 2px);
+      left: -1px;
+      padding: 0;
+      box-shadow: none;
+      border: 0 !important;
+      border-radius: 0 0 var(--select-border-radius) var(--select-border-radius);
+      max-height: var(--select-drop-max-width) !important;
+      background: var(--select-options-background-color);
+    }
+
+    .vs__dropdown-option {
+      position: relative;
+      padding: 8px 30px;
+      font-size: var(--select-search-font-size);
+      line-height: 24px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      transition: background 0.1s ease, color 0.25s ease;
+
+      color: var(--select-option-color);
+      background: var(--select-options-background-color);
+    }
+
+    .vs__dropdown-option--selected {
+      padding-right: 45px;
+
+      &::after {
+        display: inline-block;
+        content: ' ';
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 9px;
+        height: 7px;
+      }
+    }
+
+    .vs__no-options {
+      padding: 14px 20px;
+      font-size: var(--select-search-font-size);
+      line-height: 24px;
+      text-align: center;
+      color: var(--select-text-color);
+    }
+
     .vs--open .vs__search,
     .vs__search,
     .vs__selected {
@@ -352,6 +326,7 @@ export default {
       font-weight: var(--select-opened-text-weight);
       opacity: var(--select-opened-text-opacity);
     }
+
   }
 }
 </style>

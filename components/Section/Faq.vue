@@ -1,9 +1,17 @@
 <template lang="pug">
-  section.s-faq(id="faq")
+  section#faq.s-faq
     .s-faq__bg
-    BlockFaq(:list="faq")
-      template(#title)
-        UiHeadline(tag='h2') Помощь
+    LayoutsContainer
+      UiHeadline(tag='h2') Помощь
+      ul.s-faq__list
+        li(
+          v-for="(item, idx) in faq"
+          :key="idx"
+        )
+          UiFaq(
+            :title='item.title'
+            :description='item.description'
+          )
 </template>
 
 <script>
@@ -13,32 +21,26 @@ export default {
     return {
       faq: [
         {
-          id: 1,
           title: 'Вопрос 1',
           description: 'Вопрос 1',
         },
         {
-          id: 2,
           title: 'Вопрос 2',
           description: 'Вопрос 2',
         },
         {
-          id: 3,
           title: 'Вопрос 3',
           description: 'Вопрос 3',
         },
         {
-          id: 4,
           title: 'Вопрос 4',
           description: 'Вопрос 4',
         },
         {
-          id: 5,
           title: 'Вопрос 5',
           description: 'Вопрос 5',
         },
         {
-          id: 6,
           title: 'Вопрос 6',
           description: 'Вопрос 6',
         },
@@ -66,6 +68,14 @@ export default {
     right: 0;
     z-index: -1;
     background: url('~/assets/img/faq/faq-bg.png');
+  }
+
+  &__list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    border-radius: 10px;
   }
 }
 </style>

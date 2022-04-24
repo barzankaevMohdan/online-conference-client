@@ -58,15 +58,7 @@ export default {
 <style lang="scss" scoped>
 @import '~/styles/mixins.scss';
 .user-badge {
-  --modal-padding-top: 40px;
   --modal-description-margin-vertical: 0;
-  --modal-padding-bottom: 40px;
-
-  @include phones {
-    --modal-padding-top: 30px;
-    --modal-padding-bottom: 30px;
-    --modal-padding-horizon: 30px;
-  }
 
   &__part {
     display: flex;
@@ -101,7 +93,7 @@ export default {
 
   &__message {
     font-weight: normal;
-    font-size: 14px;
+    font-size: var(--main-small-text);
     line-height: 1.5;
     color: var(--gray-4);
   }

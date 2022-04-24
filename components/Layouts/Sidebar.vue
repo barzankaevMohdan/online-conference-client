@@ -49,8 +49,7 @@ export default {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding-top: 125px;
-  padding-bottom: 90px;
+  padding: 50px 0;
 
   &__close {
     position: absolute;

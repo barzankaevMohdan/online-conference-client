@@ -31,9 +31,7 @@
       )
       UiSelect.speaker__field(
         v-model='speechId'
-        :value='speeches'
         placeholder="speech"
-        :searchable="false"
         :options="speeches"
       )
       UiButton.speaker__field(

@@ -16,7 +16,6 @@
 --main-input-label-offset-left: 27px;
 --main-padding: 20px;
 --main-section-padding-vertical: 100px;
---main-big-padding: 40px;
 --main-input-label-offset-top: 5px;
 --main-input-horizontal-padding: 25px;
 --main-input-vertical-padding: 20px;
@@ -32,6 +31,7 @@
 --main-danger-color: rgb(255, 77, 77);
 --main-hover-color: #c505c2;
 --main-active-color: var(--main-dark-color);
+--main-disable-color: var(--gray-1);
 --main-positive-color: #181818;
 --main-text-color: var(--main-positive-color);
 --main-negative-color: rgb(26, 26, 26);
@@ -44,8 +44,6 @@
 --gray-3: #B3B1B4;
 --dark-1: #363636;
 --dark-2: #000;
---main-disable-color: var(--gray-1);
---main-disable-text-color: var(--gray-2);
 }
 
 @media screen and (max-width: $bp-phones) {
@@ -58,7 +56,6 @@
     --main-bigger-size: 16px;
     --main-small-text: 12px;
     --main-smallest-text: 10px;
-    --main-big-padding: 20px;
   }
 }
 

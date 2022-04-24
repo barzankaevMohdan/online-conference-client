@@ -19,10 +19,8 @@
           type="time"
           placeholder="time-end"
         )
-        span.speech__dot
         UiSelect.speech__status(
           v-model='status'
-          :searchable="false"
           :options="statuses"
           placeholder="status"
         )
@@ -162,18 +160,11 @@ export default {
   }
 
   &__status {
+    margin-left: 20px;
     @include phones() {
+      margin-left: 0;
       width: 100%;
     }
-  }
-
-  &__dot {
-    margin-left: var(--speech-modal-dot-margin-horizon);
-    margin-right: var(--speech-modal-dot-margin-horizon);
-    width: var(--speech-modal-dot-size);
-    height: var(--speech-modal-dot-size);
-    background: var(--speech-modal-status-color-hold);
-    border-radius: var(--speech-modal-dot-radius);
   }
 
   &__action {
@@ -200,14 +191,12 @@ export default {
   &__speakers-title {
     color: var(--speech-modal-speakers-color);
     margin-bottom: var(--speech-modal-speakers-margin-bottom);
-    font-weight: var(--speech-modal-time-weight);
+    font-weight: 500;
     font-size: var(--speech-modal-time-size);
-    line-height: var(--speech-modal-time-line-height);
+    line-height: 1.37;
   }
 
   &__speakers-item {
-    --speaker-item-post-color: var(--speach-speaker-color);
-
     display: flex;
     justify-content: space-between;
     padding: var(--speech-modal-speakers-item-padding) 0;

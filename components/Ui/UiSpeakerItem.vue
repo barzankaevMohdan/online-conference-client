@@ -1,9 +1,6 @@
 <template>
   <div
     class="speaker-item"
-    :class="{
-      'speaker-item_pointer': badge
-    }"
     :id="`speaker-item-${componentId}`"
   >
     <UiAvatar
@@ -40,10 +37,6 @@ export default {
       type: Object,
       require: true,
     },
-    badge: {
-      type: Boolean,
-      default: false
-    },
     onlyAvatar: Boolean,
   },
   computed: {
@@ -68,17 +61,8 @@ export default {
 
   /* Цвета */
   --speaker-item-name-color: var(--main-light);
-  --speaker-item-name-hover-color: var(--main-color);
   --speaker-item-post-color: var(--main-light);
   --speaker-item-company-color: var(--gray-2);
-
-  @include phones {
-    /* Размеры */
-    --speaker-item-image-size: 40px;
-    --speaker-item-name-size: var(--main-size);
-    --speaker-item-post-size: var(--main-smallest-text);
-
-  }
 }
 </style>
 
@@ -87,14 +71,6 @@ export default {
 
 .speaker-item {
   display: flex;
-
-  &_pointer {
-    cursor: pointer;
-
-    &:hover {
-      --speaker-item-name-color: var(--speaker-item-name-hover-color);
-    }
-  }
 
   &__text-block {
     overflow: hidden;

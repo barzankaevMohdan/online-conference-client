@@ -3,6 +3,7 @@
     :style='style'
     ref="container"
     :is="tag"
+    @transitionend='handleTransition'
   >
     <slot/>
   </component>
