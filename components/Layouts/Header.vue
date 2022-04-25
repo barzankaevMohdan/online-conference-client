@@ -9,12 +9,11 @@
         .header__user(v-if="isAuth") {{user.name}}
         .header__button
           BaseLoginLogOutBtns
-        UiBurger.header__burger(
-          @click-menu="sidebar = !sidebar"
-          :showMenu="sidebar"
-          :openSrc='require("~/assets/icons/burger.svg")'
-          :closeSrc='require("~/assets/icons/burger-close.svg")'
-        )
+        .header__burger
+          UiBurger(
+            @click="sidebar = !sidebar"
+            :showMenu="sidebar"
+          )
         LayoutsSidebar(
           :sidebar="sidebar"
           @close="sidebar = false"

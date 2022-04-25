@@ -14,13 +14,9 @@ export default {
       type: Boolean,
       default: false,
     },
-    lockSidebar: {
-      type: Boolean,
-      default: false,
-    },
   },
   watch: {
-    lockSidebar(newVal) {
+    sidebar(newVal) {
       if (newVal) {
         disablePageScroll()
       } else {

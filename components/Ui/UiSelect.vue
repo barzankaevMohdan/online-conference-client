@@ -61,7 +61,7 @@ export default {
     },
     searchable: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     placeholder: {
       type: String,
@@ -104,15 +104,13 @@ export default {
 
 :root {
   /* Размеры */
+  --select-vertical-padding: var(--main-input-vertical-padding);
+  --select-horizontal-padding: var(--main-input-horizontal-padding);
   --select-label-size: var(--main-input-label-size);
   --select-border-radius: var(--main-input-radius);
   --select-border-width: var(--main-input-border-width);
-  --select-drop-max-width: 268px;
-  --select-text-weight: inherit;
-  --select-opened-text-weight: var(--select-text-weight);
-  --select-opened-text-opacity: 1;
-  --select-search-font-size: var(--main-size);
-  --select-search-border-radius: 10px;
+  --select-drop-max-height: 250px;
+  --select-font-size: var(--main-size);
 
   /* Цвета */
   --select-background-color: var(--main-input-background-color);
@@ -126,7 +124,6 @@ export default {
   --select-option-color: var(--main-light);
   --select-options-background-color: var(--dark-1);
   --select-option-selected-background-color: var(--main-color);
-  --select-opened-text-color: var(--main-input-placeholder-color);
   --select-arrow-color: var(--main-light);
 
   --select-border-color: var(--main-input-border-color);
@@ -152,7 +149,7 @@ export default {
     width: 15px;
     height: 15px;
     display: flex;
-    color: var(--main-light);
+    color: var(--select-arrow-color);
 
     & svg {
       max-width: 15px;
@@ -178,14 +175,10 @@ export default {
 
   ::v-deep {
     .vs__search {
-      width: 100%;
-      box-sizing: border-box;
-      border-radius: var(--select-search-border-radius);
-      padding: var(--text-input-vertical-padding) var(--text-input-horizontal-padding);
-      font-size: var(--select-search-font-size);
+      padding: var(--select-vertical-padding) var(--select-horizontal-padding);
+      font-size: var(--select-font-size);
       line-height: 1.4;
       -webkit-appearance: none;
-      outline: none;
       margin: 0;
 
       &::placeholder {
@@ -217,7 +210,6 @@ export default {
 
     .vs__selected-options {
       padding: 0;
-      min-width: 1px;
       flex-wrap: nowrap;
       white-space: nowrap;
       overflow: hidden;
@@ -227,50 +219,32 @@ export default {
     .vs__selected {
       background: transparent;
       margin: 0;
-      padding: var(--text-input-vertical-padding) var(--text-input-horizontal-padding);
+      padding: var(--select-vertical-padding) var(--select-horizontal-padding);
       border-radius: var(--select-border-radius);
-      display: flex;
-      align-items: center;
-
-      + .vs__selected {
-        margin-left: -2px;
-
-        &::before {
-          display: inline-block;
-          content: ',';
-          position: absolute;
-          left: -13px;
-          top: 13px;
-        }
-      }
-
-      + .vs__search {
-        margin-left: -2px;
-      }
     }
 
     .vs__actions {
-      padding: 0 24px 0 24px;
+      padding: 0 var(--select-horizontal-padding);
       border-radius: var(--select-border-radius);
     }
 
     .vs__dropdown-menu {
       top: 100%;
-      width: calc(100% + 2px);
       left: -1px;
+      width: calc(100% + var(--select-border-width) * 2);
       padding: 0;
       box-shadow: none;
-      border: 0 !important;
+      border: none;
       border-radius: 0 0 var(--select-border-radius) var(--select-border-radius);
-      max-height: var(--select-drop-max-width) !important;
+      max-height: var(--select-drop-max-height);
       background: var(--select-options-background-color);
     }
 
     .vs__dropdown-option {
       position: relative;
       padding: 8px 30px;
-      font-size: var(--select-search-font-size);
-      line-height: 24px;
+      font-size: var(--select-font-size);
+      line-height: 1.4;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -280,24 +254,9 @@ export default {
       background: var(--select-options-background-color);
     }
 
-    .vs__dropdown-option--selected {
-      padding-right: 45px;
-
-      &::after {
-        display: inline-block;
-        content: ' ';
-        position: absolute;
-        right: 20px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 9px;
-        height: 7px;
-      }
-    }
-
     .vs__no-options {
       padding: 14px 20px;
-      font-size: var(--select-search-font-size);
+      font-size: var(--select-font-size);
       line-height: 24px;
       text-align: center;
       color: var(--select-text-color);
@@ -307,8 +266,8 @@ export default {
     .vs__search,
     .vs__selected {
       color: var(--select-text-color);
-      font-weight: var(--select-text-weight);
-      font-size: var(--select-search-font-size);
+      font-weight: 500;
+      font-size: var(--select-font-size);
     }
 
     .vs__search,
@@ -321,12 +280,12 @@ export default {
       background: var(--select-option-selected-background-color);
     }
 
-    .vs--open .vs__selected {
-      color: var(--select-opened-text-color);
-      font-weight: var(--select-opened-text-weight);
-      opacity: var(--select-opened-text-opacity);
+    .vs--single.vs--open .vs__selected, .vs--single.vs--loading .vs__selected {
+      position: static;
+      color: var(--select-option-color);
+      font-weight: 500;
+      opacity: 1;
     }
-
   }
 }
 </style>

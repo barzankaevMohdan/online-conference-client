@@ -1,9 +1,9 @@
 <template lang="pug">
-  button.burger(
-    @click="$emit('click-menu')"
-    :class="{'burger_open': !showMenu, 'burger_close': showMenu}"
-    ref="burger"
-  )
+  button.burger(:class='{"open": showMenu}' @click="$emit('click')")
+    span.line.line-1
+    span.line.line-2
+    span.line.line-3
+  </div>  
 </template>
 
 <script>
@@ -14,22 +14,6 @@ export default {
       type: Boolean,
       default: false
     },
-    openSrc: {
-      type: String,
-      default: ''
-    },
-    closeSrc: {
-      type: String,
-      default: ''
-    },
-  },
-  mounted() {
-    if (this.openSrc) {
-      this.$refs.burger.style.setProperty('--burger-background-image-open', `url("${this.openSrc}")`)
-    }
-    if (this.closeSrc) {
-      this.$refs.burger.style.setProperty('--burger-background-image-close', `url("${this.closeSrc}")`)
-    }
   },
 }
 </script>
@@ -37,13 +21,8 @@ export default {
 <style lang='scss'>
 :root {
   /* Размеры */
-  --burger-width: 30px;
+  --burger-width: 33px;
   --burger-height: 25px;
-
-  /* Цвета */
-  --burger-background: transparent;
-  --burger-background-image-open: none;
-  --burger-background-image-close: none;
 }
 </style>
 
@@ -51,21 +30,49 @@ export default {
 .burger {
   width: var(--burger-width);
   height: var(--burger-height);
-  background: var(--burger-background);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: transparent;
   outline: none;
   border: 0;
+  padding: 0;
   cursor: pointer;
-  transition: 0.2s;
+}
 
-  &_open {
-    background-image: var(--burger-background-image-open);
+.line {
+  display: block;
+  height: 2px;
+  width: 100%;
+  border-radius: 10px;
+  background: #fff;
+
+  &-1 {
+    transform-origin: 0% 0%;
+    transition: transform 0.4s ease-in-out;
   }
 
-  &_close {
-    background-image: var(--burger-background-image-close);
+  &-2 {
+    transition: transform 0.2s ease-in-out;
+  }
+
+  &-3 {
+    transform-origin: 0% 100%;
+    transition: transform 0.4s ease-in-out;
+  }
+}
+
+.open {
+  .line-1 {
+    transform: rotate(45deg);
+  }
+
+  .line-2 {
+    transform: scaleY(0);
+  }
+
+  .line-3 {
+    transform: rotate(-45deg);
   }
 }
 </style>
