@@ -170,8 +170,7 @@ export default {
   /* Позиция */
   --over-icon-bottom: 30px;
   --over-icon-left: 30px;
-  --over-button-rigth: -50px;
-  --over-button-left: -50px;
+  --over-button-coord: -50px;
 
   /* Цвета */
   --over-background: var(--main-color);
@@ -257,16 +256,13 @@ export default {
   }
 
   &__button {
+    --action-icon-size: 25px;
     position: absolute;
     top: 0;
-    right: var(--over-button-rigth);
-
-    svg {
-      max-height: 25px;
-    }
+    right: var(--over-button-coord);
 
     &_left {
-      left: var(--over-button-left);
+      left: var(--over-button-coord);
     }
   }
 }

@@ -101,20 +101,24 @@ export default {
       await this.$store.dispatch('player/createStreamRoom', this.activeStreamId).then((data) => {
         room = data
       })
-      await this.startCapture()
-        .then(() => {
-          this.socket.emit(ACTIONS.JOIN, room.id)
-          this.socket.emit(ACTIONS.ADD_ROOM, room)
-        })
-        .catch(e => console.error(e))
+      try {
+        await this.startCapture()
+      } catch(e) {
+        console.log(e);
+      }
+      this.socket.emit(ACTIONS.JOIN, room.id)
+      this.socket.emit(ACTIONS.ADD_ROOM, room)
       this.addNewClient('LOCAL_VIDEO', this.localMediaStream)
       this.isLoading = false
     },
     async joinToRoom() {
       this.isLoading = true
-      await this.startCapture()
-        .then(() => this.socket.emit(ACTIONS.JOIN, this.roomId))
-        .catch(e => console.error(e))
+      try {
+        await this.startCapture()
+      } catch(e) {
+        console.log(e);
+      }
+      this.socket.emit(ACTIONS.JOIN, this.roomId)
       this.addNewClient('LOCAL_VIDEO', this.localMediaStream)
       this.isLoading = false
     },
