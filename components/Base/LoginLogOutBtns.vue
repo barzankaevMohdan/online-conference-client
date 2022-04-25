@@ -23,6 +23,7 @@ export default {
       this.$router.push('/')
     },
     submit() {
+      this.$emit('click')
       this.isAuth ? this.logout() : this.login()
     }
   },
