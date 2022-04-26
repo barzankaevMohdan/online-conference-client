@@ -47,7 +47,6 @@ export const actions = {
       api
         .updateSpeaker(speakerData)
         .then((data) => {
-          commit('updateSpeaker', data.data)
           resolve(data.data)
         })
         .catch((error) => {

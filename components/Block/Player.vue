@@ -129,6 +129,7 @@ export default {
       })
     },
     addNewClient(newClient, stream) {
+      console.log('stream', stream);
       if (!this.clients.includes(newClient)) {
         this.clients.push(newClient)
       }
@@ -156,15 +157,16 @@ export default {
         }
       }
 
-      // let tracksNumber = 0
+      let tracksNumber = 0
       this.peerConnections[peerId].ontrack = ({streams: [remoteStream]}) => {
-        // tracksNumber++
-        this.addNewClient(peerId, remoteStream)
+        console.log('remoteStream', remoteStream);
+        tracksNumber++
+        // this.addNewClient(peerId, remoteStream)
 
-        // if (tracksNumber === 2) { // video & audio tracks received
-        //   tracksNumber = 0
-        //   this.addNewClient(peerId, remoteStream)
-        // }
+        if (tracksNumber === 2) { // video & audio tracks received
+          tracksNumber = 0
+          this.addNewClient(peerId, remoteStream)
+        }
       }
 
       this.localMediaStream?.getTracks().forEach(track => {

@@ -31,7 +31,6 @@ export const actions = {
       api
         .createStreamRoom(streamId)
         .then((data) => {
-          commit('updateRoom', data.data)
           resolve(data.data)
         })
         .catch((error) => {

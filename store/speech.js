@@ -49,7 +49,6 @@ export const actions = {
       api
         .updateSpeech(speechData)
         .then((data) => {
-          commit('updateSpeech', data.data)
           resolve(data.data)
         })
         .catch((error) => {
