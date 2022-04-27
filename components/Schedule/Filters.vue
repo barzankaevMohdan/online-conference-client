@@ -244,7 +244,9 @@ export default {
   }
 
   &__search-icon {
+    fill: var(--gray-2);
     max-width: 15px;
+    max-height: 15px;
   }
 }
 

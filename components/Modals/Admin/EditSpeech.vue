@@ -24,13 +24,13 @@
           :options="statuses"
           placeholder="status"
         )
+      UiTextArea.speech__btn(
+        v-model='speech.info'
+        type='textArea'
+        placeholder="Info"
+        :rows='3'
+      )
       .speech__action
-        UiTextArea.speech__btn(
-          v-model='speech.info'
-          type='textArea'
-          placeholder="Info"
-          :rows='3'
-        )
         UiButton.speech__btn(
           :isLoading='isLoading'
           @click="editSpeech"
@@ -146,6 +146,7 @@ export default {
     display: flex;
     align-items: center;
     margin-top: var(--speech-modal-info-margin-top);
+    margin-bottom: var(--speech-modal-info-margin-top);
 
     @include phones() {
       flex-direction: column;
@@ -161,9 +162,9 @@ export default {
 
   &__status {
     margin-left: 20px;
+    width: 100%;
     @include phones() {
       margin-left: 0;
-      width: 100%;
     }
   }
 

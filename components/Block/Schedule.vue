@@ -5,13 +5,11 @@
         slot(name='title')
         .schedule__arrows
           UiActionIcon.schedule__arrow(
-            size='big'
             @click='prev'
             :disabled='prevDisabled'
           )
             SvgIcon(name="arrow-slider")
           UiActionIcon(
-            size='big'
             @click='next'
             :disabled='nextDisabled'
           )
@@ -394,7 +392,7 @@ export default {
   /* Размеры */
   --schedule-header-margin-bottom: 32px;
   --schedule-container-max-width: 100%;
-  --schedule-arrows-width: 80px;
+  --schedule-arrow-margin: 30px;
   --schedule-col-padding-bottom: 36px;
   --schedule-time-text-size: var(--main-large-size);
   --schedule-time-line-height: 1.5;
@@ -456,16 +454,16 @@ export default {
   }
 
   &__arrows {
+    --action-icon-size: 25px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    width: var(--schedule-arrows-width);
     @include phones {
       display: none;
     }
   }
 
   &__arrow {
+    margin-right: var(--schedule-arrow-margin);
     transform: rotateY(180deg);
   }
 

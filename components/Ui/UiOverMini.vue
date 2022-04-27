@@ -6,12 +6,12 @@
         :class="{
           'over': !mini,
           'over__mini': mini,
-          'over__mini_aspect_ratio_4_3': aspectRatio === '4:3',
-          'over__mini_aspect_ratio_1_1': aspectRatio === '1:1',
+          'over__mini_aspect-ratio-4-3': aspectRatio === '4:3',
+          'over__mini_aspect-ratio-1-1': aspectRatio === '1:1',
         }"
         :style="{
-          '--over-mini-bottom': margin + 'px',
-          '--over-mini-left': margin + 'px',
+          bottom: indent + 'px',
+          left: indent + 'px',
         }"
         @mousedown="move($event)"
         data-over="mini"
@@ -22,7 +22,6 @@
             'over__button_left': buttonLeft,
           }]"
           @click.stop="toIcon"
-          size="big"
         >
           <SvgIcon name="arrow" />
         </UiActionIcon>
@@ -49,7 +48,7 @@ export default {
       type: Boolean,
       default: true,
     },
-    margin: {
+    indent: {
       type: Number,
       default: 15,
     },
@@ -114,8 +113,8 @@ export default {
         const offsetX = event.offsetX
         const offsetY = event.offsetY
         const coords = target.getBoundingClientRect()
-        const maxHorizontal = document.documentElement.clientWidth - coords.width - this.margin
-        const maxVertical = document.documentElement.clientHeight - coords.height - this.margin
+        const maxHorizontal = document.documentElement.clientWidth - coords.width - this.indent
+        const maxVertical = document.documentElement.clientHeight - coords.height - this.indent
         const iconWidth = target.children[0]?.clientWidth
         let deltaX
         let deltaY
@@ -124,13 +123,13 @@ export default {
             deltaX = e.clientX - offsetX
             deltaY = e.clientY - offsetY
             if (
-              deltaX >= this.margin &&
+              deltaX >= this.indent &&
               deltaX <= maxHorizontal
             ) {
               target.style.left = deltaX + 'px'
             }
             if (
-              deltaY >= this.margin &&
+              deltaY >= this.indent &&
               deltaY <= maxVertical
             ) {
               target.style.top = deltaY + 'px'
@@ -224,8 +223,6 @@ export default {
     top: auto;
     right: auto;
     cursor: grab;
-    bottom: var(--over-mini-bottom);
-    left: var(--over-mini-left);
     z-index: 1000;
 
     @include tablets {
@@ -237,13 +234,13 @@ export default {
       padding-top: 56.25%;
     }
 
-    &_aspect_ratio_4_3 {
+    &_aspect-ratio-4-3 {
       &::after {
         padding-top: 75%;
       }
     }
 
-    &_aspect_ratio_1_1 {
+    &_aspect-ratio-1-1 {
       &::after {
         padding-top: 100%;
       }
