@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import formsFunctions from '../../mixins/formsFunctions'
+import formsFunctions from '~/mixins/formsFunctions'
 
 export default {
   name: 'LoginForm',
@@ -35,16 +35,18 @@ export default {
   methods: {
     // login functions
     async componentHandler() {
-      const data = {
-        ...this.data,
+      const userData = {
+        email: this.data.login.toLowerCase().trim(),
+        password: this.data.password,
       }
 
-      await this.$store.dispatch('user/logIn', data)
+      await this.$store.dispatch('user/logIn', userData)
 
       this.$vfm.hide('authenticate')
     },
     forgotYourPassword() {
-      this.$vfm.show('password-forgot', this.data.login) // to do
+      this.$vfm.hide('authenticate')
+      this.$vfm.show('password-forgot', this.data.login)
     },
   },
   computed: {

@@ -6,6 +6,8 @@
     ModalsNowOnline
     ModalsSpeech
     ModalsUserBadge
+    ModalsSucces
+    ModalsForgotPassword
     ModalsAdminCreateSpeech
     ModalsAdminCreateStream
     ModalsAdminCreateSpeaker

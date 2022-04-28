@@ -2,24 +2,6 @@
   form.reg-form(
     @submit.prevent='submit'
   )
-    UiInput(
-      v-model.trim='data.name'
-      :error='errors["name"]'
-      placeholder="Имя"
-    )
-
-    UiInput.reg-form__field(
-      v-model.trim='data.last_name'
-      :error='errors["last_name"]'
-      placeholder='Фамилия'
-    )
-
-    UiInput.reg-form__field(
-      v-model.trim='data.login'
-      :error='errors["login"]'
-      placeholder='Ваш e-mail'
-    )
-
     UiInput.reg-form__field(
       v-model.trim='data.password'
       :error='errors["password"]'
@@ -43,21 +25,19 @@
           @click.prevent="showPassword"
         )
           SvgIcon.reg-form__eye-icon(name="eye-icon")
-
+    span.reg-form__error(v-if='serverError') {{serverError}}
     .reg-form__footer
-      span.reg-form__error(v-if='serverError') {{serverError}}
       UiButton(
         size='parentWidth'
         :isLoading='isLoading'
-      ) Регистрация
+      ) Обновить пароль
 </template>
 
 <script>
-
 import formsFunctions from '~/mixins/formsFunctions'
 
 export default {
-  name: 'RegistrationForm',
+  name: 'RecoveryForm',
   mixins: [formsFunctions],
   data() {
     return {
@@ -65,16 +45,15 @@ export default {
     }
   },
   methods: {
+    // login functions
     async componentHandler() {
-      const userData = {
-        email: this.data.login.toLowerCase().trim(),
-        login: this.data.login.toLowerCase().trim(),
-        name: `${this.data.name} ${this.data.last_name}`,
-        password: this.data.password,
+      const link = this.$route.params.id
+      const data = {
+        link,
+        password: this.data.password
       }
-
-      await this.$store.dispatch('user/registration', userData)
-      console.log('succes')
+      await this.$store.dispatch('user/recovery', data)
+      this.$router.push('/')
     },
     showPassword() {
       this.typeOfPasswordInput = this.typeOfPasswordInput === 'password' ? 'text' : 'password'
@@ -83,18 +62,12 @@ export default {
   computed: {
     rules() {
       const baseFieldsRules = {
-        name: 'required|min:2',
-        last_name: 'required|min:2',
-        login: ['required', 'email'],
         password: 'required|min:8|confirmed',
       }
       return baseFieldsRules
     },
     attributeNames() {
       return {
-        name: "имя",
-        last_name: 'фамилия',
-        login: 'e-mail',
         password: 'пароль',
       }
     },
