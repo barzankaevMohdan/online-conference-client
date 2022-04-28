@@ -18,7 +18,7 @@ export default class AuthService {
   }
 
   static async forgotPassword(login) {
-    return await $api.post('/user/forgot', {login})
+    return await $api.post('/user/recovery', {login})
   }
 
   static async recovery({link, password}) {
