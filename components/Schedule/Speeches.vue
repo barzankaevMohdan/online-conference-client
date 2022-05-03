@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import watchSpeech from '~/mixins/watchSpeech'
 
 export default {
   name: 'ScheduleSpeeches',
@@ -37,6 +38,7 @@ export default {
     streamsInSchedule: Object,
     isHaveSpeech: Boolean,
   },
+  mixins: [watchSpeech],
   data() {
     return {
       programVisible: [],

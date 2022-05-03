@@ -172,7 +172,7 @@ export default {
   --over-button-coord: -50px;
 
   /* Цвета */
-  --over-background: var(--main-color);
+  --over-background: var(--main-positive-color);
 }
 </style>
 

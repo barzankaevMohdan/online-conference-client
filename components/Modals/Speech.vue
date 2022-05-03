@@ -12,7 +12,7 @@
     .speech__action
       UiButton.speech__btn(
         :disabled="buttonDisabled[speech.status]"
-        @click="watchSpeech"
+        @click.prevent='watchSpeech(speech)'
       ) {{buttonText}}
       UiButton.speech__btn(
         v-if='!buttonDisabled.edit'
@@ -26,9 +26,11 @@
 </template>
 
 <script>
+import watchSpeech from '~/mixins/watchSpeech'
 
 export default {
   name: 'Speech',
+  mixins: [watchSpeech],
   data() {
     return {
       speech: {}
@@ -41,10 +43,6 @@ export default {
     edit() {
       this.close()
       this.$vfm.show('edit-speech', this.speech)
-    },
-    watchSpeech() {
-      this.close()
-      this.$router.push(`stream/${this.speech.streamId}`)
     },
     beforeOpen(event) {
       const data = event.ref.params
