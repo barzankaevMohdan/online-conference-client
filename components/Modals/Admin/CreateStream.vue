@@ -8,6 +8,7 @@
       UiInput(
         v-model.trim='data.name'
         placeholder="name"
+        :error='errors["name"]'
       )
       .auth-form__footer
         UiButton(
@@ -41,6 +42,14 @@ export default {
       this.isLoading = false
     }
   },
+  computed: {
+    rules() {
+      const baseFieldsRules = {
+        name: 'required',
+      }
+      return baseFieldsRules
+    },
+  }
 }
 </script>
 

@@ -16,9 +16,11 @@ import {ACTIONS} from "~/helpers/socketActions.js";
 export default {
   name: 'BlockChat',
   mixins: [actualStream, socketIO],
-  async mounted() {
-    await this.$store.dispatch('chat/getRoomMessages', this.activeStreamId)
-    this.socket.emit(ACTIONS.JOIN_CHAT, this.activeStreamId)
+  mounted() {
+    if (this.activeStreamId) {
+      this.$store.dispatch('chat/getRoomMessages', this.activeStreamId)
+      this.socket.emit(ACTIONS.JOIN_CHAT, this.activeStreamId)
+    }
     this.socket.on(ACTIONS.MESSAGE, (message) => {
       this.$store.commit('chat/newMessage', message)
     })
@@ -55,5 +57,11 @@ export default {
       return this.$store.getters['chat/messages'] ?? []
     }
   },
+  watch: {
+    activeStreamId(val) {
+      this.$store.dispatch('chat/getRoomMessages', val)
+      this.socket.emit(ACTIONS.JOIN_CHAT, val)
+    }
+  }
 }
 </script>

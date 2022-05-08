@@ -8,27 +8,33 @@
       UiInput.auth-form__field(
         v-model.trim='data.login'
         placeholder="login"
+        :error='errors["login"]'
       )
       UiInput.auth-form__field(
         v-model.trim='data.company_name'
         placeholder="companyName"
+        :error='errors["company_name"]'
       )
       UiInput.auth-form__field(
         v-model.trim='data.name'
         placeholder="name"
+        :error='errors["name"]'
       )
       UiInput.auth-form__field(
         v-model.trim='data.position'
         placeholder="position"
+        :error='errors["position"]'
       )
       UiInput.auth-form__field(
         v-model.trim='data.about'
         placeholder="about"
+        :error='errors["about"]'
       )
       UiSelect.auth-form__field.auth-form__select(
-        v-model='speechId'
+        v-model='data.speechId'
         placeholder="speechId"
         :options="speechIds"
+        :error='errors["speechId"]'
       )
       .auth-form__footer
         UiButton(
@@ -47,7 +53,9 @@ export default {
   mixins: [formsFunctions, socketIO],
   data() {
     return {
-      speechId: null,
+      data: {
+        speechId: null,
+      },
     }
   },
   mounted() {
@@ -59,7 +67,7 @@ export default {
     async componentHandler() {
       const data = {
         ...this.data,
-        speechId: this.speechId.value,
+        speechId: this.data.speechId.value,
       }
       await this.$store.dispatch('speaker/createSpeaker', data).then(data => {
         this.socket.emit(ACTIONS.EDIT_SPEAKER, data)
@@ -76,7 +84,18 @@ export default {
         }
       })
       return speeches
-    }
+    },
+    rules() {
+      const baseFieldsRules = {
+        login: 'required|min:2',
+        company_name: 'required',
+        name: 'required|min:2',
+        position: 'required|min:2',
+        about: 'required|min:2',
+        speechId: 'required',
+      }
+      return baseFieldsRules
+    },
   },
 }
 </script>

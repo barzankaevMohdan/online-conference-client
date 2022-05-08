@@ -37,7 +37,7 @@ export const mutations = {
     // возвращаем все исходные значения
     limit = 10
     offset = 0
-    state.messages = []
+    state.messages = {}
     state.count = limit
   },
 }

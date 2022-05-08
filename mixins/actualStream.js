@@ -2,8 +2,7 @@
 export default {
   computed: {
     activeStreamId() {
-      const stream = this.$store.getters['stream/firstStream']
-      const id = this.$route.params.id ?? stream?.id ?? 1
+      const id = this.$route.params.id ?? this.$store.getters['stream/firstStream']?.id
       return +id
     },
     activeStream() {
