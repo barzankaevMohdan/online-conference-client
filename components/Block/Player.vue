@@ -25,6 +25,10 @@
       )
 
     .player__video-wrapper(v-else)
+      .player__toggle-btn-wrapper
+        SvgIcon.player__toggle-btn(@click='toggleCamera' name='video')
+        SvgIcon.player__toggle-btn(@click='toggleAudio' name='microphone')
+        SvgIcon.player__toggle-btn(@click='leave' name='phone')
       template(v-for="client in clients")
         video.player__video(
           @click="activeVideo = client"
@@ -79,6 +83,9 @@ export default {
     this.localMediaStream?.getTracks().forEach(track => track.stop());
   },
   computed: {
+    leave() {
+      console.log('leave');
+    },
     room() {
       return this.$store.getters['player/roomByStreamId'](this.activeStreamId)
     },
@@ -90,6 +97,14 @@ export default {
     },
   },
   methods: {
+    toggleCamera() {
+      const video = this.localMediaStream.getTracks().find(track => track.kind === 'video')
+      video.enabled = !video.enabled
+    },
+    toggleAudio() {
+      const audio = this.localMediaStream.getTracks().find(track => track.kind === 'audio')
+      audio.enabled = !audio.enabled
+    },
     miniActive(data) {
       this.miniHandler = data
     },
@@ -268,6 +283,22 @@ export default {
       z-index: 0;
       border: none;
     }
+  }
+
+  &__toggle-btn-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 50px;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+
+  &__toggle-btn {
+    max-width: 40px;
+    max-height: 50px;
   }
 }
 </style>
