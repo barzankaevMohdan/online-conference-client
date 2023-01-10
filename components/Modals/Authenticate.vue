@@ -3,6 +3,7 @@
     name='authenticate'
   )
     AuthLoginForm
+
 </template>
 
 <script>

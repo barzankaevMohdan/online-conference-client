@@ -10,11 +10,13 @@
           @click="createRoom"
           :isLoading="isLoading"
         ) Начать стрим
+
         template(v-else)
           UiButton(
             @click="joinToRoom"
             :isLoading="isLoading"
           ) Присоединиться
+
           UiButton(
             @click="removeRoom"
             :isLoading="isLoading"
@@ -27,8 +29,11 @@
     .player__video-wrapper(v-else)
       .player__toggle-btn-wrapper
         SvgIcon.player__toggle-btn(@click='toggleCamera' name='video')
+
         SvgIcon.player__toggle-btn(@click='toggleAudio' name='microphone')
+
         SvgIcon.player__toggle-btn(@click='leave' name='phone')
+
       template(v-for="client in clients")
         video.player__video(
           @click="activeVideo = client"
@@ -39,6 +44,7 @@
           :muted="client === 'LOCAL_VIDEO'"
           :class="{'player__video_active': activeVideo === client}"
         )
+
 </template>
 
 <script>
@@ -83,9 +89,6 @@ export default {
     this.localMediaStream?.getTracks().forEach(track => track.stop());
   },
   computed: {
-    leave() {
-      console.log('leave');
-    },
     room() {
       return this.$store.getters['player/roomByStreamId'](this.activeStreamId)
     },
@@ -97,13 +100,23 @@ export default {
     },
   },
   methods: {
+    leave() {
+      this.localMediaStream?.getTracks().forEach(track => track.stop());
+      this.clients = []
+    },
     toggleCamera() {
-      const video = this.localMediaStream.getTracks().find(track => track.kind === 'video')
-      video.enabled = !video.enabled
+      const video = this.localMediaStream?.getTracks().find(track => track.kind === 'video')
+      
+      if (video) {
+        video.enabled = !video.enabled
+      }
     },
     toggleAudio() {
-      const audio = this.localMediaStream.getTracks().find(track => track.kind === 'audio')
-      audio.enabled = !audio.enabled
+      const audio = this.localMediaStream?.getTracks().find(track => track.kind === 'audio')
+
+      if (audio) {
+        audio.enabled = !audio.enabled
+      }
     },
     miniActive(data) {
       this.miniHandler = data
@@ -297,8 +310,19 @@ export default {
   }
 
   &__toggle-btn {
-    max-width: 40px;
-    max-height: 50px;
+    max-width: 30px;
+    max-height: 40px;
+    fill: var(--main-color);
+    cursor: pointer;
+    transition: .2s;
+
+    &:hover {
+      fill: var(--main-hover-color);
+    }
+
+    &:active {
+      fill: var(--main-active-color);
+    }
   }
 }
 </style>

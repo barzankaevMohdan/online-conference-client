@@ -7,13 +7,17 @@
     )
       template(#kv)
         img(:src="require('~/assets/img/demo/intro/kv-2.svg')")
+
     SectionPlayer
+
     SectionProgram
+
     SectionFaq
+
 </template>
 
 <script>
-import actualStream from '../../mixins/actualStream'
+import actualStream from '~/mixins/actualStream'
 
 export default {
   name: 'ConferencePage',

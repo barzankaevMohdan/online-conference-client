@@ -8,7 +8,7 @@ export default {
     async watchSpeech(speech) {
       this.$vfm.hide('speech-modal')
       await this.$router.push({path: `/stream/${speech.streamId}`, replace: false})
-      setTimeout(() => {this.scroll()}, 0)
+      setTimeout(() => { this.scroll() }, 0)
     },
     scroll() {
       gsap.to(window, {

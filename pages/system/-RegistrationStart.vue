@@ -3,10 +3,13 @@
     .reg-content
       .reg-content__left
         img.reg-content__left__logo(src='~/assets/img/auth/logo.svg')
+
       .reg-content__right
         .reg-content__form
           UiHeadline.reg-content__form-title(tag='h3') Регистрация
+
           AuthRegistrationForm
+
 </template>
 
 <script>

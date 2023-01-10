@@ -6,7 +6,9 @@
     )
       template(#kv)
         img(:src="require('~/assets/img/demo/intro/kv-2.svg')")
+
     SectionAdminCreate
+
 </template>
 
 <script>

@@ -3,26 +3,30 @@
     LayoutsContainer
       .schedule__top
         slot(name='title')
+
         .schedule__arrows
           UiActionIcon.schedule__arrow(
             @click='prev'
             :disabled='prevDisabled'
           )
             SvgIcon(name="arrow-slider")
+
           UiActionIcon(
             @click='next'
             :disabled='nextDisabled'
           )
             SvgIcon(name="arrow-slider")
+
     .schedule__container
       .schedule__hall(
-        v-for='(hall, i) in streams' :key='i'
+        v-for='(hall, i) in streams' :key='hall.id'
         :class='activeHall[i]'
         @click='hallClick(hall)'
         :style='hallLinkStyles[i]'
       ) {{hall.name}}
         slot(name='hall-arrow')
           SvgIcon.schedule__hall-arrow(name="arrow")
+
       .schedule__main(ref='schWidth')
         .swiper-slider
           .swiper-container(ref='slider')
@@ -37,6 +41,7 @@
                         span.schedule__online-img
                           slot(name='online-line-icon')
                             SvgIcon(name="online-icon")
+
                   ul.schedule__col(ref='timeRow')
                     li.schedule__time(
                       v-for='(time, idx) in timeArray'
@@ -47,10 +52,11 @@
                       span.schedule__time-line(ref='colLine')
                         svg(width='100%' height='100%' viewBox='0 0 1 730' fill='none' xmlns='http://www.w3.org/2000/svg')
                           line(x1='0.5' y1='-2.12908e-08' x2='0.50005' y2='1113' stroke-dasharray='6 10')
-                  .schedule__row(v-for='(hall, i) in streams' :key='i' ref='cardsRow')
+
+                  .schedule__row(v-for='(hall, i) in streams' :key='hall.id' ref='cardsRow')
                     UiScheduleCard.schedule__card(
                       v-for='(speech, i) in hall.speeches'
-                      :key='i'
+                      :key='speech.id'
                       :speech='speech'
                       :width='colWidthAndTimeArray'
                       :coords='timeCoordsAndTime'
@@ -66,8 +72,10 @@
                         slot(name='button-icon-done-card')
                       template(#button-icon)
                         slot(name='button-icon-card')
+
               .swiper-slide
                 span.schedule__span-slider
+
 </template>
 
 <script>

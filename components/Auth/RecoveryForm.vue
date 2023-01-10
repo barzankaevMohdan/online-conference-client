@@ -25,12 +25,15 @@
           @click.prevent="showPassword"
         )
           SvgIcon.reg-form__eye-icon(name="eye-icon")
+
     span.reg-form__error(v-if='serverError') {{serverError}}
+
     .reg-form__footer
       UiButton(
         size='parentWidth'
         :isLoading='isLoading'
       ) Обновить пароль
+
 </template>
 
 <script>

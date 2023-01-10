@@ -8,10 +8,11 @@
   )
     template(#title)
       UiHeadline(tag="h2") Программа
+
 </template>
 
 <script>
-import streamsWithSpeechesAndSpeakers from '../../mixins/streamsWithSpeechesAndSpeakers'
+import streamsWithSpeechesAndSpeakers from '~/mixins/streamsWithSpeechesAndSpeakers'
 
 export default {
   name: 'Program',

@@ -3,14 +3,18 @@
     LayoutsContainer(:key='`filters_mount${isMount}`')
       .filter__header
         UiHeadline(tag='h4') Фильтры
+
         UiButton(@click.prevent="reset" theme="fill-additional") Сбросить
+
       .filter__content
         //- временной интервал
         .filter__time
           .filter__time-col
             UiInput.time-filter.time-filter_start(:value='fromValue' readonly)
+
           .filter__time-col
             UiInput.time-filter.time-filter_end(:value='toValue' readonly)
+
           .filter__time-slider
             VueSlider(
               v-model="slider"
@@ -36,6 +40,7 @@
         UiInput(v-model='text' autocomplete='off' placeholder='Поиск')
           template(#btn)
             SvgIcon.filter__search-icon(name="magnifier")
+
 </template>
 
 <script>

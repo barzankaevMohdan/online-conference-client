@@ -5,6 +5,7 @@
         :src='src'
         alt=''
       )
+
 </template>
 
 <script>

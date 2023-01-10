@@ -1,6 +1,7 @@
 <template lang='pug' functional>
   .container
     slot
+
 </template>
 
 <script>

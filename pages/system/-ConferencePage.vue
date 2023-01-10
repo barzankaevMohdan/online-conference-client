@@ -7,9 +7,13 @@
     )
       template(#kv)
         img(:src="require('~/assets/img/demo/intro/kv.svg')")
+
     SectionPlayer
+
     SectionProgram
+
     SectionFaq
+
 </template>
 
 <script>

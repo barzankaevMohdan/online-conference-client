@@ -1,6 +1,7 @@
 <template lang='pug'>
   NavigationLinkBase(@click="scrollToBase" :theme='theme')
     slot
+
 </template>
 
 <script>

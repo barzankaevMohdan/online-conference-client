@@ -2,6 +2,7 @@
   section.s-speeches
     LayoutsContainer
       ScheduleNotFound(v-if='isHaveSpeech')
+
       template(v-for='(speeches, streamId) in groupSpeeches')
         .s-speeches__content
           .s-speeches__header(@click="showProgramm(streamId)")
@@ -13,19 +14,23 @@
           )
             .stream-group__speech(v-for='speech in speeches')
               .stream-group__time-speech {{speech.time_begin}} - {{speech.time_end}}
+
               .stream-group__content-speech(:class='`stream-group__content-speech_${speech.status}`')
                 div
                   .stream-group__time-speech.stream-group__time-speech_phone {{speech.time_begin}} - {{speech.time_end}}
                   .stream-group__title-speech {{speech.title}}
                   .stream-group__description-speech {{speech.info}}
+
                   ScheduleSpeakerBlock(
                     :speechId='speech.id'
                   )
+
                 .stream-group__action(v-if="speech.status === 'online'")
                   UiButton(
                     @click.prevent='watchSpeech(speech)'
                   ) Смотреть
                   span.stream-group__live LIVE
+
 </template>
 
 <script>

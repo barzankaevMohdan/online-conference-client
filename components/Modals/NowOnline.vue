@@ -1,29 +1,37 @@
 <template lang="pug">
-UiModal.schedule-modal(name="now-online" @opened="opened = true")
+  UiModal.schedule-modal(name="now-online" @opened="opened = true")
     template(#title) Сейчас онлайн
+
     a.schedule-modal__more(@click.prevent="followToSchedule") Расписание
+
     .schedule-modal__list
       template(v-if='streamsWithSpeechesAndSpeakers')
         .schedule-modal__item(v-for='(hall, index) in streamsWithSpeechesAndSpeakers' :key="index")
           .schedule-modal__item-hall {{hall.name}}
+
           template(v-for="(speech, speechIndex) in hall.speeches")
             template(v-if="speech.status === 'online'")
               .schedule-modal__item-info
                 span.schedule-modal__item-time
                   | {{speech.time_begin}}-{{speech.time_end}}
+
                 .schedule-modal__item-title {{speech.title}}
+
               .schedule-modal__speaker
                 UiScheduleSpeakers(
                   :speakers='speech.speakers'
                   :key='speech.speakers.id'
                   :opened='opened'
                 )
+
               UiButton.schedule-modal__item-btn(
                 @click="watchSpeech({hall, speech})"
               ) Сейчас онлайн
+
           template(v-if="!hasOnlineOrNot[index].includes(true)")
             .schedule-modal__item-title Сейчас нету онлайн стримов
             UiButton.schedule-modal__item-btn(@click="followToHall(hall)") Перейти в зал
+
 </template>
 
 <script>

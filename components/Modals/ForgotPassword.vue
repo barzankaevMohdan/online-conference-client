@@ -8,11 +8,13 @@
       :error='errors["login"]'
       placeholder="Логин"
     )
+
     template(v-slot:footer)
       UiButton(
         @click.prevent='submit'
         :isLoading='isLoading'
       ) Востановить пароль
+
 </template>
 
 <script>

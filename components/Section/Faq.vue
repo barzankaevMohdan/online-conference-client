@@ -3,6 +3,7 @@
     .s-faq__bg
     LayoutsContainer
       UiHeadline(tag='h2') Помощь
+
       ul.s-faq__list
         li(
           v-for="(item, idx) in faq"
@@ -12,6 +13,7 @@
             :title='item.title'
             :description='item.description'
           )
+
 </template>
 
 <script>

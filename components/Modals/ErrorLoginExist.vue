@@ -5,10 +5,13 @@
   )
     template(v-slot:icon)
       SvgIcon.modal-icon(name='modal-info')
+
     template(v-slot:title) Пользователь уже существует
     | {{`Пользователь с почтой ${info} уже сущетвует`}}
+
     template(v-slot:footer)
       UiButton.modal-login-btn(@click.prevent='login') Войти
+
       UiButton(@click.prevent='requestPassword') Напомнить пароль
 
 </template>

@@ -3,9 +3,11 @@
     .speaker-list__item(
       v-for="speaker in speakers"
     )
+
       UiSpeakerItem(
         :speaker='speaker'
       )
+
 </template>
 
 <script>

@@ -5,6 +5,7 @@
     @chatBlock_loadMoreMessages="loadMoreMessages"
     @chatBlock_message_openBadge="openBadge"
   )
+
 </template>
 
 <script>

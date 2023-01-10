@@ -1,10 +1,13 @@
 <template lang='pug'>
   LayoutsPageContent
     LayoutsHeader
+
     .content.content-gap(v-if='gap')
       slot
+
     .content(v-else)
       slot
+
 </template>
 
 <script>

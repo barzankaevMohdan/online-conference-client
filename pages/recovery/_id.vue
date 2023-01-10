@@ -3,6 +3,7 @@
     LayoutsContainer
       .form
         AuthRecoveryForm
+
 </template>
 
 <script>

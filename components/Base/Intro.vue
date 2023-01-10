@@ -7,9 +7,12 @@
       .s-intro__row
         .s-intro__text-box
           UiHeadline(v-html='title' tag='h1')
+
           UiHeadline(v-html='description' tag='h4')
+
         .s-intro__kv
           slot(name='kv')
+
 </template>
 
 <script>

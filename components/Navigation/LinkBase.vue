@@ -4,6 +4,7 @@
     :class="{[`nav-link_${theme}`]: theme}"
   )
     slot
+
 </template>
 
 <script>

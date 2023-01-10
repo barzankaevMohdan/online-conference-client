@@ -1,6 +1,7 @@
 <template lang='pug' functional>
   .screen
     slot
+
 </template>
 
 <script>

@@ -3,12 +3,16 @@
     .nav__list
       .nav__item
         NavigationOnline Сейчас онлайн
+
       .nav__item
         NavigationLink(to='/schedule' :theme='theme') Программа
+
       .nav__item
         NavigationLink(to='/admin' :theme='theme') Панель Админа
+
       .nav__item
         NavigationScroll(scrollTo='#faq' routTo='/' :theme='theme') Faq
+
 </template>
 
 <script>
@@ -28,6 +32,7 @@ export default {
 
 .nav {
   padding: 0 60px;
+
   @include desktop() {
     padding: 0 30px;
   }
@@ -40,9 +45,11 @@ export default {
   &__item {
     position: relative;
     padding: 0 25px;
+
     @include desktop() {
       padding: 0 10px;
     }
+
     &:first-child {
       &::before {
         content: '';

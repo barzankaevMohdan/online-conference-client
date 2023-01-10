@@ -1,6 +1,7 @@
 <template lang='pug'>
   NavigationLinkBase(@click="showModalNowOnline" :theme='theme')
     slot
+
 </template>
 
 <script>

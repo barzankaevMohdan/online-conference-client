@@ -1,7 +1,9 @@
 <template lang='pug'>
   .main
     Nuxt
+
     ModalsAllMainModalsHere
+
 </template>
 
 <script>

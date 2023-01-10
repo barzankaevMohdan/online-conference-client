@@ -4,25 +4,32 @@
     @beforeOpen="beforeOpen"
   )
     template(#title) {{speech.title}}
+
     .speech__info
       .speech__time {{speech.time_begin}}-{{speech.time_end}}
+
       span.speech__dot
+
       span.speech__status(:class="`speech__status_${speech.status}`")
         | {{statusText}}
+
     .speech__action
       UiButton.speech__btn(
         :disabled="buttonDisabled[speech.status]"
         @click.prevent='watchSpeech(speech)'
       ) {{buttonText}}
+
       UiButton.speech__btn(
         v-if='!buttonDisabled.edit'
         @click="edit"
       ) Редактировать
+
     .speech__speakers(v-if='speech.speakers && speech.speakers.length')
       .speech__speakers-title {{speakersText}}:
       .speech__speakers-list
         .speech__speakers-item(v-for='speaker in speech.speakers' :key="speaker.id")
           UiSpeakerItem(:speaker='speaker')
+
 </template>
 
 <script>

@@ -4,7 +4,9 @@
       img.not-found__img(src="~assets/img/schedule/not-found.png")
       img.not-found__img(src="~assets/img/schedule/not-found.png")
       img.not-found__img(src="~assets/img/schedule/not-found.png")
+
     UiHeadline.not-found__text(tag='h3') Ничего не найдено
+
 </template>
 
 <script>

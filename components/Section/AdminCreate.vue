@@ -6,6 +6,7 @@
         UiButton(@click.prevent="openModal('create-speech')").s-admin-create__btn Создать спича
         UiButton(@click.prevent="openModal('create-speaker')").s-admin-create__btn Создать спикера
         UiButton(@click.prevent="openModal('delete-stream')").s-admin-create__btn Удалить стрим
+
 </template>
 
 <script>

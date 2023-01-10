@@ -6,11 +6,13 @@
       :streams='streams'
       :range='minMaxRange'
     )
+
     ScheduleSpeeches(
       :groupSpeeches='groupSpeeches'
       :streamsInSchedule='streamsForId'
       :isHaveSpeech='notFound'
     )
+
 </template>
 
 <script>

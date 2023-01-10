@@ -8,7 +8,9 @@
     )
       template(#kv)
         img(:src="require('~/assets/img/demo/intro/kv-3.svg')")
+
     ScheduleContent
+
 </template>
 
 <script>

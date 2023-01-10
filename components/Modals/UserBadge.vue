@@ -11,11 +11,14 @@
       )
       .user-badge__block
         .user-badge__name {{ userBadge.name }}
+
         .user-badge__message {{ message.text }}
+
     UiButton.user-badge__btn(
       @click='deleteMessage'
       :isLoading='isLoading'
     ) Удалить сообщение
+
 </template>
 
 <script>

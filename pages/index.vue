@@ -1,6 +1,7 @@
 <template lang="pug">
   LayoutsPageContent
     component(:is='siteStatus' :key='isMounted')
+
 </template>
 
 <script>

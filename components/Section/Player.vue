@@ -3,8 +3,10 @@
     LayoutsContainer
       .s-player__block
         BlockPlayer
+
         .s-player__chat
           BlockChat
+
 </template>
 
 <script>

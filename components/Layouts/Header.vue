@@ -3,21 +3,27 @@
     .header__content
       .header__logo
         BaseLogoWithLink
+
       .header__navigation
         BaseNavigation(v-if="isAuth")
+
       .header__actions
         .header__user(v-if="isAuth") {{user.name}}
+
         .header__button
           BaseLoginLogOutBtns
+
         .header__burger
           UiBurger(
             @click="sidebar = !sidebar"
             :showMenu="sidebar"
           )
+
         LayoutsSidebar(
           :sidebar="sidebar"
           @close="sidebar = false"
         )
+
 </template>
 
 <script>

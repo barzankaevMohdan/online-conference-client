@@ -3,6 +3,7 @@
     :theme="theme"
     @click.prevent='submit'
   ) {{text}}
+
 </template>
 
 <script>

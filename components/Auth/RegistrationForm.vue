@@ -50,6 +50,7 @@
         size='parentWidth'
         :isLoading='isLoading'
       ) Регистрация
+
 </template>
 
 <script>

@@ -5,6 +5,7 @@
   )
     template(v-slot:icon)
       SvgIcon.modal-icon(name='succes')
+
     template(v-slot:title) Письмо отправлено на почту
     | На почту {{info}} отправлено письмо для востановления пароля
 

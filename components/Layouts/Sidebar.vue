@@ -4,18 +4,24 @@
       template(v-if="isAuth")
         .sidebar-content__item
           NavigationOnline(theme='sidebar' @open="$emit('close')") Сейчас онлайн
+
         .sidebar-content__item
           NavigationLink(to='/schedule' theme='sidebar' @click="$emit('close')") Программа
+
         .sidebar-content__item
           NavigationLink(to='/admin' theme='sidebar' @click="$emit('close')") Панель Админа
+
         .sidebar-content__item
           NavigationScroll(scrollTo='#faq' routTo='/' theme='sidebar' @scroll="$emit('close')") Faq
+
         .sidebar-content__footer
           span.sidebar-content__name {{user.name}}
+
           BaseLoginLogOutBtns.sidebar-content__button(theme="no-padding" @click="$emit('close')")
 
       template(v-else)
         BaseLoginLogOutBtns(theme="outline" @click="$emit('close')")
+
 </template>
 
 <script>

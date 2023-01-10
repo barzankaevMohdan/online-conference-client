@@ -7,23 +7,28 @@
       :error='errors["login"]'
       placeholder="Логин"
     )
+
     UiInput.auth-form__field(
       v-model.trim='data.password'
       type="password"
       :error='errors["password"]'
       placeholder="Пароль"
     )
+
     span.auth-form__error(v-if='serverError') {{serverError}}
+
     .auth-form__footer
       UiButton(
         size='parentWidth'
         :isLoading='isLoading'
       ) Войти
+
       UiButton(
         size='parentWidth'
         theme='fill-additional'
         @click.prevent='forgotYourPassword'
       ) Напомнить пароль
+
 </template>
 
 <script>
